@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wesley Kay · Senior Product Designer · AI Experiences</title>
+<meta name="description" content="Wesley Kay. Senior product designer. 8 years owning end-to-end product domains across AI platforms, design systems, and zero-to-one product. Currently designing BNY's AI platform Eliza on Claude.">
+<meta property="og:title" content="Wesley Kay · Senior Product Designer · AI Experiences">
+<meta property="og:description" content="Senior product designer. Currently designing BNY's AI platform Eliza on Claude. Workflow: Claude → code, no Figma.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@300;400;500;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Wesley Kay",
+  "jobTitle": "Senior Product Designer",
+  "description": "Senior product designer with 8 years owning end-to-end product domains across AI platforms, design systems, and zero-to-one product.",
+  "url": "https://linkedin.com/in/wesley-kay",
+  "sameAs": ["https://linkedin.com/in/wesley-kay"]
+}
+</script>
+
+<style>
+  :root {
+    --surface: #ffffff;
+    --surface-low: #f7f7f5;
+    --surface-high: #eeede9;
+    --surface-highest: #e5e3df;
+    --text: #1a1a1a;
+    --text-dim: #2e2e2e;
+    --text-muted: #6b6b6b;
+    --text-faint: #a0a0a0;
+    --accent: #3b5ccc;
+    --accent-dim: rgba(59,92,204,0.06);
+    --lilac: #7c3aad;
+    --lilac-dim: rgba(124,58,173,0.06);
+    --outline: #d4d2cf;
+    --outline-faint: rgba(200,198,196,0.45);
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-body: 'Manrope', -apple-system, sans-serif;
+    --font-label: 'Space Grotesk', monospace;
+    --max-w: 1280px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--surface);
+    color: var(--text-dim);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--accent); color: #ffffff; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--outline-faint);
+  }
+  .nav-inner {
+    max-width: var(--max-w); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 2.5rem;
+  }
+  .nav-name {
+    font-family: var(--font-display); font-style: italic;
+    font-size: 1.1rem; color: var(--text-dim);
+    text-decoration: none; cursor: pointer;
+  }
+  .nav-links { display: flex; gap: 3rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none;
+    cursor: pointer; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.4s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 2.5rem; }
+
+  .label {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .label.accent { color: var(--accent); }
+  .label.lilac { color: var(--lilac); }
+
+  .light-leak {
+    height: 1px; width: 100%;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.35;
+    margin: 1rem 0 0;
+  }
+
+  .hero { padding: 12rem 0 8rem; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300; line-height: 1.08;
+    color: var(--text); max-width: 900px;
+    margin-bottom: 3rem;
+  }
+  .hero h1 em { font-style: italic; }
+  .hero h1 .dim { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--text-muted);
+    max-width: 520px; line-height: 1.75; font-weight: 300;
+    margin-left: auto; margin-right: 0;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .section-line {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 4rem;
+  }
+  .section-line::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--outline-faint);
+  }
+
+  .cs-tile {
+    display: grid; gap: 3rem; margin-bottom: 8rem;
+    cursor: pointer; transition: opacity 0.3s;
+  }
+  .cs-tile:hover { opacity: 0.85; }
+  .cs-tile.layout-a { grid-template-columns: 7fr 5fr; }
+  .cs-tile.layout-b { grid-template-columns: 5fr 7fr; }
+
+  .cs-tile-img {
+    aspect-ratio: 16/9; overflow: hidden; position: relative;
+    background: var(--surface-high);
+    border: 1px solid var(--outline-faint);
+  }
+  .cs-tile-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.85; transition: transform 0.7s, opacity 0.5s;
+  }
+  .cs-tile:hover .cs-tile-img img { transform: scale(1.04); opacity: 1; }
+  .cs-tile-img .img-label {
+    position: absolute; bottom: 1rem; left: 1rem;
+    font-family: var(--font-label); font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .cs-tile-body {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 1rem 0;
+  }
+  .cs-tile-tags { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .chip {
+    font-family: var(--font-label); font-size: 9px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border: 0.5px solid var(--outline-faint);
+  }
+  .chip.accent { color: var(--accent); border-color: rgba(59,92,204,0.3); }
+  .chip.lilac { color: var(--lilac); border-color: rgba(124,58,173,0.3); }
+  .chip.muted { color: var(--text-muted); }
+
+  .cs-tile h2 {
+    font-family: var(--font-display); font-size: 2.25rem;
+    font-weight: 400; line-height: 1.2; color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .cs-tile p {
+    font-size: 0.95rem; color: var(--text-muted);
+    line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem;
+  }
+
+  .staff-chip {
+    background: var(--surface-low); padding: 1.25rem;
+    border-left: 2px solid rgba(59,92,204,0.35);
+  }
+  .staff-chip p {
+    font-family: var(--font-body); font-size: 0.8rem;
+    color: var(--text-muted); line-height: 1.6;
+    font-weight: 300; margin: 0;
+  }
+
+  /* SIDE PROJECTS STRIP */
+  .side-strip {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-bottom: 8rem;
+  }
+  .side-card {
+    background: var(--surface-low);
+    border: 1px solid var(--outline-faint);
+    padding: 2rem;
+  }
+  .side-card .label { margin-bottom: 0.75rem; display: block; }
+  .side-card h3 {
+    font-family: var(--font-display); font-size: 1.5rem;
+    font-weight: 400; color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+  .side-card p {
+    font-size: 0.9rem; color: var(--text-muted);
+    line-height: 1.65; font-weight: 300;
+    margin-bottom: 0;
+  }
+
+  /* HOW I WORK PANEL (replaces role-fit) */
+  .fit-panel {
+    background: var(--surface-low);
+    border: 1px solid var(--outline-faint);
+    padding: 3rem; margin-bottom: 8rem;
+  }
+  .fit-panel-header { margin-bottom: 3rem; }
+  .fit-grid-inner {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem 3rem;
+  }
+  .fit-item { display: flex; flex-direction: column; gap: 0.6rem; }
+  .fit-item p { font-size: 0.875rem; color: var(--text-dim); line-height: 1.6; font-weight: 300; }
+  .fit-item p strong { color: var(--text); font-weight: 500; }
+
+  .testimonials { margin-bottom: 8rem; }
+  .testimonial-item {
+    border-left: 1px solid var(--outline-faint);
+    padding-left: 3rem; margin-bottom: 4rem;
+  }
+  .testimonial-item blockquote {
+    font-family: var(--font-display); font-size: 1.75rem;
+    font-weight: 300; font-style: italic;
+    line-height: 1.35; color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-item cite {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-style: normal; color: var(--accent);
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; margin-bottom: 4rem;
+  }
+  .about-text h2 {
+    font-family: var(--font-display); font-size: 3rem;
+    font-weight: 300; font-style: italic; color: var(--text);
+    margin-bottom: 2rem;
+  }
+  .about-text p {
+    font-size: 1.05rem; color: var(--text-muted);
+    line-height: 1.75; font-weight: 300; margin-bottom: 1rem;
+  }
+  .about-photo {
+    background: var(--surface-high);
+    border: 1px solid var(--outline-faint);
+    min-height: 400px; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .about-photo .img-label { color: var(--text-faint); font-size: 11px; }
+
+  .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  .value-card {
+    background: var(--surface-low); padding: 1.5rem;
+    border: 1px solid var(--outline-faint);
+  }
+  .value-card h4 {
+    font-family: var(--font-label); font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .value-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; font-weight: 300; }
+
+  .contact-section {
+    background: var(--surface-low);
+    border: 1px solid var(--outline-faint);
+    padding: 4rem; text-align: center;
+    margin-bottom: 8rem;
+  }
+  .contact-section h2 {
+    font-family: var(--font-display); font-size: 3rem;
+    font-weight: 400; color: var(--text); margin-bottom: 1rem;
+  }
+  .contact-section p {
+    color: var(--text-muted); font-size: 0.95rem;
+    font-weight: 300; margin-bottom: 2rem;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--outline); padding: 0.85rem 2rem;
+    color: var(--text-dim); text-decoration: none;
+    transition: all 0.3s;
+  }
+  .contact-link:hover {
+    background: var(--accent); color: #ffffff; border-color: var(--accent);
+  }
+
+  footer {
+    border-top: 1px solid var(--outline-faint);
+    padding: 3rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: var(--max-w); margin: 0 auto;
+  }
+  footer span {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* SUBPAGE STYLES */
+  .back-btn {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); cursor: pointer;
+    padding: 1rem 0; border: none; background: none;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--text); }
+
+  .cs-header { padding: 4rem 0 3rem; }
+  .cs-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    font-weight: 400; line-height: 1.15; color: var(--text);
+    margin-bottom: 0.75rem; max-width: 800px;
+  }
+  .cs-header .cs-meta {
+    font-family: var(--font-label); font-size: 11px;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+  .cs-header .cs-intro {
+    font-size: 1.1rem; color: var(--text-muted);
+    max-width: 700px; line-height: 1.75; font-weight: 300;
+  }
+
+  .cs-section {
+    padding: 3.5rem 0;
+    border-top: 1px solid var(--outline-faint);
+  }
+  .cs-section h2 {
+    font-family: var(--font-display); font-size: 1.75rem;
+    font-weight: 400; color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+  .cs-section h3 {
+    font-family: var(--font-display); font-size: 1.15rem;
+    font-weight: 600; color: var(--text);
+    margin-bottom: 0.6rem; margin-top: 2rem;
+  }
+  .cs-section p {
+    color: var(--text-muted); font-size: 0.95rem;
+    line-height: 1.8; font-weight: 300;
+    margin-bottom: 1rem; max-width: 700px;
+  }
+  .cs-section ul { list-style: none; padding: 0; max-width: 700px; }
+  .cs-section ul li {
+    color: var(--text-muted); font-size: 0.9rem;
+    line-height: 1.7; padding: 0.35rem 0 0.35rem 1.5rem;
+    position: relative; font-weight: 300;
+  }
+  .cs-section ul li::before {
+    content: ''; position: absolute; left: 0; top: 0.8rem;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--outline);
+  }
+  .cs-section ul li strong { color: var(--text); font-weight: 500; }
+
+  .outcomes {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem; margin: 2.5rem 0;
+  }
+  .outcome {
+    background: var(--surface-low); padding: 1.5rem;
+    border: 1px solid var(--outline-faint);
+  }
+  .outcome .num {
+    font-family: var(--font-display); font-size: 2.25rem;
+    font-weight: 700; line-height: 1.1; margin-bottom: 0.35rem;
+  }
+  .outcome .num.accent { color: var(--accent); }
+  .outcome .num.lilac { color: var(--lilac); }
+  .outcome .num.tmo { color: #d6006e; }
+  .outcome .num.dark { color: var(--text); }
+  .outcome .desc {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.05em; color: var(--text-faint);
+    line-height: 1.5; text-transform: uppercase;
+  }
+
+  .img-placeholder {
+    overflow: hidden; display: flex; align-items: center;
+    justify-content: center; min-height: 300px; position: relative;
+    background: var(--surface-high);
+    border: 1px solid var(--outline-faint);
+  }
+  .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+  .img-label { color: var(--text-faint); font-size: 11px; text-align: center; padding: 1rem; }
+
+  .image-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem; margin: 2rem 0;
+  }
+  .image-row .img-placeholder { min-height: 220px; }
+
+  .staff-signal {
+    background: var(--surface-low); padding: 2.5rem;
+    border-left: 2px solid rgba(59,92,204,0.35);
+    margin: 3rem 0;
+  }
+  .staff-signal h4 {
+    font-family: var(--font-label); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .staff-signal p {
+    font-size: 0.95rem; color: var(--text-muted);
+    line-height: 1.8; font-weight: 300; max-width: 700px;
+  }
+
+  .cs-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin: 2rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 8rem 0 4rem; }
+    .cs-tile.layout-a, .cs-tile.layout-b { grid-template-columns: 1fr; }
+    .side-strip { grid-template-columns: 1fr; }
+    .fit-grid-inner { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .nav-inner { padding: 1rem 1.5rem; }
+    .container { padding: 0 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .testimonial-item blockquote { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" onclick="navigate('home')">Wesley Kay</a>
+    <ul class="nav-links">
+      <li><a onclick="navigate('home','work')">Work</a></li>
+      <li><a onclick="navigate('home','about')">About</a></li>
+      <li><a onclick="navigate('home','contact')">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+<div class="container">
+
+  <section class="hero">
+    <div>
+      <span class="label accent">Senior Product Designer · AI Experiences</span>
+      <div class="light-leak"></div>
+    </div>
+    <h1 style="margin-top: 3rem;">
+      Designing AI products and the <em>systems</em> behind them.
+    </h1>
+    <p class="hero-sub">
+      Eight years owning end-to-end product domains across enterprise platforms, design systems, and zero-to-one product. Currently designing <strong>Eliza</strong>, BNY's AI platform on Claude. My workflow is Claude → code. I don't touch Figma.
+    </p>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <div class="section-line" id="work"><span class="label">Selected work</span></div>
+
+  <!-- BNY -->
+  <div class="cs-tile layout-a" onclick="navigate('bny')">
+    <div class="cs-tile-img">
+      <div class="img-label">BNY Eliza · AI Platform</div>
+    </div>
+    <div class="cs-tile-body">
+      <div class="cs-tile-tags">
+        <span class="chip accent">AI Platform</span>
+        <span class="chip muted">BNY</span>
+      </div>
+      <h2>Designing how a 240-year-old bank manages AI</h2>
+      <p>Lead designer on Eliza, BNY's AI platform built on Claude. Owned the global navigation, the Digital Employee Marketplace, light mode (shipped in 3 days), and an automated design audit tool that screenshots inconsistencies and files them as issues.</p>
+      <div class="staff-chip">
+        <span class="label accent" style="display:block; margin-bottom:0.5rem;">Senior signal</span>
+        <p>Built force-multiplier tooling alongside the design work. Ran independent research via an agent I built to synthesize user interviews. Workflow is Claude → code, no Figma.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Qualcomm -->
+  <div class="cs-tile layout-b" onclick="navigate('qds')">
+    <div class="cs-tile-body">
+      <div class="cs-tile-tags">
+        <span class="chip lilac">Design Systems</span>
+        <span class="chip muted">Qualcomm</span>
+      </div>
+      <h2>Leading content &amp; iconography for Qualcomm's first design system</h2>
+      <p>Taxonomy, 1,500+ icons, AI-in-the-loop documentation pipeline, governance framework. Three brands with no shared language before this.</p>
+      <div class="staff-chip" style="border-left-color: rgba(124,58,173,0.35);">
+        <span class="label lilac" style="display:block; margin-bottom:0.5rem;">Senior signal</span>
+        <p>Built the documentation pipeline that hit 120x writing-effort reduction and shipped 60+ component docs on schedule.</p>
+      </div>
+    </div>
+    <div class="cs-tile-img">
+      <div class="img-label">Qualcomm Design System</div>
+    </div>
+  </div>
+
+  <!-- T-Mobile -->
+  <div class="cs-tile layout-a" onclick="navigate('tmo')">
+    <div class="cs-tile-img">
+      <div class="img-label">T-Mobile Search Redesign</div>
+    </div>
+    <div class="cs-tile-body">
+      <div class="cs-tile-tags">
+        <span class="chip accent">Shipping at scale</span>
+        <span class="chip muted">T-Mobile</span>
+      </div>
+      <h2>Redesigning search for 40 million users</h2>
+      <p>105% engagement increase. 94% null results decrease. 661% buying intention increase. Plus leading navigation across the entire ecosystem.</p>
+      <div class="staff-chip">
+        <span class="label accent" style="display:block; margin-bottom:0.5rem;">Senior signal</span>
+        <p>Dropped into a mid-flight project with a PM who didn't yet value design thinking. Advocated for users, delivered impact, led research initiatives across in-house teams and third-party vendors.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="cs-tile layout-b" onclick="navigate('overlay')">
+    <div class="cs-tile-body">
+      <div class="cs-tile-tags">
+        <span class="chip lilac">Zero to one</span>
+        <span class="chip muted">Overlay</span>
+      </div>
+      <h2>Co-founding a DeFi protocol from scratch</h2>
+      <p>Founding designer and COO. Brand, product, design system, community. 0 to 100K+ members. $3.4M managed. Team scaled 3 to 25.</p>
+      <div class="staff-chip" style="border-left-color: rgba(124,58,173,0.35);">
+        <span class="label lilac" style="display:block; margin-bottom:0.5rem;">Senior signal</span>
+        <p>Designed with extreme constraints, built for community, cultivated dev relationships that compounded design velocity. Survived four major app versions.</p>
+      </div>
+    </div>
+    <div class="cs-tile-img" style="background: var(--surface-low);">
+      <div class="img-label">Overlay Protocol</div>
+    </div>
+  </div>
+
+  <!-- SIDE PROJECTS -->
+  <div class="section-line"><span class="label">Things I build for me</span></div>
+  <div class="side-strip">
+    <div class="side-card">
+      <span class="label accent">2026 · 0 to 1</span>
+      <h3>sketch-to-revit</h3>
+      <p>An AI tool that turns a set of hand-drawn architectural sketches (plans, elevations, sections, perspectives, parti) into one multi-storey IFC BIM model openable in Revit or ArchiCAD. Multi-image vision reconciliation in a single Claude call, structured output, IFC geometry generated programmatically. Solo design and build. In alpha with an architect.</p>
+    </div>
+    <div class="side-card">
+      <span class="label lilac">2026 · Built daily</span>
+      <h3>Iona Tracker</h3>
+      <p>Self-hosted PWA for tracking newborn and toddler activity across caregivers. Feeds, sleep, handoffs. Solo design and build on Node, Express, SQLite, behind a Cloudflare Tunnel on a Mac mini. Runs daily in my own home.</p>
+    </div>
+  </div>
+
+  <!-- HOW I WORK -->
+  <div class="section-line"><span class="label">How I work</span></div>
+  <div class="fit-panel">
+    <div class="fit-panel-header">
+      <span class="label accent">Six things that show up in every project I touch</span>
+    </div>
+    <div class="fit-grid-inner">
+      <div class="fit-item">
+        <span class="label accent">End-to-end ownership</span>
+        <p><strong>Owned entire product domains, not just shipped features within them.</strong> BNY Eliza nav and Digital Employee Marketplace. Qualcomm content, icons, and architecture. Overlay from zero.</p>
+      </div>
+      <div class="fit-item">
+        <span class="label accent">Systems thinking</span>
+        <p><strong>Data models, permissions, integration surfaces.</strong> Architecture-trained. The DE Marketplace taxonomy (Role → Capability → Process → Agent → Tasks) is a data model. T-Mobile nav was the unifying layer for 40M+ users.</p>
+      </div>
+      <div class="fit-item">
+        <span class="label accent">Zero to one</span>
+        <p><strong>Started from a problem, not a spec.</strong> Overlay DeFi (0 → 100K+). BNY's Digital Employee Marketplace. sketch-to-revit. Iona Tracker. I build when nobody's asked me to.</p>
+      </div>
+      <div class="fit-item">
+        <span class="label accent">AI as core infrastructure</span>
+        <p><strong>Claude → code, no Figma.</strong> Built an AI documentation pipeline at Qualcomm (120x writing-effort reduction). Built an automated design audit tool at BNY. AI is how I ship.</p>
+      </div>
+      <div class="fit-item">
+        <span class="label accent">Independent research</span>
+        <p><strong>No research handoffs.</strong> At BNY, ran 1-on-1 user interviews and fed transcripts through an agent I built to synthesize findings. At T-Mobile, briefed in-house research and third-party vendors directly.</p>
+      </div>
+      <div class="fit-item">
+        <span class="label accent">Force multiplier</span>
+        <p><strong>I build tools that make the team faster.</strong> The AI doc pipeline at Qualcomm. The automated design audit tool at BNY. The component library at Overlay. Output compounds.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section-line"><span class="label">Endorsements</span></div>
+  <div class="testimonials">
+    <div class="testimonial-item">
+      <blockquote>"Overlay wouldn't be where it is today without the work we've done with Wesley. What sets him apart is his ability to see the bigger picture, understanding our business goals and ensuring the designs align with our overall objectives."</blockquote>
+      <cite>Lan Wolfer · CEO, Overlay Foundation</cite>
+    </div>
+    <div class="testimonial-item">
+      <blockquote>"The quality of his work has been top notch, and his fast turnaround times have kept us ahead in a fast-paced industry. Wesley handled everything with what felt like ease, from design strategy and UX to marketing and branding."</blockquote>
+      <cite>Josh Mackanic · CEO &amp; Co-Founder, CivilGrid</cite>
+    </div>
+    <div class="testimonial-item">
+      <blockquote>"Wesley is a holistic and critical thinker. It was a joy to collaborate with him on intricate design challenges."</blockquote>
+      <cite>Irene Barber · Design Director, Blink UX</cite>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section-line" id="about"><span class="label">About</span></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>Hey, I'm Wesley.</h2>
+      <p>I've led product design at startups and a Fortune 500. Before UX I studied architecture. That's where the systems thinking comes from, even if I never practiced.</p>
+      <p>Dad, husband, Pacific Northwest. Two kids (one new this year). Outside as much as the weather allows.</p>
+      <p>When I was 13 I saved a girl from falling off a galloping horse by riding up beside her and pushing her back up. Probably has nothing to do with design. Felt worth mentioning.</p>
+      <p style="margin-top: 2rem;">
+        <a href="https://linkedin.com/in/wesley-kay" style="color: var(--accent); margin-right: 2rem; text-decoration: none;">LinkedIn</a>
+        <a href="#" style="color: var(--accent); text-decoration: none;">Resume</a>
+      </p>
+    </div>
+    <div class="about-photo">
+      <div class="img-label">Photo</div>
+    </div>
+  </div>
+
+  <div class="values-grid" style="margin-bottom: 8rem;">
+    <div class="value-card"><h4>Bias to ship</h4><p>Done at hour 4 beats perfect at week 4.</p></div>
+    <div class="value-card"><h4>AI as leverage</h4><p>Claude → code. Prototypes in minutes. Docs in hours. Tools that compound.</p></div>
+    <div class="value-card"><h4>Craft when it matters</h4><p>Judgment on where to spend the polish budget.</p></div>
+    <div class="value-card"><h4>Systems first</h4><p>Patterns that compound across products beat one-off features.</p></div>
+    <div class="value-card"><h4>Own the problem</h4><p>Not the ticket. Not the spec. The actual problem.</p></div>
+    <div class="value-card"><h4>No research handoffs</h4><p>I run my own interviews and synthesize my own findings.</p></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact"></div>
+  <div class="contact-section">
+    <h2>Let's talk.</h2>
+    <p>Open to senior and staff product design roles. AI-forward teams especially.</p>
+    <div class="contact-links">
+      <a href="mailto:wesley.kay@gmail.com" class="contact-link">Email</a>
+      <a href="https://linkedin.com/in/wesley-kay" class="contact-link">LinkedIn</a>
+      <a href="tel:3038180087" class="contact-link">(303) 818-0087</a>
+    </div>
+  </div>
+
+</div>
+<footer><span>Wesley Kay · 2026</span><span>Built with Claude. No Figma.</span></footer>
+</div>
+
+
+<!-- SUBPAGE: BNY -->
+<div class="page" id="page-bny">
+<div class="container">
+  <button class="back-btn" onclick="navigate('home')">← Back to work</button>
+  <div class="cs-header">
+    <span class="label accent">AI Platform Design</span>
+    <h1 style="margin-top:1rem;">Designing how a 240-year-old bank manages AI</h1>
+    <div class="cs-meta">BNY · Senior UX Designer · via Blink · Feb 2026 to Present</div>
+    <p class="cs-intro">BNY is building Eliza, an internal AI platform built on Claude where "digital employees" are recruited, monitored, and governed like human talent. I lead design across navigation, the marketplace, dashboards, personalization, and the design system that has to feed AI agents instead of human designers.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>The platform</h2>
+    <p>Eliza sits under BNY's AI umbrella. Underneath the umbrella: chat (the AI assistant), a Digital Employee marketplace (where AI agents live), an initiative intake system (how new AI projects get started), and governance tools. When I joined, these areas had grown fast but the UX hadn't kept up. Multiple product areas were siloed under inconsistent navigation. Users couldn't find what they needed. Leadership couldn't see across the platform.</p>
+    <p>My job was to make it cohesive while shipping on aggressive timelines through a complex stakeholder landscape.</p>
+    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">BNY Eliza AI Platform<br><em style="font-size:10px;color:var(--text-faint);">(Screenshots limited due to active NDA)</em></div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Navigation redesign</h2>
+    <p>The existing Eliza platform used a workbench-style top navigation that couldn't scale. As BNY added more AI products (governance tools, performance dashboards, compliance workflows), the top nav was running out of room and users were getting lost.</p>
+    <p>I proposed a hierarchical IA with four top-level areas (Eliza, Governance, Performance, Compliance) unified under a left-nav with a hub landing page at AI.bny. Significant structural change. The team needed something transformational enough to solve real problems and shippable enough to launch in March.</p>
+    <h3>Key decisions</h3>
+    <ul>
+      <li><strong>Left nav over top nav.</strong> Scales as product areas expand. Hides when users drill into specific tools to maximize workspace.</li>
+      <li><strong>Hub landing page.</strong> AI.bny becomes the front door. Eliza (chat) is the first item in navigation, not the entire platform. Reframes Eliza as one part of BNY's AI ecosystem.</li>
+      <li><strong>Logo changed from "Eliza" to "BNY".</strong> Subtle but important. The platform is bigger than the chatbot.</li>
+      <li><strong>Chat history in the nav.</strong> Pulls from local backend so users have persistent access to prior conversations.</li>
+    </ul>
+    <p>I ran independent user research alongside the design work. Interviewed Eliza users 1-on-1 about what they needed. Fed transcripts through an agent I built to synthesize findings. Designed off the synthesis. No research process was handed to me. I built the loop.</p>
+    <p>We launched the navigation redesign, marketplace redesign, chat history, and new landing page together. A coordinated release that changed how BNY's employees experience AI at the company.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>Digital Employee Marketplace</h2>
+    <p>BNY's digital employees are AI agents that handle specific tasks (transaction repair, document processing, compliance checks). Each has capabilities, performance metrics, and a lifecycle (pipeline → pilot → active → retired). The marketplace is where these agents live.</p>
+    <p>I owned the UX end-to-end. Defined the data model (Role → Capability → Process → Agent instance → Tasks), the filtering and integration surfaces across Practices/Platforms/Hubs, and three deployment pathways (net-new, clone-and-modify, scale existing). These patterns now compound across every downstream agent-creation flow.</p>
+    <p>I also designed the manager dashboard with cross-platform capability views, so a manager could see all the DEs they're responsible for across different systems. Health status uses a red/amber/green system based on accuracy thresholds. If an agent drops below 94% accuracy, it triggers a warning.</p>
+    <h3>Design challenges</h3>
+    <ul>
+      <li><strong>Table consistency.</strong> Different DE types have different data. Transaction repair agents have transaction volumes. Engineering DEs don't. Needed a table structure that worked across all agent types without blank columns everywhere.</li>
+      <li><strong>Naming.</strong> "Username" was confusing. Landed on "DE ID" for the system identifier and "Employee name" for the human-readable name.</li>
+      <li><strong>Disable/enable flow.</strong> Managers need to take agents offline without losing their configuration. Modal confirmation for disable, re-enable without starting over.</li>
+    </ul>
+  </div>
+
+  <div class="cs-section">
+    <h2>Light mode in three days</h2>
+    <p>The team had 1,100+ hard-coded color references across 138 files in the monorepo, with dark/light tokens partially built but no working switching mechanism. Direct color inversion didn't achieve the desired aesthetic. The product had launched in light mode anyway, with quality that nobody was happy with.</p>
+    <p>I built a new V3 in light mode with a Claude → code workflow. Token-only consumption from the new design system, A11Y-compliant palette explorations (slate, frost, pewter, steel), direct foundation-layer token mirroring for dark to light conversion. Working prototype in three days.</p>
+    <p>Alongside it I built an automated design audit tool that screenshots inconsistencies across the system and files them as issue-tracker entries. The team gets faster QA without doing the QA. That tool keeps paying back.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>Shaping the AI-consumable design system</h2>
+    <p>Before paternity leave I shaped the strategy for an AI-consumable design system that becomes the foundation every product area inherits. The concrete moves:</p>
+    <ul>
+      <li><strong>Bent in-flight teams off legacy approaches.</strong> Drove the decision to rip Tailwind from a key product because the new system wouldn't survive it.</li>
+      <li><strong>Pushed component strategy toward LLM-friendly architecture.</strong> Larger semantic components with clear usage contracts instead of highly compositional Swiss Army knife patterns. Larger component APIs require more LLM processing and validation cycles. Smaller, focused, semantically-named components are easier for both humans and agents.</li>
+      <li><strong>Surfaced where traditional design systems break down for AI-driven UI.</strong> When AI is generating the UI, the system isn't a component library. It's instructions.</li>
+    </ul>
+    <p>A colleague carried the specific multi-layer architecture and component-contract implementation across the finish line during my paternity leave. The strategic shape was set beforehand.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>How I work, applied</h2>
+    <p>The biggest single impact I've had at BNY might not be any specific screen. It's how design feedback happens.</p>
+    <p>My workflow is Claude → code. I no longer touch Figma. Time goes to collecting context, then iterating, testing, and shipping. On one occasion I delivered five prototype iterations in a single session: record a walkthrough with stakeholders, process notes in 10 minutes, iterate in 2 hours total. Compare that to the previous cycle of Figma mockup → review meeting → comments → revision → another meeting → handoff spec. Weeks compressed to hours.</p>
+    <p>The team is several months ahead of peer design groups on AI tool adoption. I also pushed for recording all product team meetings and advocated for user-testing data backing design decisions in leadership demos, rather than just showing mockups and hoping for buy-in.</p>
+  </div>
+
+  <div class="staff-signal">
+    <h4>What this shows</h4>
+    <p>The hardest problem wasn't the UI. It was defining what "managing AI" means for a bank that's older than the country. I shaped the conceptual framework that the team designs within: agent lifecycle, governance integration, observability, platform IA. I also built force-multiplier tooling alongside the design work, because the highest-leverage thing a staff designer can do is make the rest of the team faster.</p>
+  </div>
+
+  <div style="padding:3rem 0;"><button class="back-btn" onclick="navigate('home')">← Back to work</button></div>
+</div>
+</div>
+
+
+<!-- SUBPAGE: QUALCOMM -->
+<div class="page" id="page-qds">
+<div class="container">
+  <button class="back-btn" onclick="navigate('home')">← Back to work</button>
+  <div class="cs-header">
+    <span class="label lilac">Design Systems</span>
+    <h1 style="margin-top:1rem;">Leading content &amp; iconography for Qualcomm's first design system</h1>
+    <div class="cs-meta">Qualcomm · Senior UX Designer, Content Lead · via Blink · Feb to Sept 2025</div>
+    <p class="cs-intro">Qualcomm had no unified design system. Three brands (Qualcomm, Snapdragon, Dragonwing), dozens of product teams, zero shared language. I led content strategy, iconography, documentation architecture, and defined the system's taxonomy, while contributing to component design alongside the team.</p>
+  </div>
+
+  <div class="outcomes">
+    <div class="outcome"><div class="num lilac">1,500+</div><div class="desc">Icons shipped with governance</div></div>
+    <div class="outcome"><div class="num lilac">60+</div><div class="desc">Components documented</div></div>
+    <div class="outcome"><div class="num lilac">120x</div><div class="desc">Writing-effort reduction</div></div>
+    <div class="outcome"><div class="num lilac">95%</div><div class="desc">CMS creation time reduction</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Defining the taxonomy</h2>
+    <p>Before you can build a design system, you need a shared language for what things are. I defined the taxonomy that became QDS's organizing principle: Atoms → Molecules → Organisms → Templates → UX Flows → Design Patterns.</p>
+    <p>This wasn't an atomic-design rehash. The addition of UX Flows and Design Patterns as explicit levels acknowledged that Qualcomm's products needed more than component specs. They needed guidance on how components compose into real user experiences. A button is an atom. A search bar is a molecule. "How filtering works across all Qualcomm products" is a pattern and deserved its own place in the hierarchy.</p>
+    <p>This taxonomy informed everything downstream: how the documentation was structured, how engineering understood the relationships between parts of the system, and how the team talked about what they were building.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>The AI documentation pipeline</h2>
+    <p>The math problem: 60+ components that needed full documentation. Manually, that's maybe 12 components in the time we had. The system would launch half-empty.</p>
+    <p>I built an AI-in-the-loop documentation pipeline using Claude. The workflow: I created a structured input format that captured a component's props, variants, states, and design intent. Fed that into Claude with carefully engineered prompts. Claude generated a first draft. Human designers reviewed, refined, approved. CMS pages were created from the output.</p>
+    <h3>What made it work</h3>
+    <ul>
+      <li><strong>Structured inputs, not freeform.</strong> The quality of AI output depends entirely on input quality. I designed a template that forced the right information to be captured before generation started.</li>
+      <li><strong>Human-in-the-middle, not human-out-of-the-loop.</strong> Every doc was reviewed and refined by a designer. The AI did the heavy lifting. Humans ensured accuracy and voice consistency.</li>
+      <li><strong>The process was the product.</strong> I didn't just build the pipeline. I defined the input format, wrote the prompts, established the review process, and trained the team on the workflow. When I left, the team could keep going without me.</li>
+    </ul>
+    <p>Result: 120x reduction in writing effort, 95% reduction in CMS page creation time, 60+ components documented on schedule. The system launched complete instead of half-built.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>1,500+ icons, end-to-end</h2>
+    <p>Qualcomm had icons scattered across teams with no standards, no naming conventions, and no process for adding new ones. Marketing used one set. Product used another.</p>
+    <p>I owned the icon library from audit to ship. Cataloged every existing icon across both marketing and product design. Established sizing standards and naming conventions. Built a metadata schema so icons could be searchable and filterable. Created a governance workflow for custom icon submissions. Shipped v1 with 1,500+ utility and marketing icons unified across all three brands.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>Documentation architecture</h2>
+    <p>A design system is only as useful as its documentation site. I designed the complete information architecture: sitemap, content structure, navigation, and page templates. Evaluated CMS options (including Knapsack) before the team decided to build a custom storefront, which I collaborated with engineering to implement.</p>
+    <p>Each component page followed a consistent template: overview, usage guidelines, variants, states, accessibility, code reference. This consistency meant that once you learned how to read one component page, you could read them all.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>Governance &amp; UX patterns research</h2>
+    <p>A system without governance is just a library that slowly rots. I established review workflows, contribution processes, and quality standards that enabled distributed teams across multiple time zones and business units to contribute without the system losing coherence.</p>
+    <p>I also led UX patterns research. Audited applications across Qualcomm, interviewed key designers, and identified recurring challenges (navigation patterns, table behaviors, filtering and sorting conventions). The research informed the pattern library roadmap.</p>
+  </div>
+
+  <div class="staff-signal">
+    <h4>What this shows</h4>
+    <p>The AI documentation pipeline wasn't about speed. It was about proving that AI is a first-class tool in design system operations. I defined the input format, wrote the prompts, established the review process, and trained the team on the workflow. This is the kind of "AI-ready" process thinking that scales a system beyond what a small team can maintain manually.</p>
+  </div>
+
+  <div style="padding:3rem 0;"><button class="back-btn" onclick="navigate('home')">← Back to work</button></div>
+</div>
+</div>
+
+
+<!-- SUBPAGE: T-MOBILE -->
+<div class="page" id="page-tmo">
+<div class="container">
+  <button class="back-btn" onclick="navigate('home')">← Back to work</button>
+  <div class="cs-header">
+    <span class="label accent">Shipping at Scale</span>
+    <h1 style="margin-top:1rem;">Redesigning search for 40 million users</h1>
+    <div class="cs-meta">T-Mobile · Senior UX Designer, Lead · Feb 2020 to Sept 2021</div>
+    <p class="cs-intro">As a UX Lead on T-Mobile's Design System team, I was tasked with redesigning the search experience across all of T-Mobile's properties. I was also the lead designer for Navigation, building a framework used by 40M+ monthly active users, and contributed scalable components to the design system serving 40+ designers.</p>
+  </div>
+
+  <div class="outcomes">
+    <div class="outcome"><div class="num tmo">105%</div><div class="desc">Engagement increase (185k → 380k/wk)</div></div>
+    <div class="outcome"><div class="num tmo">94%</div><div class="desc">Null results decrease (13% → 0.7%)</div></div>
+    <div class="outcome"><div class="num tmo">661%</div><div class="desc">Buying intention increase (864 → 6,580/wk)</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Context</h2>
+    <p>I got dropped into the middle of this project, so typical discovery and exploration was out. As the only designer on a team of three leading this initiative, partnered with a PM who had not yet fully come to appreciate the benefits of design thinking, advocating for design thinking without delaying the project was a tool I quickly deployed and sharpened.</p>
+    <p>I aligned on four business and user objectives:</p>
+    <ul>
+      <li><strong>Reduce cost.</strong> Decrease call volume by providing accurate results through auto-suggested terms and categorized results that fit users' mental model.</li>
+      <li><strong>Improve usability.</strong> Reduce friction by guiding users to intended results through auto-suggestions, relevant filters, and improved content taxonomies.</li>
+      <li><strong>Increase revenue.</strong> Guide users from search to Shop, reducing drop-off.</li>
+      <li><strong>Improve CSAT.</strong> Reduce dead ends by providing auto-suggestions and relevant results from initial search through filtered results.</li>
+    </ul>
+    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Business and user objectives</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Research &amp; analysis</h2>
+    <p>To maintain project deadlines while balancing user needs, I led research initiatives end-to-end: defined the research questions, briefed the in-house research team and third-party vendors on methodology, and translated findings into product direction.</p>
+    <ul>
+      <li>Conducted interviews with the research team to gain deeper insights into known search patterns across several user journeys</li>
+      <li>Analyzed user behavior through Clicktale heatmaps to understand current search pain points and interaction patterns</li>
+      <li>Referenced Baymard Institute and Nielsen Norman Group for established search UX best practices</li>
+      <li>Synthesized quantitative data from user tracking to understand common patterns and validate assumptions</li>
+    </ul>
+    <div class="cs-grid" style="margin-top:2rem;">
+      <div class="img-placeholder"><div class="img-label">Clicktale heatmaps</div></div>
+      <div class="img-placeholder"><div class="img-label">Coveo analytics</div></div>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Precedent analysis</h2>
+    <p>I conducted competitive and comparative analysis across Verizon, Google, REI, Amazon, Home Depot, and Dell, drawing insights from industry leaders to balance innovation with established patterns.</p>
+    <ul>
+      <li><strong>Verizon.</strong> Tabular filtering and near-matches below top hits.</li>
+      <li><strong>Google.</strong> Type-ahead with contextual suggestions.</li>
+      <li><strong>REI.</strong> Type-ahead that surfaces genuinely helpful content.</li>
+      <li><strong>Amazon.</strong> Highlights near-perfect matches with visual distinction. Multi-link "near match" results.</li>
+      <li><strong>Home Depot.</strong> Type-ahead loads potentially helpful content for ambiguous queries.</li>
+      <li><strong>Dell.</strong> Separates shopping and support into tabs, reducing cognitive load.</li>
+    </ul>
+    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Competitive analysis across 6 industry leaders</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Design &amp; iteration</h2>
+    <p>I developed design concepts addressing user needs within technical constraints, iterating rapidly based on stakeholder feedback. Five major iterations:</p>
+    <ul>
+      <li><strong>V1.02.</strong> Basic full-screen takeover search.</li>
+      <li><strong>V1.03.</strong> Introduced auto-suggestions.</li>
+      <li><strong>V1.04.</strong> Content categorization (phones, support, accessories) with chip-style filters.</li>
+      <li><strong>V1.05.</strong> Refined visual hierarchy with tabbed categories and inline product results.</li>
+      <li><strong>V1.06.</strong> Contextual results pages with smart filtering.</li>
+    </ul>
+    <h3>Key design decisions</h3>
+    <ul>
+      <li><strong>Zero-state design.</strong> Popular categories and recent searches, reducing the blank-page problem.</li>
+      <li><strong>Auto-suggestions with categories.</strong> Results grouped by type so users immediately understand what they're looking at.</li>
+      <li><strong>Chip-based filters.</strong> Lightweight, mobile-friendly filtering without a separate panel.</li>
+      <li><strong>"Looking for Sprint results?"</strong> Contextual messaging for legacy Sprint users after the T-Mobile merger.</li>
+    </ul>
+    <div class="img-placeholder" style="margin-top:2rem;min-height:350px;"><div class="img-label">Five design iterations: v1.02 through v1.06</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Testing &amp; validation</h2>
+    <p>Implemented A/B testing to validate design decisions before full deployment. Continuously monitored key metrics through Coveo's administration console. The numbers: 94% null result reduction, 105% engagement increase, 661% buying intention increase.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>The final design</h2>
+    <div class="img-placeholder" style="min-height:400px;"><div class="img-label">Final search design</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Reflection</h2>
+    <p>Within a short period and with a high-visibility feature at stake:</p>
+    <ul>
+      <li>I advocated for design thinking and users when others were focused on the business</li>
+      <li>I kept a level head in a high-pressure situation</li>
+      <li>I delivered impact in a small team while navigating a complex organization, within time constraints</li>
+    </ul>
+  </div>
+
+  <div class="staff-signal">
+    <h4>What this shows</h4>
+    <p>The metrics are strong, but the real story is what happened around them. I was the only designer, dropped mid-project, working with a PM who didn't yet value design thinking. I advocated for users when others were focused on the business. I delivered impact in a compressed timeline in a complex organization. That's the same muscle senior product design requires across any ecosystem: influence without authority, data-informed craft, and the judgment to know when good enough is done.</p>
+  </div>
+
+  <div style="padding:3rem 0;"><button class="back-btn" onclick="navigate('home')">← Back to work</button></div>
+</div>
+</div>
+
+
+<!-- SUBPAGE: OVERLAY -->
+<div class="page" id="page-overlay">
+<div class="container">
+  <button class="back-btn" onclick="navigate('home')">← Back to work</button>
+  <div class="cs-header">
+    <span class="label lilac">Zero to One</span>
+    <h1 style="margin-top:1rem;">Co-founding a DeFi protocol from scratch</h1>
+    <div class="cs-meta">Overlay Protocol · Co-Founder, COO &amp; Head of Design · Sep 2021 to Feb 2025</div>
+    <p class="cs-intro">Founding Designer and COO. Led the development of Overlay, a decentralized exchange for niche data markets. Built everything from zero: brand, product, design system, community, team.</p>
+  </div>
+
+  <div class="outcomes">
+    <div class="outcome"><div class="num dark">0 → 100k+</div><div class="desc">Community members</div></div>
+    <div class="outcome"><div class="num dark">4</div><div class="desc">On-chain deployments</div></div>
+    <div class="outcome"><div class="num dark">3 → 25</div><div class="desc">Team scaled</div></div>
+    <div class="outcome"><div class="num dark">~5,000</div><div class="desc">Monthly active users</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Discovery &amp; research</h2>
+    <p>I leaned on qualitative user research, precedent analysis, collaborative team decisions, and my own instincts when making design decisions.</p>
+    <p>Over three years I started multiple "Core User" groups, soliciting direct feedback from community members. This wasn't formal UXR. It was embedded, ongoing, community-native research. I was in Telegram chats daily, talking to users, watching how they interacted with the product, and using that signal to inform design decisions.</p>
+    <ul>
+      <li><strong>Telegram groups.</strong> Invite-only OG groups for direct feedback and ideation. Established rapport with power users who became our sharpest critics.</li>
+      <li><strong>Discord channels.</strong> Announced features, gauged reactions, used emoji polls for quick signal on new UI directions.</li>
+      <li><strong>Twitter surveys.</strong> Ran polls on market preferences and feature priorities. One poll (67 votes) directly influenced our market expansion roadmap.</li>
+    </ul>
+    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Community research across Telegram, Discord, and Twitter</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Design strategy</h2>
+    <p>Early on I developed a Design Strategy document, a "Design Ethos" that balanced Overlay's highly technical nature with a playful, meme-driven brand identity.</p>
+    <p>The core question: how do you design a protocol that's supposed to handle everything? In creation, if you design for everything, nothing has significance. The spectrum of possibilities is too great.</p>
+    <p>The answer: <strong>Cats.</strong></p>
+    <p>Our team had a deep appreciation of scientific rigor, mathematical dexterity, and the absurd. Few things are as beautifully absurd as cats and our social infatuation with them. They're obsessive, they're the second most successful hunters in the animal kingdom, they're cool, fuzzy, and turned out to be an aesthetic we liked.</p>
+    <p>What does a cat do if it doesn't like something on the shelf? It knocks it off. This philosophy ("scientists and cats") became the foundation for all marketing, communication, and product personality.</p>
+    <h3>Design principles from the ethos</h3>
+    <ul>
+      <li><strong>Shapes.</strong> Circles from the logo: absurdist, organic, subjective. Squares: math, science, equal, objective.</li>
+      <li><strong>Patterns.</strong> Western progression: left to right, top to bottom. Type left-aligned, buttons bottom-right. Simple shapes define simple patterns.</li>
+      <li><strong>"Packet" pattern.</strong> A function like "build" or "unwind" lives as a packet: housed within a square with 1px border and 4px radius.</li>
+    </ul>
+    <div class="cs-grid" style="margin-top:2rem;">
+      <div class="img-placeholder"><div class="img-label">Design Ethos document</div></div>
+      <div class="img-placeholder"><div class="img-label">Design system patterns</div></div>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Collaboration &amp; systems</h2>
+    <p>I collaborated closely with dev on all new features. When the team was small, I cultivated a relationship with our front-end lead that allowed us to move extremely fast without formal documentation.</p>
+    <p>I built a component library on the fly: buttons, tabs, spacing, dropdowns, headers, market elements, cards, pop-ups, radio buttons. Notes for devs were embedded directly in the library rather than separate spec documents.</p>
+    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Component library</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Iterative design</h2>
+    <p>Four major app versions, each responding to real market feedback:</p>
+    <ul>
+      <li><strong>V1.</strong> Fit DeFi summer trends. Simple, functional, dark. Built for always-online on-chain traders.</li>
+      <li><strong>V2.</strong> Increased legibility but landing on the product still caused confusion.</li>
+      <li><strong>V3.</strong> Landed on a list of products. Quick scan of tradable markets with top navigation functionality.</li>
+      <li><strong>V4.</strong> Most refined. Polished visual language for broader user base. Featured markets, governance, chess grandmasters index.</li>
+    </ul>
+    <div class="img-placeholder" style="margin-top:2rem;min-height:350px;"><div class="img-label">Four app iterations · V1 through V4</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Brand evolution</h2>
+    <p>I engaged a brand design agency to move Overlay from the initial phase to a brand with greater gravitas. We started simple and mathematical. We progressed into nuanced and fluid. The pixel art cat became a samurai cat.</p>
+    <div class="cs-grid" style="margin-top:2rem;">
+      <div class="img-placeholder"><div class="img-label">Logo evolution</div></div>
+      <div class="img-placeholder"><div class="img-label">Mascot evolution</div></div>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <h2>Key projects</h2>
+    <h3>NFT Power Cards</h3>
+    <p>Gamification was a significant advantage. I designed the NFT cards and the app functionality and was responsible for the tokenomics behind the powers the NFTs gave holders. Worked with dev to ensure the gamified nature worked within the system's technical constraints.</p>
+    <div class="img-placeholder" style="margin-top:1rem;"><div class="img-label">NFT Power Cards</div></div>
+    <h3 style="margin-top:2rem;">Referral program</h3>
+    <p>To onboard the next 10,000 members, we built an ambitious referral program for all user types. Significant upfront effort to understand referential logic and prevent Sybil attacks. Heavy collaboration with dev and product strategy.</p>
+    <div class="img-placeholder" style="margin-top:1rem;"><div class="img-label">Referral program · three states</div></div>
+  </div>
+
+  <div class="cs-section">
+    <h2>What I learned</h2>
+    <ul>
+      <li><strong>Speed to market</strong> is almost more important than anything else when you're a young company.</li>
+      <li><strong>Cultivating dev relationships</strong> creates +1 effects on design velocity.</li>
+      <li><strong>How-to, and how-not-to,</strong> build a startup.</li>
+    </ul>
+  </div>
+
+  <div class="staff-signal" style="border-left-color:rgba(219,184,255,0.4);">
+    <h4 style="color:var(--lilac);">What this shows</h4>
+    <p>Founding a company teaches you to design with extreme constraints, make irreversible decisions with incomplete information, and build for a community, not just users. The "scientists and cats" philosophy demonstrated that technical products can have personality. The developer collaboration muscle is directly transferable to any product team that wants to ship faster.</p>
+  </div>
+
+  <div style="padding:3rem 0;"><button class="back-btn" onclick="navigate('home')">← Back to work</button></div>
+</div>
+</div>
+
+
+<script>
+function navigate(page, scrollTo) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) { target.classList.add('active'); target.style.animation = 'none'; target.offsetHeight; target.style.animation = ''; }
+  if (scrollTo) { setTimeout(() => { const el = document.getElementById(scrollTo); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 50); } else { window.scrollTo(0, 0); }
+  history.pushState(null, '', page === 'home' ? window.location.pathname : '#' + page);
+}
+window.addEventListener('popstate', () => {
+  const h = window.location.hash.replace('#','');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  (document.getElementById('page-' + (h || 'home')) || document.getElementById('page-home')).classList.add('active');
+  window.scrollTo(0, 0);
+});
+window.addEventListener('DOMContentLoaded', () => {
+  const h = window.location.hash.replace('#','');
+  if (h) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const t = document.getElementById('page-' + h); if (t) t.classList.add('active'); }
+});
+</script>
+
+</body>
+</html>
