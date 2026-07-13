@@ -405,20 +405,18 @@
 
   .img-placeholder {
     overflow: hidden; display: flex; align-items: center;
-    justify-content: center; min-height: 300px; position: relative;
+    justify-content: center; height: 440px; position: relative;
     background: var(--surface-high);
     border: 1px solid var(--outline-faint);
   }
-  .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
-  .img-placeholder.contained { height: 440px; }
-  .img-placeholder.contained img { object-fit: contain; }
+  .img-placeholder img { width: 100%; height: 100%; object-fit: contain; }
   .img-label { color: var(--text-faint); font-size: 11px; text-align: center; padding: 1rem; }
 
   .image-row {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem; margin: 2rem 0;
   }
-  .image-row .img-placeholder { min-height: 220px; }
+  .image-row .img-placeholder { height: 260px; }
 
   .staff-signal {
     background: var(--surface-low); padding: 2.5rem;
@@ -643,10 +641,6 @@
       <p>I've led product design at startups and a Fortune 500. Before UX I studied architecture. That's where the systems thinking comes from, even if I never practiced.</p>
       <p>Dad, husband, Pacific Northwest. Two kids (one new this year). Outside as much as the weather allows.</p>
       <p>When I was 13 I saved a girl from falling off a galloping horse by riding up beside her and pushing her back up. Probably has nothing to do with design. Felt worth mentioning.</p>
-      <p style="margin-top: 2rem;">
-        <a href="https://linkedin.com/in/wesley-kay" style="color: var(--accent); margin-right: 2rem; text-decoration: none;">LinkedIn</a>
-        <a href="Wesley-Kay-Resume.pdf" target="_blank" style="color: var(--accent); text-decoration: none;">Resume</a>
-      </p>
     </div>
     <div class="about-photo">
       <img src="images/wesley-headshot.png" alt="Wesley Kay">
@@ -670,6 +664,7 @@
     <div class="contact-links">
       <a href="mailto:wesley.kay@gmail.com" class="contact-link">Email</a>
       <a href="https://linkedin.com/in/wesley-kay" class="contact-link">LinkedIn</a>
+      <a href="Wesley-Kay-Resume.pdf" target="_blank" class="contact-link">Resume</a>
       <a href="tel:3038180087" class="contact-link">(303) 818-0087</a>
     </div>
   </div>
@@ -819,7 +814,7 @@
     <h2>Defining what a pattern is, then which ones the system would ship</h2>
     <p>QDS didn't have an answer to the question "what counts as a UX pattern, and which ones belong in this system." Without that answer, every team picks their own definition and the system fragments before it ships. I owned the work to define both.</p>
     <p>Original research. Interviewed three staff designers and a Head of Design to surface what they were already calling patterns, where they disagreed, and which behaviors caused the most rework. Benchmarked peer documentation systems (Carbon, Material, Polaris, Atlassian) to understand how the industry was framing the problem. Synthesized into a working definition and a candidate taxonomy.</p>
-    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/qualcomm/pattern-cover.png" alt="UX Patterns Research Summary cover: common patterns, documentation best practices, opportunities for standardization, product-specific considerations"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-cover.png" alt="UX Patterns Research Summary cover: common patterns, documentation best practices, opportunities for standardization, product-specific considerations"></div>
     <p style="margin-top:2rem;">Tested the taxonomy across current QC products and the shape of what was coming next. Navigation was the highest-leverage cluster — Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav each had different rules, different states, different audiences. I deconstructed real product surfaces and mapped them against the proposed taxonomy to validate it survived contact with the actual portfolio.</p>
     <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-taxonomy.png" alt="Navigation pattern taxonomy applied to actual Qualcomm products: Footer, Header, Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav"></div>
     <p style="margin-top:2rem;">Patterns aren't just happy paths. Each pattern got state coverage: forms documented by layout and validation state, tables documented across empty / loading / unauthorized / vague-input states. State coverage is what makes a pattern usable for product teams who would otherwise reinvent the same broken edges.</p>
@@ -979,15 +974,15 @@
       <li><strong>Discord channels.</strong> Announced features, gauged reactions, used emoji polls for quick signal on new UI directions.</li>
       <li><strong>Twitter surveys.</strong> Ran polls on market preferences and feature priorities. One poll (67 votes) directly influenced our market expansion roadmap.</li>
     </ul>
-    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/overlay2.png" alt="Community research in Telegram, Discord, and Twitter"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay2.png" alt="Community research in Telegram, Discord, and Twitter"></div>
   </div>
 
   <div class="cs-section">
     <h2>Brand &amp; design ethos</h2>
     <p>Early on I wrote a Design Ethos to balance Overlay's technical depth with a playful, meme-driven identity. The shorthand: <strong>"scientists and cats."</strong> Rigorous underneath, absurd on the surface. What does a cat do when it doesn't like something on the shelf? Knocks it off. That attitude set the tone for all marketing, communication, and product personality.</p>
-    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/overlay3.png" alt="Design Ethos document"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay3.png" alt="Design Ethos document"></div>
     <p style="margin-top:2rem;">As the protocol matured I engaged a brand agency to add gravitas. Simple and mathematical became nuanced and fluid. The pixel art cat became a samurai cat.</p>
-    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/overlay5.png" alt="Logo and mascot evolution"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay5.png" alt="Logo and mascot evolution"></div>
   </div>
 
   <div class="cs-section">
