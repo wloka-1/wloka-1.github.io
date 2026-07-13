@@ -31,7 +31,7 @@
     --text: #1a1a1a;
     --text-dim: #2e2e2e;
     --text-muted: #6b6b6b;
-    --text-faint: #a0a0a0;
+    --text-faint: #646464;
     --accent: #3b5ccc;
     --accent-dim: rgba(59,92,204,0.06);
     --lilac: #7c3aad;
@@ -45,6 +45,9 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
   html { scroll-behavior: smooth; }
 
   body {
@@ -407,6 +410,8 @@
     border: 1px solid var(--outline-faint);
   }
   .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+  .img-placeholder.contained { height: 440px; }
+  .img-placeholder.contained img { object-fit: contain; }
   .img-label { color: var(--text-faint); font-size: 11px; text-align: center; padding: 1rem; }
 
   .image-row {
@@ -454,11 +459,11 @@
 
 <nav>
   <div class="nav-inner">
-    <a class="nav-name" onclick="navigate('home')">Wesley Kay</a>
+    <a class="nav-name" href="#" onclick="navigate('home'); return false;">Wesley Kay</a>
     <ul class="nav-links">
-      <li><a onclick="navigate('home','work')">Work</a></li>
-      <li><a onclick="navigate('home','about')">About</a></li>
-      <li><a onclick="navigate('home','contact')">Contact</a></li>
+      <li><a href="#" onclick="navigate('home','work'); return false;">Work</a></li>
+      <li><a href="#" onclick="navigate('home','about'); return false;">About</a></li>
+      <li><a href="#" onclick="navigate('home','contact'); return false;">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -485,7 +490,7 @@
   <div class="section-line" id="work"><span class="label">Selected work</span></div>
 
   <!-- BNY -->
-  <div class="cs-tile layout-a" onclick="navigate('bny')">
+  <div class="cs-tile layout-a" role="link" tabindex="0" aria-label="BNY Eliza case study" onclick="navigate('bny')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('bny')}">
     <div class="cs-tile-img">
       <img src="images/bny-logo.jpg" alt="BNY">
       <div class="img-label">BNY Eliza · AI Platform</div>
@@ -505,7 +510,7 @@
   </div>
 
   <!-- Qualcomm -->
-  <div class="cs-tile layout-b" onclick="navigate('qds')">
+  <div class="cs-tile layout-b" role="link" tabindex="0" aria-label="Qualcomm design system case study" onclick="navigate('qds')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('qds')}">
     <div class="cs-tile-body">
       <div class="cs-tile-tags">
         <span class="chip lilac">Design Systems</span>
@@ -525,7 +530,7 @@
   </div>
 
   <!-- T-Mobile -->
-  <div class="cs-tile layout-a" onclick="navigate('tmo')">
+  <div class="cs-tile layout-a" role="link" tabindex="0" aria-label="T-Mobile search redesign case study" onclick="navigate('tmo')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('tmo')}">
     <div class="cs-tile-img">
       <img src="images/tmo1.png" alt="T-Mobile search redesign across mobile screens">
       <div class="img-label">T-Mobile Search Redesign</div>
@@ -545,7 +550,7 @@
   </div>
 
   <!-- Overlay -->
-  <div class="cs-tile layout-b" onclick="navigate('overlay')">
+  <div class="cs-tile layout-b" role="link" tabindex="0" aria-label="Overlay Protocol case study" onclick="navigate('overlay')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('overlay')}">
     <div class="cs-tile-body">
       <div class="cs-tile-tags">
         <span class="chip lilac">Zero to one</span>
@@ -814,7 +819,7 @@
     <h2>Defining what a pattern is, then which ones the system would ship</h2>
     <p>QDS didn't have an answer to the question "what counts as a UX pattern, and which ones belong in this system." Without that answer, every team picks their own definition and the system fragments before it ships. I owned the work to define both.</p>
     <p>Original research. Interviewed three staff designers and a Head of Design to surface what they were already calling patterns, where they disagreed, and which behaviors caused the most rework. Benchmarked peer documentation systems (Carbon, Material, Polaris, Atlassian) to understand how the industry was framing the problem. Synthesized into a working definition and a candidate taxonomy.</p>
-    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-cover.png" alt="UX Patterns Research Summary cover: common patterns, documentation best practices, opportunities for standardization, product-specific considerations"></div>
+    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/qualcomm/pattern-cover.png" alt="UX Patterns Research Summary cover: common patterns, documentation best practices, opportunities for standardization, product-specific considerations"></div>
     <p style="margin-top:2rem;">Tested the taxonomy across current QC products and the shape of what was coming next. Navigation was the highest-leverage cluster — Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav each had different rules, different states, different audiences. I deconstructed real product surfaces and mapped them against the proposed taxonomy to validate it survived contact with the actual portfolio.</p>
     <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-taxonomy.png" alt="Navigation pattern taxonomy applied to actual Qualcomm products: Footer, Header, Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav"></div>
     <p style="margin-top:2rem;">Patterns aren't just happy paths. Each pattern got state coverage: forms documented by layout and validation state, tables documented across empty / loading / unauthorized / vague-input states. State coverage is what makes a pattern usable for product teams who would otherwise reinvent the same broken edges.</p>
@@ -864,7 +869,6 @@
       <li><strong>Increase revenue.</strong> Guide users from search to Shop, reducing drop-off.</li>
       <li><strong>Improve CSAT.</strong> Reduce dead ends by providing auto-suggestions and relevant results from initial search through filtered results.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/tmo2.png" alt="Business and user objectives"></div>
   </div>
 
   <div class="cs-section">
@@ -975,7 +979,7 @@
       <li><strong>Discord channels.</strong> Announced features, gauged reactions, used emoji polls for quick signal on new UI directions.</li>
       <li><strong>Twitter surveys.</strong> Ran polls on market preferences and feature priorities. One poll (67 votes) directly influenced our market expansion roadmap.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay2.png" alt="Community research in Telegram, Discord, and Twitter"></div>
+    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/overlay2.png" alt="Community research in Telegram, Discord, and Twitter"></div>
   </div>
 
   <div class="cs-section">
@@ -991,7 +995,7 @@
       <li><strong>Patterns.</strong> Western progression: left to right, top to bottom. Type left-aligned, buttons bottom-right. Simple shapes define simple patterns.</li>
       <li><strong>"Packet" pattern.</strong> A function like "build" or "unwind" lives as a packet: housed within a square with 1px border and 4px radius.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay3.png" alt="Design Ethos document"></div>
+    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/overlay3.png" alt="Design Ethos document"></div>
   </div>
 
   <div class="cs-section">
@@ -1016,14 +1020,13 @@
   <div class="cs-section">
     <h2>Brand evolution</h2>
     <p>I engaged a brand design agency to move Overlay from the initial phase to a brand with greater gravitas. We started simple and mathematical. We progressed into nuanced and fluid. The pixel art cat became a samurai cat.</p>
-    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay5.png" alt="Logo and mascot evolution"></div>
+    <div class="img-placeholder contained" style="margin-top:2rem;"><img src="images/overlay5.png" alt="Logo and mascot evolution"></div>
   </div>
 
   <div class="cs-section">
     <h2>Key projects</h2>
     <h3>NFT Power Cards</h3>
     <p>Gamification was a significant advantage. I designed the NFT cards and the app functionality and was responsible for the tokenomics behind the powers the NFTs gave holders. Worked with dev to ensure the gamified nature worked within the system's technical constraints.</p>
-    <div class="img-placeholder" style="margin-top:1rem;"><img src="images/overlay7.png" alt="NFT Power Cards"></div>
     <h3 style="margin-top:2rem;">Referral program</h3>
     <p>To onboard the next 10,000 members, we built an ambitious referral program for all user types. Significant upfront effort to understand referential logic and prevent Sybil attacks. Heavy collaboration with dev and product strategy.</p>
     <div class="img-placeholder" style="margin-top:1rem;"><img src="images/overlay6.png" alt="Referral program across three states"></div>
