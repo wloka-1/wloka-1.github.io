@@ -259,6 +259,11 @@
     border: 1px solid var(--outline-faint);
     min-height: 400px; display: flex;
     align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .about-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    position: absolute; inset: 0;
   }
   .about-photo .img-label { color: var(--text-faint); font-size: 11px; }
 
@@ -482,6 +487,7 @@
   <!-- BNY -->
   <div class="cs-tile layout-a" onclick="navigate('bny')">
     <div class="cs-tile-img">
+      <img src="images/bny-logo.jpg" alt="BNY">
       <div class="img-label">BNY Eliza · AI Platform</div>
     </div>
     <div class="cs-tile-body">
@@ -513,6 +519,7 @@
       </div>
     </div>
     <div class="cs-tile-img">
+      <img src="images/qualcomm/Overview.png" alt="Qualcomm icon library overview">
       <div class="img-label">Qualcomm Design System</div>
     </div>
   </div>
@@ -520,6 +527,7 @@
   <!-- T-Mobile -->
   <div class="cs-tile layout-a" onclick="navigate('tmo')">
     <div class="cs-tile-img">
+      <img src="images/tmo1.png" alt="T-Mobile search redesign across mobile screens">
       <div class="img-label">T-Mobile Search Redesign</div>
     </div>
     <div class="cs-tile-body">
@@ -551,6 +559,7 @@
       </div>
     </div>
     <div class="cs-tile-img" style="background: var(--surface-low);">
+      <img src="images/overlay1.png" alt="Overlay Protocol V4 across mobile and desktop">
       <div class="img-label">Overlay Protocol</div>
     </div>
   </div>
@@ -631,11 +640,11 @@
       <p>When I was 13 I saved a girl from falling off a galloping horse by riding up beside her and pushing her back up. Probably has nothing to do with design. Felt worth mentioning.</p>
       <p style="margin-top: 2rem;">
         <a href="https://linkedin.com/in/wesley-kay" style="color: var(--accent); margin-right: 2rem; text-decoration: none;">LinkedIn</a>
-        <a href="#" style="color: var(--accent); text-decoration: none;">Resume</a>
+        <a href="Wesley-Kay-Resume.pdf" target="_blank" style="color: var(--accent); text-decoration: none;">Resume</a>
       </p>
     </div>
     <div class="about-photo">
-      <div class="img-label">Photo</div>
+      <img src="images/wesley-headshot.png" alt="Wesley Kay">
     </div>
   </div>
 
@@ -754,7 +763,7 @@
     <span class="label lilac">Design Systems</span>
     <h1 style="margin-top:1rem;">Leading content &amp; iconography for Qualcomm's first design system</h1>
     <div class="cs-meta">Qualcomm · Senior UX Designer, Content Lead · via Blink · Feb to Sept 2025</div>
-    <p class="cs-intro">Qualcomm had no unified design system. Three brands (Qualcomm, Snapdragon, Dragonwing), dozens of product teams, zero shared language. I led content strategy, iconography, documentation architecture, and defined the system's taxonomy, while contributing to component design alongside the team.</p>
+    <p class="cs-intro">Qualcomm had no unified design system. Three brands (Qualcomm, Snapdragon, Dragonwing), dozens of product teams, zero shared language. I led content strategy, iconography, documentation architecture, defined the system's taxonomy, and ran original research to define the UX patterns the system would ship.</p>
   </div>
 
   <div class="outcomes">
@@ -788,6 +797,11 @@
     <h2>1,500+ icons, end-to-end</h2>
     <p>Qualcomm had icons scattered across teams with no standards, no naming conventions, and no process for adding new ones. Marketing used one set. Product used another.</p>
     <p>I owned the icon library from audit to ship. Cataloged every existing icon across both marketing and product design. Established sizing standards and naming conventions. Built a metadata schema so icons could be searchable and filterable. Created a governance workflow for custom icon submissions. Shipped v1 with 1,500+ utility and marketing icons unified across all three brands.</p>
+    <div class="image-row" style="margin-top:2rem;">
+      <div class="img-placeholder" style="min-height:240px;"><img src="images/qualcomm/Sizing.png" alt="Icon sizing standards"></div>
+      <div class="img-placeholder" style="min-height:240px;"><img src="images/qualcomm/Ramp.png" alt="Icon ramp"></div>
+      <div class="img-placeholder" style="min-height:240px;"><img src="images/qualcomm/Spacing.png" alt="Icon spacing"></div>
+    </div>
   </div>
 
   <div class="cs-section">
@@ -797,14 +811,25 @@
   </div>
 
   <div class="cs-section">
-    <h2>Governance &amp; UX patterns research</h2>
-    <p>A system without governance is just a library that slowly rots. I established review workflows, contribution processes, and quality standards that enabled distributed teams across multiple time zones and business units to contribute without the system losing coherence.</p>
-    <p>I also led UX patterns research. Audited applications across Qualcomm, interviewed key designers, and identified recurring challenges (navigation patterns, table behaviors, filtering and sorting conventions). The research informed the pattern library roadmap.</p>
+    <h2>Defining what a pattern is, then which ones the system would ship</h2>
+    <p>QDS didn't have an answer to the question "what counts as a UX pattern, and which ones belong in this system." Without that answer, every team picks their own definition and the system fragments before it ships. I owned the work to define both.</p>
+    <p>Original research. Interviewed three staff designers and a Head of Design to surface what they were already calling patterns, where they disagreed, and which behaviors caused the most rework. Benchmarked peer documentation systems (Carbon, Material, Polaris, Atlassian) to understand how the industry was framing the problem. Synthesized into a working definition and a candidate taxonomy.</p>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-cover.png" alt="UX Patterns Research Summary cover: common patterns, documentation best practices, opportunities for standardization, product-specific considerations"></div>
+    <p style="margin-top:2rem;">Tested the taxonomy across current QC products and the shape of what was coming next. Navigation was the highest-leverage cluster — Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav each had different rules, different states, different audiences. I deconstructed real product surfaces and mapped them against the proposed taxonomy to validate it survived contact with the actual portfolio.</p>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-taxonomy.png" alt="Navigation pattern taxonomy applied to actual Qualcomm products: Footer, Header, Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav"></div>
+    <p style="margin-top:2rem;">Patterns aren't just happy paths. Each pattern got state coverage: forms documented by layout and validation state, tables documented across empty / loading / unauthorized / vague-input states. State coverage is what makes a pattern usable for product teams who would otherwise reinvent the same broken edges.</p>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-variants.png" alt="Pattern variants: forms across layout and validation states, tables across empty / loading / unauthorized / vague-input states"></div>
+    <p style="margin-top:2rem;">Then I presented to the Heads of Design to get buy-in on the definition and the taxonomy. Patterns work doesn't matter until leadership agrees that's how the org is going to talk about patterns going forward. That alignment is what made the pattern library roadmap real instead of a side artifact.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>Governance the system needed to survive a distributed team</h2>
+    <p>A system without governance is a library that slowly rots. I established review workflows, contribution processes, and quality standards that let distributed teams across multiple time zones and business units contribute without the system losing coherence.</p>
   </div>
 
   <div class="staff-signal">
     <h4>What this shows</h4>
-    <p>The AI documentation pipeline wasn't about speed. It was about proving that AI is a first-class tool in design system operations. I defined the input format, wrote the prompts, established the review process, and trained the team on the workflow. This is the kind of "AI-ready" process thinking that scales a system beyond what a small team can maintain manually.</p>
+    <p>Two pillars of staff-level systems work. First: AI as a first-class tool in DS operations (defined the input format, wrote the prompts, set up the review loop, trained the team) so the system could ship complete instead of half-built. Second: original research and taxonomy work that defined the abstraction layer the whole team designed inside of — and the stakeholder management to get Heads of Design to agree on it before it shipped.</p>
   </div>
 
   <div style="padding:3rem 0;"><button class="back-btn" onclick="navigate('home')">← Back to work</button></div>
@@ -839,7 +864,7 @@
       <li><strong>Increase revenue.</strong> Guide users from search to Shop, reducing drop-off.</li>
       <li><strong>Improve CSAT.</strong> Reduce dead ends by providing auto-suggestions and relevant results from initial search through filtered results.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Business and user objectives</div></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/tmo2.png" alt="Business and user objectives"></div>
   </div>
 
   <div class="cs-section">
@@ -852,8 +877,8 @@
       <li>Synthesized quantitative data from user tracking to understand common patterns and validate assumptions</li>
     </ul>
     <div class="cs-grid" style="margin-top:2rem;">
-      <div class="img-placeholder"><div class="img-label">Clicktale heatmaps</div></div>
-      <div class="img-placeholder"><div class="img-label">Coveo analytics</div></div>
+      <div class="img-placeholder"><img src="images/tmo3.png" alt="Clicktale heatmaps of T-Mobile search"></div>
+      <div class="img-placeholder"><img src="images/tmo6.png" alt="Coveo analytics console showing search query data"></div>
     </div>
   </div>
 
@@ -868,7 +893,7 @@
       <li><strong>Home Depot.</strong> Type-ahead loads potentially helpful content for ambiguous queries.</li>
       <li><strong>Dell.</strong> Separates shopping and support into tabs, reducing cognitive load.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Competitive analysis across 6 industry leaders</div></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/tmo4.png" alt="Competitive analysis across Verizon, Google, REI, Amazon, Home Depot, and Dell"></div>
   </div>
 
   <div class="cs-section">
@@ -888,7 +913,7 @@
       <li><strong>Chip-based filters.</strong> Lightweight, mobile-friendly filtering without a separate panel.</li>
       <li><strong>"Looking for Sprint results?"</strong> Contextual messaging for legacy Sprint users after the T-Mobile merger.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;min-height:350px;"><div class="img-label">Five design iterations: v1.02 through v1.06</div></div>
+    <div class="img-placeholder" style="margin-top:2rem;min-height:350px;"><img src="images/tmo5.png" alt="Five design iterations: v1.02 through v1.06"></div>
   </div>
 
   <div class="cs-section">
@@ -898,7 +923,7 @@
 
   <div class="cs-section">
     <h2>The final design</h2>
-    <div class="img-placeholder" style="min-height:400px;"><div class="img-label">Final search design</div></div>
+    <div class="img-placeholder" style="min-height:400px;"><img src="images/tmo7.png" alt="Final search design"></div>
   </div>
 
   <div class="cs-section">
@@ -932,6 +957,8 @@
     <p class="cs-intro">Founding Designer and COO. Led the development of Overlay, a decentralized exchange for niche data markets. Built everything from zero: brand, product, design system, community, team.</p>
   </div>
 
+  <div class="img-placeholder" style="margin: 0 0 2rem; min-height: 380px;"><img src="images/overlay9.png" alt="Overlay Protocol V4 desktop interface"></div>
+
   <div class="outcomes">
     <div class="outcome"><div class="num dark">0 → 100k+</div><div class="desc">Community members</div></div>
     <div class="outcome"><div class="num dark">4</div><div class="desc">On-chain deployments</div></div>
@@ -948,7 +975,7 @@
       <li><strong>Discord channels.</strong> Announced features, gauged reactions, used emoji polls for quick signal on new UI directions.</li>
       <li><strong>Twitter surveys.</strong> Ran polls on market preferences and feature priorities. One poll (67 votes) directly influenced our market expansion roadmap.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Community research across Telegram, Discord, and Twitter</div></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay2.png" alt="Community research in Telegram, Discord, and Twitter"></div>
   </div>
 
   <div class="cs-section">
@@ -964,17 +991,14 @@
       <li><strong>Patterns.</strong> Western progression: left to right, top to bottom. Type left-aligned, buttons bottom-right. Simple shapes define simple patterns.</li>
       <li><strong>"Packet" pattern.</strong> A function like "build" or "unwind" lives as a packet: housed within a square with 1px border and 4px radius.</li>
     </ul>
-    <div class="cs-grid" style="margin-top:2rem;">
-      <div class="img-placeholder"><div class="img-label">Design Ethos document</div></div>
-      <div class="img-placeholder"><div class="img-label">Design system patterns</div></div>
-    </div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay3.png" alt="Design Ethos document"></div>
   </div>
 
   <div class="cs-section">
     <h2>Collaboration &amp; systems</h2>
     <p>I collaborated closely with dev on all new features. When the team was small, I cultivated a relationship with our front-end lead that allowed us to move extremely fast without formal documentation.</p>
     <p>I built a component library on the fly: buttons, tabs, spacing, dropdowns, headers, market elements, cards, pop-ups, radio buttons. Notes for devs were embedded directly in the library rather than separate spec documents.</p>
-    <div class="img-placeholder" style="margin-top:2rem;"><div class="img-label">Component library</div></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay4.png" alt="Overlay component library: buttons, tabs, dropdowns, headers"></div>
   </div>
 
   <div class="cs-section">
@@ -986,26 +1010,23 @@
       <li><strong>V3.</strong> Landed on a list of products. Quick scan of tradable markets with top navigation functionality.</li>
       <li><strong>V4.</strong> Most refined. Polished visual language for broader user base. Featured markets, governance, chess grandmasters index.</li>
     </ul>
-    <div class="img-placeholder" style="margin-top:2rem;min-height:350px;"><div class="img-label">Four app iterations · V1 through V4</div></div>
+    <div class="img-placeholder" style="margin-top:2rem;min-height:350px;"><img src="images/overlay8.png" alt="Four app iterations V1 through V4"></div>
   </div>
 
   <div class="cs-section">
     <h2>Brand evolution</h2>
     <p>I engaged a brand design agency to move Overlay from the initial phase to a brand with greater gravitas. We started simple and mathematical. We progressed into nuanced and fluid. The pixel art cat became a samurai cat.</p>
-    <div class="cs-grid" style="margin-top:2rem;">
-      <div class="img-placeholder"><div class="img-label">Logo evolution</div></div>
-      <div class="img-placeholder"><div class="img-label">Mascot evolution</div></div>
-    </div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/overlay5.png" alt="Logo and mascot evolution"></div>
   </div>
 
   <div class="cs-section">
     <h2>Key projects</h2>
     <h3>NFT Power Cards</h3>
     <p>Gamification was a significant advantage. I designed the NFT cards and the app functionality and was responsible for the tokenomics behind the powers the NFTs gave holders. Worked with dev to ensure the gamified nature worked within the system's technical constraints.</p>
-    <div class="img-placeholder" style="margin-top:1rem;"><div class="img-label">NFT Power Cards</div></div>
+    <div class="img-placeholder" style="margin-top:1rem;"><img src="images/overlay7.png" alt="NFT Power Cards"></div>
     <h3 style="margin-top:2rem;">Referral program</h3>
     <p>To onboard the next 10,000 members, we built an ambitious referral program for all user types. Significant upfront effort to understand referential logic and prevent Sybil attacks. Heavy collaboration with dev and product strategy.</p>
-    <div class="img-placeholder" style="margin-top:1rem;"><div class="img-label">Referral program · three states</div></div>
+    <div class="img-placeholder" style="margin-top:1rem;"><img src="images/overlay6.png" alt="Referral program across three states"></div>
   </div>
 
   <div class="cs-section">
