@@ -720,12 +720,9 @@
     <p>The marketplace is where BNY's AI agents live. Each agent handles a specific operational task and has capabilities, performance metrics, and a lifecycle from pilot through retirement.</p>
     <p>I own the UX end-to-end. Defined the underlying data model, the filtering and integration surfaces, and the deployment pathways for getting new agents into the marketplace.</p>
     <p>I also designed the manager dashboard with cross-platform capability views, so a manager could see all the agents they're responsible for across different systems. Health status uses a red/amber/green system based on accuracy thresholds, so degradation is visible before it becomes an incident.</p>
-    <h3>Design challenges</h3>
-    <ul>
-      <li><strong>Table consistency.</strong> Different agent types have different data. What's meaningful for one type is a blank column for another. Needed a table structure that worked across all agent types without blank columns everywhere.</li>
-      <li><strong>Naming.</strong> "Username" was confusing for something that isn't a person. Split the system identifier from the human-readable agent name.</li>
-      <li><strong>Disable/enable flow.</strong> Managers need to take agents offline without losing their configuration. Modal confirmation for disable, re-enable without starting over.</li>
-    </ul>
+    <h3>The real design challenge</h3>
+    <p>The hard part wasn't tables or naming. The marketplace was built inside a team whose goals and priorities changed weekly. Staying consistent in an environment like that is the actual design problem.</p>
+    <p>My counter was process. I sat down with the PM and recorded the conversations so nothing got missed. Reviewed the journey maps, then graphed the red routes so the critical paths were explicit. When priorities shifted again, we had a shared artifact to re-rank against instead of a fresh debate.</p>
   </div>
 
   <div class="cs-section">
