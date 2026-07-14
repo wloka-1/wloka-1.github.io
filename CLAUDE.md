@@ -21,6 +21,8 @@ Built specifically to support a Staff/Senior Product Designer (AI-forward) job s
 ## Hard content rules
 
 - **No em-dashes.** Anywhere. The separator everywhere is `·` (interpunct). Wesley reads em-dashes as an AI tell.
+- **NDA scrub (2026-07-13, applies to site AND resume):** never say Eliza is "built on Claude" or name BNY's stack; never use "digital employee" / "DE" (say "agent marketplace", "AI agents"); no internal URLs (AI.bny), internal org taxonomy (Practices/Platforms/Hubs), named top-level nav areas, exact accuracy thresholds, or named agent task types. Wesley's *personal* workflow claims ("Claude → code, no Figma", footer, sketch-to-revit) are fine and stay.
+- **BNY frameworks that ARE Wesley's (ok to claim):** hierarchical IA that was adopted; placement framework (Eliza-native / integrated / external · verify middle term with Wesley); task/notification model (self-created / assigned / AI-proposed); 1:1 user testing of nav + notifications. Current role = present tense for ongoing ownership, past tense for shipped events.
 - **Voice:** direct, blunt, lowercase-okay, not corporate, no LinkedIn-speak. Match Wesley's own writing.
 - **Claude → code, no Figma.** State it confidently in the hero and How I Work. This is the load-bearing positioning differentiator.
 
