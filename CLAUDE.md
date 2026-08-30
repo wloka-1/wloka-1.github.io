@@ -26,6 +26,16 @@ Built specifically to support a Staff/Senior Product Designer (AI-forward) job s
 - **Voice:** direct, blunt, lowercase-okay, not corporate, no LinkedIn-speak. Match Wesley's own writing.
 - **Claude → code, no Figma.** Still the load-bearing positioning differentiator, but say it sparingly (Wesley, 2026-07-13: "we don't need to say it all over the place"). It lives in exactly four spots: site hero, og:description meta, footer signature, resume summary line. Do not add it anywhere else.
 
+## Case study metrics (verified, safe to cite)
+
+Moved here from the global CLAUDE.md on 2026-08-17 — this is where positioning work happens.
+
+- **T-Mobile UNAV redesign:** 16 → 30 sites, +23% usage.
+- **T-Mobile Search redesign:** +24% usage, −59% zero-result searches, +11% phone sales.
+- **Qualcomm:** built the design system (QDS) from scratch.
+- **Overlay (DeFi protocol):** co-founder, COO + Head of Design. $4M seed. 77K Twitter, 50K Discord.
+- **Background:** ~10 years UX. Architecture (grad school).
+
 ## Attribution corrections (must not violate)
 
 Two pieces of BNY work are **not** Wesley's:
