@@ -402,12 +402,6 @@
   }
   .img-placeholder img { width: 100%; height: 100%; object-fit: contain; }
 
-  /* Full-bleed detail crops: no letterbox, natural aspect ratio */
-  .img-detail {
-    height: auto; display: block; background: var(--surface-high);
-    border: 1px solid var(--outline-faint); margin-top: 2rem;
-  }
-  .img-detail img { display: block; width: 100%; height: auto; }
   .img-caption {
     font-family: var(--font-label); font-size: 10px;
     letter-spacing: 0.1em; text-transform: uppercase;
@@ -815,19 +809,19 @@
     <h2>Defining what a pattern is, then which ones the system would ship</h2>
     <p>QDS didn't have an answer to the question "what counts as a UX pattern, and which ones belong in this system." Without that answer, every team picks their own definition and the system fragments before it ships. I owned the work to define both.</p>
     <p>Original research. Interviewed three staff designers and a Head of Design to surface what they were already calling patterns, where they disagreed, and which behaviors caused the most rework. Benchmarked peer documentation systems (Carbon, Material, Polaris, Atlassian) to understand how the industry was framing the problem. Synthesized into a working definition and a candidate taxonomy.</p>
-    <div class="img-detail"><img src="images/qualcomm/pattern-report.png" alt="UX Patterns research synthesis: summary, common UX patterns across products, data visualization and navigation clusters"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-report.png" alt="UX Patterns research synthesis: summary, common UX patterns across products, data visualization and navigation clusters"></div>
     <p class="img-caption">Research synthesis, opening section</p>
     <p style="margin-top:2rem;">Tested the taxonomy across current QC products and the shape of what was coming next. Navigation was the highest-leverage cluster · Top Nav, Side Nav, Browser Nav, Local Nav, Marketing Nav each had different rules, different states, different audiences. I deconstructed real product surfaces and mapped them against the proposed taxonomy to validate it survived contact with the actual portfolio.</p>
-    <div class="img-detail"><img src="images/qualcomm/pattern-nav-a.png" alt="Header, footer and top nav patterns deconstructed across existing Qualcomm products"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-nav-a.png" alt="Header, footer and top nav patterns deconstructed across existing Qualcomm products"></div>
     <p class="img-caption">Header / footer / top nav, mapped across shipping products</p>
-    <div class="img-detail"><img src="images/qualcomm/pattern-nav-b.png" alt="Side nav patterns across Qualcomm products, including hierarchy levels and collapsed states"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-nav-b.png" alt="Side nav patterns across Qualcomm products, including hierarchy levels and collapsed states"></div>
     <p class="img-caption">Side nav, including hierarchy depth and collapsed states</p>
-    <div class="img-detail"><img src="images/qualcomm/pattern-nav-c.png" alt="Browser nav, local nav and marketing nav patterns across Qualcomm products"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-nav-c.png" alt="Browser nav, local nav and marketing nav patterns across Qualcomm products"></div>
     <p class="img-caption">Browser nav, local nav, marketing nav</p>
     <p style="margin-top:2rem;">Patterns aren't just happy paths. Each pattern got state coverage: forms documented by layout and validation state, tables documented across empty / loading / unauthorized / vague-input states. State coverage is what makes a pattern usable for product teams who would otherwise reinvent the same broken edges.</p>
-    <div class="img-detail"><img src="images/qualcomm/pattern-forms.png" alt="Form pattern documented across three products: Layout Checker, QMargin, PDN Checker"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-forms.png" alt="Form pattern documented across three products: Layout Checker, QMargin, PDN Checker"></div>
     <p class="img-caption">Forms, documented per product and validation state</p>
-    <div class="img-detail"><img src="images/qualcomm/pattern-tables.png" alt="Table pattern documented across Layout Checker and PDN Checker, including empty and loading states"></div>
+    <div class="img-placeholder" style="margin-top:2rem;"><img src="images/qualcomm/pattern-tables.png" alt="Table pattern documented across Layout Checker and PDN Checker, including empty and loading states"></div>
     <p class="img-caption">Tables, documented across empty, loading and populated states</p>
     <p style="margin-top:2rem;">Then I presented to the Heads of Design to get buy-in on the definition and the taxonomy. Patterns work doesn't matter until leadership agrees that's how the org is going to talk about patterns going forward. That alignment is what made the pattern library roadmap real instead of a side artifact.</p>
   </div>
