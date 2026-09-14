@@ -662,7 +662,7 @@
     <span class="label accent">AI Platform Design</span>
     <h1 style="margin-top:1rem;">Designing how a 240-year-old bank does AI</h1>
     <div class="cs-meta">BNY · Senior (Staff) AI Designer · via Blink · Oct 2025 to Present</div>
-    <p class="cs-intro">BNY's AI products grew faster than the UX around them. Areas sat siloed under inconsistent navigation, users couldn't find what they needed, and leadership couldn't see across the platform. I'm the design lead for Eliza's core experience, the app every employee at the bank uses to work with AI: navigation, tasks and notifications, the agent marketplace, dashboards, personalization, and a design system that has to feed AI agents instead of human designers.</p>
+    <p class="cs-intro">BNY's AI products grew faster than the UX around them. Areas sat siloed under inconsistent navigation, users couldn't find what they needed, and leadership couldn't see across the platform. I'm the design lead for Eliza's core experience, the app every employee at the bank uses to work with AI: navigation, how work reaches people, the assistant's interaction layer, the agent marketplace, dashboards, personalization, and a design system that has to feed AI agents instead of human designers.</p>
     <p style="font-size:0.85rem; color: var(--text-muted); margin-top:1rem;">This work is under an active NDA. Details are deliberately limited and some specifics are abstracted.</p>
   </div>
 
@@ -694,9 +694,23 @@
   </div>
 
   <div class="cs-section">
-    <h2>Tasks &amp; notifications</h2>
-    <p>Personalization on Eliza runs through one queue: the tasks and notifications that reach each user. I defined the task model that got adopted: tasks you <strong>create yourself</strong>, tasks you're <strong>given</strong>, and tasks <strong>AI proposes</strong>. Three origins, three different trust levels, one consistent surface.</p>
-    <p>The distinction matters because AI-proposed work is not like assigned work. Users need to see where a task came from before they act on it. The model gives every downstream product a shared answer for how work shows up in front of a user. I validated it in 1-on-1 user testing alongside the navigation sessions.</p>
+    <h2>From notifications to how work reaches people</h2>
+    <p>This started as a notifications requirement. Notifications weren't the real problem. Work was reaching people from colleagues, from systems, and from AI, spread across separate places with no shared sense of what mattered first. A better notification would have made that noise arrive faster. So I turned the requirement into a work-management model: where work comes from, how it gets ranked, and where people act on it.</p>
+    <p>The foundation is the task model that got adopted: tasks you <strong>create yourself</strong>, tasks you're <strong>given</strong>, and tasks <strong>AI proposes</strong>. Three origins, three different trust levels, one consistent surface. AI-proposed work is not like assigned work, and users need to see where a task came from before they act on it. I validated the model in 1-on-1 user testing alongside the navigation sessions.</p>
+    <p>On top of it sits a criticality and triage model, so the most important work surfaces first instead of the newest. The places people check today (a daily planner, a task list, a notification feed) are converging into one experience built on that model. The vision is set and it's in validation now.</p>
+    <p>For that validation I built a research framework that maps personas against work styles. Interviews target people whose days actually differ, instead of whoever is available, with interview paths specific to each group.</p>
+  </div>
+
+  <div class="cs-section">
+    <h2>The assistant's interaction layer</h2>
+    <p>An enterprise assistant stopped being a text box. It takes actions in email, calendars, chat, and documents. It runs more than one request at a time. It has a memory limit users can't see. Each of those is a design problem, not just a backend feature.</p>
+    <ul>
+      <li><strong>Queued and concurrent prompts.</strong> People keep working while a request runs, and can see what's still in flight.</li>
+      <li><strong>Context visibility.</strong> Showing how much of the conversation the model can still hold, so a long thread degrading isn't a mystery.</li>
+      <li><strong>Model selection.</strong> Choosing a model without the labels implying behavior the platform doesn't have.</li>
+      <li><strong>Actions in other apps.</strong> When the assistant can send, schedule, or edit on your behalf, people have to discover that it can, and the output has to be designed as carefully as the request.</li>
+    </ul>
+    <p>I supply production-candidate prototypes and work with engineering on what goes into each release.</p>
   </div>
 
   <div class="cs-section">
@@ -741,7 +755,7 @@
 
   <div class="staff-signal">
     <h4>What this shows</h4>
-    <p>The hardest problem wasn't the UI. It was defining what "managing AI" means for a bank that's almost as old as the country. I shaped the conceptual frameworks the team designs within: platform IA, the placement framework, the task model, agent lifecycle, observability. I also built force-multiplier tooling alongside the design work, because the highest-leverage thing a staff designer can do is make the rest of the team faster.</p>
+    <p>The hardest problem wasn't the UI. It was defining what "managing AI" means for a bank that's almost as old as the country. I shaped the conceptual frameworks the team designs within: platform IA, the placement framework, the work-management model, agent lifecycle, observability. I also built force-multiplier tooling alongside the design work, because the highest-leverage thing a staff designer can do is make the rest of the team faster.</p>
   </div>
 
   <div style="padding:3rem 0;"><button class="back-btn" onclick="navigate('home')">← Back to work</button></div>
