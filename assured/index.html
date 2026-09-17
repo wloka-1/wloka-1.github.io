@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Wesley Kay · for Assured · Design Lead, Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@300;400;500;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface: #ffffff;
+    --surface-low: #f7f7f5;
+    --surface-high: #eeede9;
+    --text: #1a1a1a;
+    --text-dim: #2e2e2e;
+    --text-muted: #6b6b6b;
+    --accent: #3b5ccc;
+    --accent-dim: rgba(59,92,204,0.06);
+    --lilac: #7c3aad;
+    --outline: #d4d2cf;
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-body: 'Manrope', -apple-system, sans-serif;
+    --font-label: 'Space Grotesk', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--surface);
+    color: var(--text-dim);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .label {
+    font-family: var(--font-label);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  header { padding: 5rem 0 3.5rem; }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5.5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-top: 1.75rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .sub { font-size: 1.08rem; color: var(--text-muted); margin-top: 1.5rem; max-width: 60ch; }
+  .sub strong { color: var(--text); font-weight: 500; }
+
+  .rule { border-top: 1px solid var(--outline); margin: 3.5rem 0 2.5rem; padding-top: 0.75rem; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .ask {
+    font-family: var(--font-label);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    border-left: 2px solid var(--outline);
+    padding-left: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  section.block { margin-bottom: 3rem; }
+  section.block p { margin-top: 0.85rem; }
+  section.block p + p { margin-top: 0.7rem; }
+
+  ul { margin: 1rem 0 0 1.1rem; }
+  li { margin-bottom: 0.5rem; }
+
+  .pull {
+    font-family: var(--font-display);
+    font-size: 1.32rem;
+    line-height: 1.45;
+    color: var(--text);
+    background: var(--accent-dim);
+    border-left: 2px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+  }
+  .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .links a {
+    font-family: var(--font-label);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--outline);
+    padding: 0.7rem 1.1rem;
+    color: var(--text);
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .links a.primary { background: var(--text); color: #fff; border-color: var(--text); }
+  .links a.primary:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--outline);
+    padding: 1.5rem 0 4rem;
+    font-family: var(--font-label);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="label">For Assured · Design Lead, Foundations</span>
+    <h1>I build the foundations <em>other people</em> build on.</h1>
+    <p class="sub">Wesley Kay. I built Qualcomm's first design system from scratch and I'm the design lead for the core experience of <strong>Eliza</strong>, BNY's enterprise AI platform, where I shaped the strategy for a design system that AI agents consume instead of designers. This page is the short version, aimed at your posting. Everything here links to the longer version.</p>
+  </header>
+
+  <div class="rule"><span class="label">Where I match</span></div>
+
+  <section class="block">
+    <p class="ask">"Own and evolve our design system, bringing today's fragmented systems and patterns into a strong, shared foundation."</p>
+    <h2>I've started one from zero and I've had to fix fragmentation twice.</h2>
+    <p>At Qualcomm there was no system and three brands with no shared language. I set the visual direction, wrote the principles the rest of the team built from, defined the taxonomy, and owned iconography and the documentation architecture. I ran original research to settle which patterns the system would ship, then got buy-in from the Heads of Design before the roadmap was committed.</p>
+    <p>At BNY the problem is the opposite. Systems already existed, built in isolation, inside a bank where governance is not optional. Cohesion there is a negotiation, not a decree.</p>
+    <div class="links">
+      <a href="../#qds">Qualcomm case study</a>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="ask">"Create tools and ways of working that enable others."</p>
+    <h2>The enablement work is the part I like most.</h2>
+    <ul>
+      <li>Built an <strong>automated design audit</strong> that screenshots inconsistencies across the system and files them as issue-tracker entries. The team gets the QA without doing the QA.</li>
+      <li>Built an <strong>AI-in-the-loop documentation pipeline</strong> at Qualcomm that cut writing effort 120x and CMS page creation 95%, which is how 60+ component docs shipped on schedule for an enterprise beta.</li>
+      <li>Wrote the governance and contribution model for a distributed team across several time zones, because a system nobody can contribute to stops being a system.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="ask">"We're also excited about what design enablement can look like in an AI-oriented world."</p>
+    <h2>This is the part I have a real position on.</h2>
+    <div class="pull">A design system is deterministic. A model is not. So the system's job is no longer documentation people are asked to read. It's the set of rules the generator has to obey, enforced in code.</div>
+    <p>That means instructions written to be read by whatever agent is doing the building, with lint, tests, and deterministic checks that catch drift and fix it. Documentation for humans becomes a side effect rather than the artifact. It is nowhere near solved, which is exactly why it needs a designer writing it: whoever decides what is allowed is more load-bearing than before, not less.</p>
+    <p>I work this way myself. Prototypes get built with Claude against the same code context and version as production, so most of what I build goes to production rather than to a handoff doc. Five prototype iterations in a single session, design-to-engineer-ready in hours.</p>
+    <div class="links">
+      <a href="../#bny">BNY case study</a>
+    </div>
+  </section>
+
+  <div class="rule"><span class="label">What I'd ask first</span></div>
+
+  <section class="block">
+    <p>Before touching components, I'd want to know three things, because the answers decide the whole sequence:</p>
+    <ul>
+      <li>Which of the fragmented systems are actually load-bearing in production, and which are just still open in someone's file?</li>
+      <li>Where does brand end and product begin in your tokens, and who currently gets the final call when they disagree?</li>
+      <li>What breaks first when generation scales: consistency, accessibility, or claimant comprehension in the moments that matter most?</li>
+    </ul>
+    <p>That last one is the reason this role is interesting to me. Claims are a stressed, vulnerable, high-consequence moment, and a foundation that carries clarity into that moment is a better problem than a component library.</p>
+  </section>
+
+  <div class="rule"><span class="label">Links</span></div>
+
+  <div class="links">
+    <a class="primary" href="../Wesley-Kay-Resume-Foundations.pdf" target="_blank">Resume · PDF</a>
+    <a href="../">Full portfolio</a>
+    <a href="mailto:wesley.kay@gmail.com">wesley.kay@gmail.com</a>
+    <a href="https://linkedin.com/in/wesley-kay" target="_blank">LinkedIn</a>
+  </div>
+
+  <footer>
+    <span>Wesley Kay · 2026</span>
+    <span>Built with Claude · not indexed</span>
+  </footer>
+
+</div>
+</body>
+</html>
