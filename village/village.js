@@ -43,6 +43,15 @@ const waterTiles=[];
 const pathNodes=[[13,43],[20,43],[23,38],[22,33],[19,31],[25,33],[31,36],[37,34],[44,30],[46,36],[42,41],[38,45],[29,48],[21,46],[13,43]];
 function pathPoints(nodes,steps=12){const out=[];for(let i=0;i<nodes.length-1;i++)for(let j=0;j<steps;j++){const t=j/steps,x=mix(nodes[i][0],nodes[i+1][0],t),y=mix(nodes[i][1],nodes[i+1][1],t);out.push({...point(x,y),wx:x,wy:y});}return out;}
 const road=pathPoints(pathNodes);
+const skiTop=point(30,22),skiBottom=point(35,26);
+function liftPoint(progress,lane=0){return {x:mix(skiBottom.x,skiTop.x,progress)-28+lane,y:mix(skiBottom.y,skiTop.y,progress)-18+Math.sin(progress*Math.PI)*5};}
+const riverRoute=[];
+for(let d=-72;d<=72;d+=.25){
+ const sum=91+Math.sin(d/10)*3.3,x=(sum+d)/2,y=(sum-d)/2;
+ if(landAt(x,y)&&height(x,y)===1)riverRoute.push({...project(x,y,1),wx:x,wy:y});
+}
+// Leave room for the board at each shoreline, while using the entire river.
+riverRoute.splice(-3);riverRoute.splice(0,3);
 function closeToRoad(x,y,d=1.7){return road.some(p=>Math.hypot(p.wx-x,p.wy-y)<d);}
 function drawTerrain(){
  ground.clearRect(0,0,W,H);
@@ -68,21 +77,29 @@ function drawTerrain(){
  }
  const roadPoints=road.map(p=>[p.x,p.y]);
  line(ground,roadPoints,'#7c945b',15);line(ground,roadPoints,'#d8c99b',11);line(ground,roadPoints,'#e8dcb5',5);
- // A little footpath down to the mailbox and the water.
- const foot=pathPoints([[29,48],[30,51],[35,53],[40,53]],8).map(p=>[p.x,p.y]);line(ground,foot,'#d6caa0',8);
- // Wooden footbridge over the river.
- const bridge=pathPoints([[38,49],[42,54]],10).map(p=>[p.x,p.y-4]);line(ground,bridge,'#795f43',16);line(ground,bridge,'#c5a574',11);
- for(let i=0;i<bridge.length;i++){const p=bridge[i];line(ground,[[p[0]-6,p[1]-3],[p[0]+6,p[1]+3]],'#947550',2);}
+ // The dirt trail stops on the bank. A raised timber deck spans the water.
+ const foot=pathPoints([[29,48],[30,51],[32,52]],10).map(p=>[p.x,p.y]);
+ foot.push([point(32,52).x,point(32,52).y]);line(ground,foot,'#d6caa0',8);
+ const farPath=pathPoints([[40,53],[42,54]],8).map(p=>[p.x,p.y]);line(ground,farPath,'#d6caa0',8);
+ // Lift towers and both sides of the cable remain part of the cached terrain.
+ for(const lane of [0,12]){
+  const cable=[];for(let i=0;i<=24;i++){const p=liftPoint(i/24,lane);cable.push([p.x,p.y-47]);}
+  line(ground,cable,'#64766b',1.5);
+ }
+ for(const u of [0,.5,1]){
+  const cable=liftPoint(u),base=point(mix(35,30,u),mix(26,22,u));
+  line(ground,[[cable.x+6,base.y],[cable.x+6,cable.y-50]],'#7b8674',4);
+  line(ground,[[cable.x-6,cable.y-48],[cable.x+24,cable.y-48]],'#566b60',4);
+  rect(ground,cable.x+1,base.y-2,10,4,'#a6b2a0');
+ }
  for(let i=0;i<80;i++){
   const x=8+hash(i,7)*52,y=32+hash(i,19)*22;
   if(!landAt(x,y)||riverAt(x,y)||closeToRoad(x,y,1))continue;
   const p=point(x,y);flower(ground,p.x,p.y,['#fbdf9d','#fff3cc','#dca4a5'][i%3]);
  }
- // The ground has its own gentle wayfinding.
- ground.save();const label=point(29,46);ground.translate(label.x-22,label.y+25);ground.transform(1,.5,-1,.5,0,0);ground.font='17px Village, monospace';ground.fillStyle='#547341';ground.fillText('take the scenic route',-70,0);ground.restore();
 }
 const spriteCache=new Map();
-function sprite(key,draw){if(spriteCache.has(key))return spriteCache.get(key);const img=offscreen(200,220),g=img.getContext('2d');g.translate(100,195);draw(g);const v={img,ax:100,ay:195};spriteCache.set(key,v);return v;}
+function sprite(key,draw,canvasHeight=220){if(spriteCache.has(key))return spriteCache.get(key);const img=offscreen(200,canvasHeight),g=img.getContext('2d');g.translate(100,195);draw(g);const v={img,ax:100,ay:195};spriteCache.set(key,v);return v;}
 function shadow(g,w=16){poly(g,[[-w,-2],[0,-8],[w+6,0],[4,7]],'#38564223');}
 function pineSprite(variant=0){return sprite('pine'+variant,g=>{
  shadow(g,16);rect(g,-3,-15,7,18,'#846343');rect(g,2,-13,3,16,'#674e38');
@@ -131,6 +148,16 @@ function chaletSprite(c){return sprite(c.id,g=>{
  rect(g,-41,-16,8,7,'#ae7952');rect(g,-44,-22,12,8,'#719753');
  });}
 function actorSprite(kind,frame=0){return sprite(kind+frame,g=>{
+ if(kind==='lift-rider'||kind==='lift-chair'){
+  line(g,[[0,-47],[0,-24],[-10,-17]],'#65766a',2);
+  line(g,[[-11,-17],[11,-17],[11,-7],[-11,-7],[-11,-17]],'#8b7960',3);
+  if(kind==='lift-rider'){
+   rect(g,-5,-27,10,13,'#b5754f');rect(g,-4,-36,8,9,'#d2a16e');rect(g,-5,-39,11,4,'#e4cc88');
+   line(g,[[-4,-14],[6,-12],[6,-2]],'#486778',4);line(g,[[2,-14],[11,-12],[11,-1]],'#486778',3);
+   line(g,[[-5,0],[15,4]],'#ba8256',2);line(g,[[1,-3],[21,1]],'#ba8256',2);
+  }
+  return;
+ }
  if(kind==='fox'){shadow(g,12);rect(g,-12,-12,24,9,'#b97943');rect(g,8,-19,10,12,'#c68a4d');rect(g,7,-23,4,6,'#95633f');rect(g,15,-22,3,5,'#95633f');rect(g,16,-14,5,4,'#fff0c9');rect(g,14,-17,2,2,'#344d3d');rect(g,-20,-16,12,7,'#c78d4f');rect(g,-22,-17,6,6,'#f0dfb3');rect(g,-9,-4,3,5,'#70553e');rect(g,6,-4,3,5,'#70553e');return;}
  if(kind==='sheep'){shadow(g,14);rect(g,-14,-17,24,16,'#eee8cd');rect(g,-10,-20,15,21,'#fff9df');rect(g,7,-14,10,9,'#7a826a');rect(g,14,-13,3,3,'#3d5142');rect(g,-10,-2,3,7,'#777a60');rect(g,5,-2,3,7,'#777a60');return;}
  shadow(g,kind==='foiler'?24:12);
@@ -163,12 +190,30 @@ const props=[];
 function addProp(x,y,art,scale=1,id='',sway=false){const p=point(x,y);const o={x:p.x,y:p.y,depth:x+y,art,scale,id,sway};props.push(o);return o;}
 const places={};
 for(const c of chalets){const o=addProp(c.x,c.y,chaletSprite(c),1,c.id);places[c.id]={x:o.x,y:o.y+31};c.screen=o;}
+const bridgeStart=point(32,52),bridgeEnd=point(40,53);
+const bridgeArt=sprite('river-bridge',g=>{
+ const dx=bridgeEnd.x-bridgeStart.x,dy=bridgeEnd.y-bridgeStart.y,len=Math.hypot(dx,dy),nx=-dy/len*9,ny=dx/len*9;
+ const edge=(u,side)=>[dx*u+nx*side,dy*u+ny*side];
+ const back0=edge(0,-1),back1=edge(1,-1),front0=edge(0,1),front1=edge(1,1);
+ // Deck and fascia stay at bank height instead of following the riverbed.
+ poly(g,[back0,back1,front1,front0],'#c4a77b');
+ poly(g,[front0,front1,[front1[0],front1[1]+5],[front0[0],front0[1]+5]],'#8c704f');
+ for(let i=0;i<=12;i++)line(g,[edge(i/12,-1),edge(i/12,1)],'#967c56',1.5);
+ for(const side of [-1,1]){
+  for(const u of [0,.25,.5,.75,1]){const p=edge(u,side);line(g,[[p[0],p[1]-14],[p[0],p[1]+3]],'#826b4b',3);}
+  const a=edge(0,side),b=edge(1,side);line(g,[[a[0],a[1]-14],[b[0],b[1]-14]],'#b49a70',3);
+ }
+},280);
+props.push({x:bridgeStart.x,y:bridgeStart.y,depth:93,art:bridgeArt,scale:1,id:'bridge'});
 // Vegetation is deterministic and deliberately kept clear of the paths and doors.
 for(let y=7;y<55;y+=1.65)for(let x=5;x<68;x+=1.65){
  if(!landAt(x,y)||riverAt(x,y)||height(x,y)>30||hash(x,y)<.45||closeToRoad(x,y))continue;
  if(chalets.some(c=>Math.hypot(c.x-x,c.y-y)<5))continue;
  if(x+y>84||x+y<40)continue;
  if(x>19&&x<41&&y>36)continue;
+ // Keep the fox's entire little patrol visible through the foreground trees.
+ const tree=point(x,y),fox=point(16,35),scale=.65+hash(x+1,y)*.65;
+ if(x+y>=50&&Math.abs(tree.x-fox.x)<18*scale+32&&tree.y>fox.y-22&&tree.y-65*scale<fox.y+12)continue;
  addProp(x,y,pineSprite(Math.floor(hash(y,x)*3)),.65+hash(x+1,y)*.65,'',true);
 }
 for(const [x,y,type] of [[23,45,'apple'],[20,49,'bloom'],[25,50,'bloom'],[17,47,'bloom'],[47,38,'bloom'],[48,33,'apple'],[10,36,'bloom']]){
@@ -181,8 +226,8 @@ places.mail={...point(65,20)};places.mail.y+=24;
 const mailbox=sprite('mailbox',g=>{shadow(g,10);rect(g,-2,-20,4,23,'#967149');rect(g,-9,-37,20,19,'#688e79');rect(g,-6,-40,14,3,'#92ae8a');rect(g,-9,-23,20,5,'#4f7561');rect(g,9,-40,2,16,'#76563d');rect(g,11,-39,8,5,'#c77f55');rect(g,-3,-32,8,5,'#f6e6bd');});
 addProp(65,20,mailbox,1);
 const bench=sprite('bench',g=>{shadow(g,23);poly(g,[[-24,-13],[7,3],[20,-4],[-11,-20]],'#b39a6b');line(g,[[-24,-17],[7,-1]],'#86714d',3);line(g,[[-22,-14],[-22,0]],'#78654b',3);line(g,[[7,1],[7,12]],'#78654b',3);line(g,[[-22,-25],[8,-10]],'#c2a578',7);});
-addProp(35,43,bench);
-const fixedActors={picker:[27,44],lan:[35,44],irene:[42,33],josh:[17,41],fox:[16,35],sheep:[43,40]};
+addProp(35,39,bench);
+const fixedActors={picker:[27,44],lan:[32,40],irene:[42,33],josh:[17,41],fox:[16,35],sheep:[31,44.5]};
 for(const [id,xy] of Object.entries(fixedActors)){const p=point(...xy);places[id]={x:p.x,y:p.y-15};}
 const conversations={
  skier:{who:'Wesley, on the mountain',text:'There’s snow at the top. You know where to find me.'},
@@ -220,7 +265,7 @@ function positionNodes(){
  $('#zoom-out').disabled=zoom<=1.001;$('#zoom-in').disabled=zoom>=(vw<760?4:2.7)-.001;
  if(activeSpeech)positionSpeech();
 }
-function drawSprite(g,o,t){const s=o.scale||1,dx=o.sway?Math.round(Math.sin(t*.8+o.depth)*1.2):0;g.drawImage(o.art.img,o.x-o.art.ax*s+dx,o.y-o.art.ay*s,o.art.img.width*s,o.art.img.height*s);}
+function drawSprite(g,o,t){const s=o.scale||1,dx=o.sway?Math.round(Math.sin(t*.8+o.depth)*1.2):0;if(o.flip){g.save();g.translate(o.x+dx,o.y);g.scale(-1,1);g.drawImage(o.art.img,-o.art.ax*s,-o.art.ay*s,o.art.img.width*s,o.art.img.height*s);g.restore();}else g.drawImage(o.art.img,o.x-o.art.ax*s+dx,o.y-o.art.ay*s,o.art.img.width*s,o.art.img.height*s);}
 function cloud(g,x,y,s=1){g.save();g.translate(x,y);g.scale(s,s);rect(g,-36,0,80,12,'#f2f8ec');rect(g,-22,-11,52,20,'#f8fcf2');rect(g,-7,-21,25,25,'#f8fcf2');rect(g,-29,12,65,4,'#ccded7');g.restore();}
 function actorsAt(t){
  const list=[];
@@ -228,13 +273,21 @@ function actorsAt(t){
   let [x,y]=xy;if(id==='fox'){x+=Math.sin(t*.22)*.8;y+=Math.cos(t*.22)*.2;}
   const p=point(x,y),o={x:p.x,y:p.y,depth:x+y,art:actorSprite(id,Math.floor(t*1.5)%2),scale:1};list.push(o);places[id]={x:p.x,y:p.y-17};
  }
- // Out-and-back ski turns stay on the snowy shoulder, avoiding a teleport at the loop seam.
- const ski=(Math.sin(t*.2)+1)/2,sx=mix(30,35,ski)+Math.sin(ski*Math.PI*4)*.6,sy=mix(22,26,ski);
- const sp=point(sx,sy);list.push({x:sp.x,y:sp.y,depth:sx+sy,art:actorSprite('skier'),scale:1});places.skier={x:sp.x,y:sp.y-17};
+ // Ski down, board at the lower station, ride uphill, and step off at the top.
+ const phase=t%42;let sp,skierArt='skier',skiDepth;
+ if(phase<18){const u=phase/18,sx=mix(30,35,u)+Math.sin(u*Math.PI*4)*.6,sy=mix(22,26,u);sp=point(sx,sy);skiDepth=sx+sy;}
+ else if(phase<20){const u=(phase-18)/2,p=liftPoint(0);sp={x:mix(skiBottom.x,p.x,u),y:mix(skiBottom.y,p.y,u)};skiDepth=61;}
+ else if(phase<40){const u=(phase-20)/20;sp=liftPoint(u);skiDepth=mix(61,52,u);skierArt='lift-rider';}
+ else{const u=(phase-40)/2,p=liftPoint(1);sp={x:mix(p.x,skiTop.x,u),y:mix(p.y,skiTop.y,u)};skiDepth=52;}
+ list.push({...sp,depth:skiDepth,art:actorSprite(skierArt),scale:1,id:'skier',phase:skierArt==='lift-rider'?'lift':'ski'});places.skier={x:sp.x,y:sp.y-17};
+ // Empty chairs circle back down the other side of the lift.
+ const returnProgress=1-(t%20)/20,chair=liftPoint(returnProgress,12);
+ list.push({...chair,depth:mix(61,52,returnProgress),art:actorSprite('lift-chair'),scale:1});
  const ri=(t*3.3)%road.length,ra=road[Math.floor(ri)],rb=road[(Math.floor(ri)+1)%road.length];
- const bp={x:mix(ra.x,rb.x,ri%1),y:mix(ra.y,rb.y,ri%1)};list.push({...bp,depth:mix(ra.wx+ra.wy,rb.wx+rb.wy,ri%1),art:actorSprite('biker',Math.floor(t*5)%2),scale:1});places.biker={x:bp.x,y:bp.y-15};
- const fx=43+Math.sin(t*.18)*10,fy=91+Math.sin((2*fx-91)/10)*3.3-fx,fp=project(fx,fy,1);
- list.push({...fp,depth:fx+fy,art:actorSprite('foiler'),scale:1});places.foiler={x:fp.x,y:fp.y-26};
+ const bp={x:mix(ra.x,rb.x,ri%1),y:mix(ra.y,rb.y,ri%1)};list.push({...bp,depth:mix(ra.wx+ra.wy,rb.wx+rb.wy,ri%1),art:actorSprite('biker',Math.floor(t*5)%2),scale:1,flip:ri>=8*12,id:'biker'});places.biker={x:bp.x,y:bp.y-15};
+ const travel=(1-Math.cos(t*Math.PI/24))/2,fi=travel*(riverRoute.length-1),fa=riverRoute[Math.floor(fi)],fb=riverRoute[Math.min(Math.floor(fi)+1,riverRoute.length-1)];
+ const fp={x:mix(fa.x,fb.x,fi%1),y:mix(fa.y,fb.y,fi%1)};
+ list.push({...fp,depth:mix(fa.wx+fa.wy,fb.wx+fb.wy,fi%1),art:actorSprite('foiler'),scale:1,flip:Math.sin(t*Math.PI/24)<0,id:'foiler'});places.foiler={x:fp.x,y:fp.y-26};
  return list;
 }
 function paint(t){
