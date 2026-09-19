@@ -23,6 +23,8 @@ The chalets are BNY, Qualcomm, T-Mobile, and Overlay. Sketch-to-Revit and Iona d
 - On mobile, drag the sheet's title bar upward to expand it and downward to return to its smaller height. Scroll inside the sheet to read.
 - The welcome sign introduces Wesley. The trail directory opens the same studies. The mailbox links to email, the existing resume PDF, and LinkedIn.
 - Click activity figures for personal speech bubbles and other villagers for attributed quotes. Pick an apple, greet the fox, or pet the sheep.
+- The cyclist faces left after Qualcomm and right after T-Mobile. The skier descends, boards the lift at the bottom, rides uphill, and steps off at the top. The foiler follows the full river between the shorelines.
+- A raised timber bridge connects the banks. The fox has a clear patch of forest; the sheep grazes beside the blueberries, and Lan stands in the open meadow with his bench nearby.
 - Music is an original, sparse synthesized loop. It starts only after pressing the music button. No audio file downloads.
 - Animation can be paused, respects reduced-motion preferences, and stops while the tab is hidden. Music also suspends in the background.
 
