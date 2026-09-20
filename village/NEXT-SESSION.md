@@ -10,11 +10,12 @@ Read `AGENTS.md`, `village/README.md`, and `village/EDITORIAL-SOURCES.md` before
 
 Wesley confirmed the 120x writing-effort and 95% CMS creation-time reductions as verified and requested their restoration. Both now appear in Qualcomm’s metric grid and documentation section. Do not remove them for lack of a separately recorded measurement method. All four case studies now use system sans-serif for body text, headings, labels, and metrics. Village signs and panel chrome retain Pixelify Sans.
 
+Wesley also confirmed the T-Mobile zero-result reduction and chose the before/after rates for display: about 13% → 0.7% of searches returned zero results. This replaces −59% in the study. Search usage +24% and phone sales +11% remain; navigation metrics stay separate.
+
 ## Remaining optional clarification
 
 Questions were sent early in the rewrite session; no answers had arrived when the changes were saved:
 
-- T-Mobile: reconcile 13% → 0.7% / 94% with the project-verified −59% zero-result figure. Current copy uses the verified project figures: search usage +24%, zero-result searches −59%, phone sales +11%. Navigation remains separate: 16 → 30 sites, +23% usage, 40M+ monthly reach.
 - Overlay: a consequential product mistake, what exposed it, and what changed. Current copy uses the documented arrival-confusion / market-discovery change without inventing a stronger anecdote or onboarding metric.
 - BNY: confirm the placement-framework middle term. Framework labels are omitted. The study uses the adopted IA, documented usability findings, and task origins. Broader task-experience validation is not presented as a shipped outcome.
 
