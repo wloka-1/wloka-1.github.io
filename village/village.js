@@ -219,7 +219,7 @@ const mailbox=sprite('mailbox',g=>{shadow(g,10);rect(g,-2,-20,4,23,'#967149');re
 addProp(65,20,mailbox,1);
 const bench=sprite('bench',g=>{shadow(g,23);poly(g,[[-24,-13],[7,3],[20,-4],[-11,-20]],'#b39a6b');line(g,[[-24,-17],[7,-1]],'#86714d',3);line(g,[[-22,-14],[-22,0]],'#78654b',3);line(g,[[7,1],[7,12]],'#78654b',3);line(g,[[-22,-25],[8,-10]],'#c2a578',7);});
 addProp(35,39,bench);
-const fixedActors={picker:[27,44],lan:[32,40],irene:[42,33],josh:[17,41],fox:[16,35],sheep:[31,44.5]};
+const fixedActors={picker:[27,44],lan:[32,40],irene:[32,34.5],josh:[17,41],fox:[16,35],sheep:[31,44.5]};
 for(const [id,xy] of Object.entries(fixedActors)){const p=point(...xy);places[id]={x:p.x,y:p.y-15};}
 const conversations={
  skier:{who:'Wesley, on the mountain',text:'There’s snow at the top. You know where to find me.'},
@@ -331,7 +331,7 @@ async function openPanel(id,origin=null,changeRoute=true){
  if(!origin&&panel.hidden)origin=document.activeElement;
  closeSpeech(false);activePanel=id;if(origin)panelOrigin=origin;const token=++requestToken;
  if(changeRoute)setRoute(id);
- panel.hidden=false;document.body.classList.add('panel-open');$('#panel-title').textContent=projectMeta[id]?.[0]|| (id==='directory'?'The trail directory':'A note from the village');body.scrollTop=0;body.removeAttribute('aria-busy');$('#close-panel').focus({preventScroll:true});
+ panel.hidden=false;syncPanelModal();document.body.classList.add('panel-open');$('#panel-title').textContent=projectMeta[id]?.[0]|| (id==='directory'?'The trail directory':'A note from the village');body.scrollTop=0;body.removeAttribute('aria-busy');$('#close-panel').focus({preventScroll:true});
  if(id==='directory'){
   body.innerHTML='<h1>A few places I’ve been.</h1><p class="directory-intro">Four projects. Different kinds of problems. Make yourself at home.</p><ul class="directory-list">'+Object.entries(projectMeta).map(([k,[n,d]],i)=>`<li><button data-project="${k}"><span>${String(i+1).padStart(2,'0')} · ${n}<small>${d}</small></span><span aria-hidden="true">↗</span></button></li>`).join('')+'</ul><p>Or close this and take the scenic route.</p>';
   return;
@@ -344,7 +344,14 @@ async function openPanel(id,origin=null,changeRoute=true){
   body.innerHTML=html.replaceAll('src="../../images/','src="images/');body.removeAttribute('aria-busy');
  }catch(error){if(token!==requestToken)return;body.removeAttribute('aria-busy');body.innerHTML='<div class="panel-error"><h1>The trail is taking a moment.</h1><p>This case study couldn’t load. Try again, or get in touch.</p><button class="retry-button" data-project="'+id+'">Try again</button>'+links+'</div>';}
 }
-function closePanel(restore=true,changeRoute=true){if(panel.hidden)return;panel.hidden=true;document.body.classList.remove('panel-open');activePanel='';requestToken++;if(changeRoute)setRoute('');if(restore&&panelOrigin?.isConnected)panelOrigin.focus({preventScroll:true});}
+function closePanel(restore=true,changeRoute=true){if(panel.hidden)return;panel.hidden=true;syncPanelModal();document.body.classList.remove('panel-open');activePanel='';requestToken++;if(changeRoute)setRoute('');if(restore&&panelOrigin?.isConnected)panelOrigin.focus({preventScroll:true});}
+function syncPanelModal(){
+ const modal=!panel.hidden&&innerWidth>=760;
+ world.inert=modal;
+ if(modal)panel.setAttribute('aria-modal','true');else panel.removeAttribute('aria-modal');
+}
+$('#panel-backdrop').addEventListener('click',()=>closePanel());
+window.addEventListener('resize',syncPanelModal);
 function applyRoute(){const id=routeFor(location.hash.slice(1));if(id&&id===activePanel&&!panel.hidden)return;if(id)openPanel(id,null,false);else closePanel(false,false);}
 // All interactions are available as real, keyboard-accessible buttons over the drawing.
 let suppressClickUntil=0;
@@ -389,6 +396,15 @@ window.addEventListener('pointerup',endPointer);window.addEventListener('pointer
 world.addEventListener('wheel',e=>{if(e.target.closest('.speech,.view-controls,.ambience-controls'))return;e.preventDefault();zoomAt(zoom*Math.exp(-clamp(e.deltaY,-100,100)*.0018),e.clientX,e.clientY);},{passive:false});
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){if(!speech.hidden)closeSpeech();else closePanel();return;}
+ if(!panel.hidden&&innerWidth>=760){
+  if(e.key==='Tab'){
+   const stops=[...panel.querySelectorAll('a[href],button:not([disabled]),[tabindex="0"]')].filter(el=>el.getClientRects().length);
+   const first=stops[0],last=stops[stops.length-1];
+   if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+   else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+  return;
+ }
  if(e.target.closest('#case-panel,#speech'))return;
  if(e.key==='+'||e.key==='='){e.preventDefault();zoomAt(zoom*1.2);}if(e.key==='-'){e.preventDefault();zoomAt(zoom/1.2);}if(e.key==='0'){e.preventDefault();resetView();}
  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();if(e.key==='ArrowLeft')panX+=45;if(e.key==='ArrowRight')panX-=45;if(e.key==='ArrowUp')panY+=45;if(e.key==='ArrowDown')panY-=45;transform();requestDraw();}
