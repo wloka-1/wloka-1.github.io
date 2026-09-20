@@ -18,7 +18,7 @@ Checked relevant original meeting notes in `/Users/wk/Projects/Obsidian/Wesley/M
 - **Product differences:** April 29, `UX Pattern Research Katie Ramp`, records table filtering and modal-versus-page questions. May 12, `Ryan UX Patterns`, identifies navigation and data-table demand and states that the work was research/audit, not a completed pattern library.
 - **Taxonomy:** the two July 18 taxonomy/pattern meetings disagree about retaining a separate UX-flow category. July 21, `Ken Doc Images`, records another hierarchy. The rewrite retains the supported distinction between reusable layouts and abstract guidance, not a claim that one exact hierarchy became universal.
 - **Illustrations:** July 21, `Ken Doc Images`, supports Wesley's illustration work and engineering's conversion to code for themes and responsive behavior. Inspected the two tracked component-card captures, size/ramp guides, pattern synthesis, and navigation audit for caption accuracy.
-- **Automation:** August 25, `Julie 1:1`, records about two hours of manual transfer per page becoming minutes using PDF-to-CMS conversion. This supports the transfer bottleneck, not a precise reduction in reviewed writing effort. The 120x and 95% claims are omitted pending the measurement method. The 60+ beta-delivery count comes from the resumes; the August note refers to 55 pages in the conversion workstream, not a conflicting final total.
+- **Automation:** August 25, `Julie 1:1`, records about two hours of manual transfer per page becoming minutes using PDF-to-CMS conversion. This supports the transfer bottleneck, not a precise reduction in reviewed writing effort. Wesley explicitly confirmed the 120x writing-effort and 95% CMS creation-time reductions as verified on September 20, 2026 and directed their restoration. Both are restored on that authority; no new measurement method or review-time breakdown is inferred. The 60+ beta-delivery count comes from the resumes; the August note refers to 55 pages in the conversion workstream, not a conflicting final total.
 - **Public artifact:** checked the [public component overview](https://react.qui.qualcomm.com/components/overview). It confirms a public system exists, not individual authorship or adoption metrics.
 
 ## BNY
@@ -47,8 +47,8 @@ Checked relevant original meeting notes in `/Users/wk/Projects/Obsidian/Wesley/M
 ## Open questions asked this session
 
 1. T-Mobile: do the conflicting figures describe different periods or definitions?
-2. Qualcomm: what before/after times and human-review scope support 120x and 95%?
+2. Qualcomm: resolved September 20, 2026. Wesley confirmed both figures as verified and requested they be restored.
 3. Overlay: what consequential product decision was wrong, what exposed it, and what changed?
 4. BNY: confirm the placement-framework middle term and any further testing-led changes.
 
-No answers had arrived when these edits were saved. The copy omits claims dependent on those answers. Resume discrepancies remain explicitly recorded here rather than silently changing resume files outside this task.
+Qualcomm was resolved by Wesley on September 20, 2026. The other questions remain open; claims dependent on those answers remain omitted or qualified. Resume discrepancies remain explicitly recorded here rather than silently changing resume files outside this task.
