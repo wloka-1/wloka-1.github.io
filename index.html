@@ -10,15 +10,16 @@
 <meta property="og:description" content="Senior product designer. Currently design lead for the core experience of Eliza, BNY's enterprise AI platform.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="village/village.css">
-<script src="village/village.js" defer></script>
+<link rel="stylesheet" href="village/village.css?v=4">
+<script src="village/village.js?v=4" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#trail-directory">Skip to the projects</a>
 <main id="world" aria-label="Wesley's alpine village">
 <canvas id="landscape" aria-label="A pixel mountain with snowy slopes, four project chalets, an orchard, and a river. Use the signs to explore the work." role="img"></canvas>
 <div id="world-signs">
-<button class="village-sign welcome-sign" id="welcome" data-place="welcome" aria-label="About Wesley Kay"><span class="sign-eyebrow">welcome to my little corner</span><strong>Wesley Kay</strong><span>product designer &amp; outside person</span></button>
+<div id="village-intro"><button class="village-sign welcome-sign" id="welcome" data-place="welcome" aria-label="About Wesley Kay"><span class="sign-eyebrow">welcome to my little corner</span><strong>Wesley Kay</strong><span>product designer &amp; outside person</span></button>
+<div class="explore-hint"><span class="desktop-hint">drag to wander · scroll to look closer</span><span class="mobile-hint">drag to wander · pinch to look closer</span><span>the little signs open the work</span></div></div>
 <button class="village-sign project-sign" data-place="bny" data-project="bny" aria-label="Open BNY case study"><span class="sign-number">01</span> BNY <span class="sign-arrow" aria-hidden="true">↗</span></button>
 <button class="village-sign project-sign" data-place="qds" data-project="qds" aria-label="Open Qualcomm case study"><span class="sign-number">02</span> Qualcomm <span class="sign-arrow" aria-hidden="true">↗</span></button>
 <button class="village-sign project-sign" data-place="tmo" data-project="tmo" aria-label="Open T-Mobile case study"><span class="sign-number">03</span> T-Mobile <span class="sign-arrow" aria-hidden="true">↗</span></button>
@@ -37,7 +38,6 @@
 <button class="world-person" data-person="sheep" aria-label="Pet the sheep"><span>pet the sheep</span></button>
 </div>
 <div class="ambience-controls" aria-label="Ambience"><button id="music" class="quiet-button" aria-pressed="false"><span aria-hidden="true">♫</span> music off</button><button id="motion" class="quiet-button" aria-pressed="false" aria-label="Pause village animation"><span aria-hidden="true">Ⅱ</span> pause</button></div>
-<div class="explore-hint"><span class="desktop-hint">drag to wander · scroll to look closer</span><span class="mobile-hint">drag to wander · pinch to look closer</span><span>the little signs open the work</span></div>
 <nav class="view-controls" aria-label="Village view"><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset-view" aria-label="Show the whole village">whole village</button><button id="zoom-in" aria-label="Zoom in">+</button></nav>
 <section id="speech" class="speech" role="dialog" aria-label="Village conversation" hidden><button class="speech-close" aria-label="Close conversation">×</button><div class="speech-who" id="speech-who"></div><div id="speech-content"></div></section>
 <div id="toast" class="toast" role="status"></div>

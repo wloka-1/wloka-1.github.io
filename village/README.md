@@ -21,9 +21,10 @@ The chalets are BNY, Qualcomm, T-Mobile, and Overlay. Sketch-to-Revit and Iona d
 - Drag to pan, wheel or pinch to zoom. Fixed elevated camera, bounded movement. `+`, `-`, arrow keys, and `0` also control the view.
 - Chalet signs and the buildings themselves open studies. The desktop panel is on the right; mobile uses a bottom sheet. The camera stays still.
 - On mobile, drag the sheet's title bar upward to expand it and downward to return to its smaller height. Scroll inside the sheet to read.
+- The village is centered slightly above the viewport midpoint, without a ground shadow. The name sign sits below the island, with the exploration hints centered beneath it.
 - The welcome sign introduces Wesley. The trail directory opens the same studies. The mailbox links to email, the existing resume PDF, and LinkedIn.
 - Click activity figures for personal speech bubbles and other villagers for attributed quotes. Pick an apple, greet the fox, or pet the sheep.
-- The cyclist faces left after Qualcomm and right after T-Mobile. The skier descends, boards the lift at the bottom, rides uphill, and steps off at the top. The foiler follows the full river between the shorelines.
+- The cyclist faces left after Qualcomm and right after T-Mobile. The skier descends, puts his skis on his back, and walks uphill for the next run. The foiler follows the full river between the shorelines.
 - A raised timber bridge connects the banks. The fox has a clear patch of forest; the sheep grazes beside the blueberries, and Lan stands in the open meadow with his bench nearby.
 - Music is an original, sparse synthesized loop. It starts only after pressing the music button. No audio file downloads.
 - Animation can be paused, respects reduced-motion preferences, and stops while the tab is hidden. Music also suspends in the background.
@@ -32,16 +33,19 @@ The chalets are BNY, Qualcomm, T-Mobile, and Overlay. Sketch-to-Revit and Iona d
 
 No framework, runtime dependencies, build step, remote font calls, downloaded scene textures, models, videos, or audio. Canvas draws a fixed isometric heightmap once, caches the pixel-object sprites, and reuses them for the animated view. This is a 2.5D canvas scene with fixed viewing angle, not a freely rotating 3D engine.
 
-The opening request set is `index.html`, `village/village.css`, `village/village.js`, and the locally bundled `pixelify-sans.woff2`. Together these are about 59 KB raw and 27 KB with gzip. Those figures are a file-size budget, not a measured first-paint time. The Python preview server sends the uncompressed files. A future host should compress HTML, CSS, and JS and cache static assets.
+The opening request set is `index.html`, `village/village.css`, `village/village.js`, and the locally bundled `pixelify-sans.woff2`. Together these are about 62 KB raw and 28 KB with gzip. Those figures are a file-size budget, not a measured first-paint time. The Python preview server sends the uncompressed files. A future host should compress HTML, CSS, and JS and cache static assets.
 
 Studies are separate HTML fragments requested on first opening and cached for the session. Their existing images use native lazy loading. All professional case-study content and colleague quotes come from the pre-experiment portfolio. The original resume PDF is unchanged. Pixelify Sans is redistributed under the SIL Open Font License in `fonts/OFL.txt`.
 
 ## Validation
 
 - JavaScript syntax checked with `node --check village/village.js`.
-- Code-level interaction harness checked actor coordinates, terrain redraw stability, zoom limits, camera invariance when panels open, all four studies, caching, directory, contact, and close/reset behavior.
+- Run `node village/check.cjs` for the dependency-free Node VM interaction harness. It checks actor coordinates, terrain redraw stability, zoom limits and pointer anchors, camera invariance when panels open, all four studies, caching, directory, contact, welcome-sign clicks, and close/reset behavior.
+- Skier checks cover downhill travel, uphill travel, alternating cached walking frames, still legs during pauses, continuity at phase boundaries, and the full 48-second repeat.
+- Bridge checks inspect the actual deck, fascia, plank, and rail drawing bounds, including stroke widths, against its sprite canvas and final placement. Replacing its bounds with the standard upright sprite canvas makes this check fail.
+- Layout checks cover horizontal centering, island/sign clearance, and viewport fit across desktop, portrait mobile, and short landscape sizes using mocked DOM dimensions.
 - Verified every study image resolves to an existing file, is lazy-loaded, and retains its source alt text.
 - Verified localhost HTTP response and measured raw/gzip initial payload.
-- Visual browser testing, touch-device behavior, and real-device paint/load timing have not been measured. The current Sites skill restricts browser QA to explicit requests.
+- The supplied screenshot informed the composition changes. The latest rendering has not been inspected in a live browser because the supported browser tools are unavailable in this session. The VM checks do not verify CSS rendering, touch-device behavior, or real-device paint/load timing.
 
 To return to the original portfolio after this experiment is saved, switch to `main`. No changes to remote branches are needed.
