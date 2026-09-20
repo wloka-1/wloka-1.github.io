@@ -35,7 +35,7 @@ No framework, runtime dependencies, build step, remote font calls, downloaded sc
 
 The opening request set is `index.html`, `village/village.css`, `village/village.js`, and the locally bundled `pixelify-sans.woff2`. Together these are about 62 KB raw and 28 KB with gzip. Those figures are a file-size budget, not a measured first-paint time. The Python preview server sends the uncompressed files. A future host should compress HTML, CSS, and JS and cache static assets.
 
-Studies are separate HTML fragments requested on first opening and cached for the session. Their existing images use native lazy loading. All professional case-study content and colleague quotes come from the pre-experiment portfolio. The original resume PDF is unchanged. Pixelify Sans is redistributed under the SIL Open Font License in `fonts/OFL.txt`.
+Studies are separate HTML fragments requested on first opening and cached for the session. Their existing images use native lazy loading. The case studies were rewritten on September 19, 2026 against the resumes, Obsidian meeting notes, existing artifacts, and project content rules. See `EDITORIAL-SOURCES.md` for evidence and unresolved claims. Colleague quotes remain from the pre-experiment portfolio. The original resume PDF is unchanged. Pixelify Sans is redistributed under the SIL Open Font License in `fonts/OFL.txt`.
 
 ## Validation
 
@@ -44,8 +44,8 @@ Studies are separate HTML fragments requested on first opening and cached for th
 - Skier checks cover downhill travel, uphill travel, alternating cached walking frames, still legs during pauses, continuity at phase boundaries, and the full 48-second repeat.
 - Bridge checks inspect the actual deck, fascia, plank, and rail drawing bounds, including stroke widths, against its sprite canvas and final placement. Replacing its bounds with the standard upright sprite canvas makes this check fail.
 - Layout checks cover horizontal centering, island/sign clearance, and viewport fit across desktop, portrait mobile, and short landscape sizes using mocked DOM dimensions.
-- Verified every study image resolves to an existing file, is lazy-loaded, and retains its source alt text.
+- Verified every retained study image resolves to a tracked file and is lazy-loaded. Captions were checked against the images; alt text was clarified where the old wording misdescribed the artifact.
 - Verified localhost HTTP response and measured raw/gzip initial payload.
-- The supplied screenshot informed the composition changes. The latest rendering has not been inspected in a live browser because the supported browser tools are unavailable in this session. The VM checks do not verify CSS rendering, touch-device behavior, or real-device paint/load timing.
+- The supplied screenshot informed the composition changes. The rewritten studies have not been inspected in a live browser because the supported browser execution tool was unavailable during the rewrite session. The VM checks do not verify CSS rendering, touch-device behavior, or real-device paint/load timing.
 
 To return to the original portfolio after this experiment is saved, switch to `main`. No changes to remote branches are needed.
