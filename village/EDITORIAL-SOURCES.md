@@ -31,8 +31,8 @@ Checked relevant original meeting notes in `/Users/wk/Projects/Obsidian/Wesley/M
 
 ## T-Mobile
 
-- **Metric conflict remains open.** The project rules verify search usage +24%, zero-result searches −59%, phone sales +11%. Both resumes instead use a 94% null-result reduction; the AI Forward variant also includes different engagement/intention figures. A September 2025 interview recap uses yet another rounded null-result figure. No underlying measurement periods were found in the meeting notes.
-- The rewrite uses the project-verified figures and omits 13% → 0.7%, 94%, and the alternate engagement/intention claims. It does not attribute the aggregate results to a single UI control. The main resume's claim that an empty-results message caused the reduction is not reproduced.
+- **Resolved by Wesley on September 20, 2026:** the roughly 90%+ reduction is verified, and he prefers showing the underlying rates: about 13% → 0.7% of searches returned zero results. This direct confirmation supersedes the earlier −59% figure for this study. The rates imply about a 94.6% relative reduction; the portfolio uses the rates, without a relative-reduction headline. No new measurement periods are inferred.
+- The study now shows 13% → 0.7%, alongside search usage +24% and phone sales +11%. Alternate engagement/intention claims remain omitted. It does not attribute the aggregate results to a single UI control. The main resume's claim that an empty-results message caused the reduction is not reproduced.
 - **Navigation remains separate:** 16 → 30 sites and +23% usage come from the project rules; 40M+ reach comes from the resumes. July 31, `emi - me`, and January 17, `Nick DiRienzo and Wloka`, corroborate the navigation scope but not the search metrics.
 - **Decision evidence:** inspected `tmo5.png`, `tmo1.png`, and `tmo7.png`. They show query suggestions by category, product/support tabs, removable filters plus a filter panel, and the Sprint route. Captions describe those visible choices. Research methods and A/B testing are retained from the existing study/resumes; no new test result or participant anecdote is invented.
 
@@ -46,9 +46,9 @@ Checked relevant original meeting notes in `/Users/wk/Projects/Obsidian/Wesley/M
 
 ## Open questions asked this session
 
-1. T-Mobile: do the conflicting figures describe different periods or definitions?
+1. T-Mobile: resolved September 20, 2026. Wesley confirmed the reduction and selected the before/after rates for display.
 2. Qualcomm: resolved September 20, 2026. Wesley confirmed both figures as verified and requested they be restored.
 3. Overlay: what consequential product decision was wrong, what exposed it, and what changed?
 4. BNY: confirm the placement-framework middle term and any further testing-led changes.
 
-Qualcomm was resolved by Wesley on September 20, 2026. The other questions remain open; claims dependent on those answers remain omitted or qualified. Resume discrepancies remain explicitly recorded here rather than silently changing resume files outside this task.
+Qualcomm and T-Mobile were resolved by Wesley on September 20, 2026. The Overlay and BNY questions remain open; claims dependent on those answers remain omitted or qualified. Resume discrepancies remain explicitly recorded here rather than silently changing resume files outside this task.
