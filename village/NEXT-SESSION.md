@@ -6,12 +6,15 @@ Rewrote all four village studies in the approved order: Qualcomm, BNY, T-Mobile,
 
 Read `AGENTS.md`, `village/README.md`, and `village/EDITORIAL-SOURCES.md` before further content changes. The evidence record lists the resumes and Obsidian notes checked, contradictions found, and what the copy can support.
 
+## Follow-up · 2026-09-20
+
+Wesley confirmed the 120x writing-effort and 95% CMS creation-time reductions as verified and requested their restoration. Both now appear in Qualcomm’s metric grid and documentation section. Do not remove them for lack of a separately recorded measurement method. All four case studies now use system sans-serif for body text, headings, labels, and metrics. Village signs and panel chrome retain Pixelify Sans.
+
 ## Remaining optional clarification
 
 Questions were sent early in the rewrite session; no answers had arrived when the changes were saved:
 
 - T-Mobile: reconcile 13% → 0.7% / 94% with the project-verified −59% zero-result figure. Current copy uses the verified project figures: search usage +24%, zero-result searches −59%, phone sales +11%. Navigation remains separate: 16 → 30 sites, +23% usage, 40M+ monthly reach.
-- Qualcomm: establish before/after times and human-review scope for 120x writing effort and 95% CMS creation reduction. Both multipliers are omitted. The documented two-hour manual page-transfer bottleneck remains.
 - Overlay: a consequential product mistake, what exposed it, and what changed. Current copy uses the documented arrival-confusion / market-discovery change without inventing a stronger anecdote or onboarding metric.
 - BNY: confirm the placement-framework middle term. Framework labels are omitted. The study uses the adopted IA, documented usability findings, and task origins. Broader task-experience validation is not presented as a shipped outcome.
 
@@ -21,7 +24,7 @@ Both resumes still contain conflicting or unqualified claims; they were read but
 
 Work only on `codex/alpine-village`. Main remains at `21c9abe2cac0edc7a077b24fb2eb3e9da0af87f3`. Do not push, publish, deploy, switch to main, or change main. Save relevant changes in local commits only. Leave untracked `AGENTS.md` and unrelated Qualcomm images unstaged.
 
-Scene design, CSS, village JavaScript, and interactions were preserved. Only a brittle BNY headline assertion in `check.cjs` changed to identify the loaded study by its stable page ID.
+Scene design, village JavaScript, and interactions were preserved. The September 20 CSS update changes only typography and metric-column sizing within case-study content. Only a brittle BNY headline assertion in `check.cjs` changed to identify the loaded study by its stable page ID.
 
 ## Verification and preview
 
