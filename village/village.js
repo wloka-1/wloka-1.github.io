@@ -344,7 +344,7 @@ async function openPanel(id,origin=null,changeRoute=true){
   body.innerHTML=html.replaceAll('src="../../images/','src="images/');body.removeAttribute('aria-busy');
  }catch(error){if(token!==requestToken)return;body.removeAttribute('aria-busy');body.innerHTML='<div class="panel-error"><h1>The trail is taking a moment.</h1><p>This case study couldn’t load. Try again, or get in touch.</p><button class="retry-button" data-project="'+id+'">Try again</button>'+links+'</div>';}
 }
-function closePanel(restore=true,changeRoute=true){if(panel.hidden)return;panel.hidden=true;panel.classList.remove('expanded');document.body.classList.remove('panel-open');activePanel='';requestToken++;if(changeRoute)setRoute('');if(restore&&panelOrigin?.isConnected)panelOrigin.focus({preventScroll:true});}
+function closePanel(restore=true,changeRoute=true){if(panel.hidden)return;panel.hidden=true;document.body.classList.remove('panel-open');activePanel='';requestToken++;if(changeRoute)setRoute('');if(restore&&panelOrigin?.isConnected)panelOrigin.focus({preventScroll:true});}
 function applyRoute(){const id=routeFor(location.hash.slice(1));if(id&&id===activePanel&&!panel.hidden)return;if(id)openPanel(id,null,false);else closePanel(false,false);}
 // All interactions are available as real, keyboard-accessible buttons over the drawing.
 let suppressClickUntil=0;
@@ -387,10 +387,6 @@ window.addEventListener('pointermove',e=>{
 function endPointer(e){if(!pointers.has(e.pointerId))return;if(pointerStart?.moved)suppressClickUntil=performance.now()+350;pointers.delete(e.pointerId);canvas.classList.remove('dragging');if(pointers.size===1){const p=[...pointers.values()][0];pointerStart={...p,px:panX,py:panY,moved:true};}else if(!pointers.size){pointerStart=null;}gestureStart=null;}
 window.addEventListener('pointerup',endPointer);window.addEventListener('pointercancel',endPointer);
 world.addEventListener('wheel',e=>{if(e.target.closest('.speech,.view-controls,.ambience-controls'))return;e.preventDefault();zoomAt(zoom*Math.exp(-clamp(e.deltaY,-100,100)*.0018),e.clientX,e.clientY);},{passive:false});
-// The mobile sheet can be expanded by dragging its title bar. Its content scrolls independently.
-let sheetStart=0;
-$('.panel-toolbar').addEventListener('pointerdown',e=>{if(e.target.closest('button')||vw>=760)return;sheetStart=e.clientY;e.currentTarget.setPointerCapture(e.pointerId);});
-$('.panel-toolbar').addEventListener('pointerup',e=>{if(!sheetStart)return;const dy=e.clientY-sheetStart;if(dy < -35)panel.classList.add('expanded');if(dy>35)panel.classList.remove('expanded');sheetStart=0;});
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){if(!speech.hidden)closeSpeech();else closePanel();return;}
  if(e.target.closest('#case-panel,#speech'))return;
