@@ -31,7 +31,7 @@ vm.runInNewContext(source,sandbox,{timeout:5000});const a=sandbox.api;
  a.paint(1);const water=a.waterTiles.length;a.drawTerrain();assert.equal(a.waterTiles.length,water,'Redrawing the terrain does not duplicate water');
  for(let t=0;t<120;t+=.5){for(const actor of a.actorsAt(t)){assert(Number.isFinite(actor.x)&&Number.isFinite(actor.y));assert(actor.x>=0&&actor.x<=1500&&actor.y>=0&&actor.y<=1130,'Actors stay inside the scene');}}
  a.zoomAt(99);assert.equal(a.getState().zoom,2.7);a.zoomAt(.01);assert.equal(a.getState().zoom,1);
- a.zoomAt(1.8,500,400);const view=JSON.stringify(a.getState());await a.openPanel('bny');assert.equal(a.getState().tx,JSON.parse(view).tx);assert.equal(a.getState().ty,JSON.parse(view).ty);assert(a.body.innerHTML.includes('240-year-old'));assert(!a.body.innerHTML.includes('src="../../images/'));
+ a.zoomAt(1.8,500,400);const view=JSON.stringify(a.getState());await a.openPanel('bny');assert.equal(a.getState().tx,JSON.parse(view).tx);assert.equal(a.getState().ty,JSON.parse(view).ty);assert(a.body.innerHTML.includes('id="page-bny"'));assert(!a.body.innerHTML.includes('src="../../images/'));
  for(const id of ['qds','tmo','overlay']){await a.openPanel(id);assert(a.body.innerHTML.includes('loading="lazy"'));assert(!a.body.innerHTML.includes('back-btn'));}
  const before=fetchCount;await a.openPanel('qds');assert.equal(fetchCount,before,'Opened studies are cached');
  await a.openPanel('directory');assert(a.body.innerHTML.includes('data-project="bny"'));assert(a.body.innerHTML.includes('data-project="overlay"'));assert(!a.body.innerHTML.includes('Iona'));await a.openPanel('contact');assert(a.body.innerHTML.includes('Wesley-Kay-Resume.pdf'));assert(a.body.innerHTML.includes('mailto:'));
