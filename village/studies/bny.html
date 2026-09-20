@@ -3,104 +3,30 @@
 
   <div class="cs-header">
     <span class="label accent">AI Platform Design</span>
-    <h1 style="margin-top:1rem;">Designing how a 240-year-old bank does AI</h1>
+    <h1 style="margin-top:1rem;">Giving a growing AI platform a coherent structure</h1>
     <div class="cs-meta">BNY · Senior (Staff) AI Designer · via Blink · Oct 2025 to Present</div>
-    <p class="cs-intro">BNY's AI products grew faster than the UX around them. Areas sat siloed under inconsistent navigation, users couldn't find what they needed, and leadership couldn't see across the platform. I'm the design lead for Eliza's core experience, the app every employee at the bank uses to work with AI: navigation, how work reaches people, the assistant's interaction layer, the agent marketplace, dashboards, personalization, and a design system that has to feed AI agents instead of human designers.</p>
-    <p style="font-size:0.85rem; color: var(--text-muted); margin-top:1rem;">This work is under an active NDA. Details are deliberately limited and some specifics are abstracted.</p>
+    <p class="cs-intro">BNY's AI products had grown faster than the experience connecting them. I lead design for Eliza's core experience. I proposed the hierarchical information architecture the team adopted, led its navigation redesign through user testing, and partnered with engineering on the production rollout. I also created the adopted task model for how work reaches people; the broader experience built on it is still in validation.</p>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:1rem;">This work is under NDA. Examples are limited to the design reasoning and permitted outcomes.</p>
   </div>
 
   <div class="cs-section">
-    <h2>The platform</h2>
-    <p>Eliza sits under BNY's AI umbrella. Underneath the umbrella: chat (the AI assistant), a marketplace where AI agents live, an initiative intake system (how new AI projects get started), and governance tools. When I joined, these areas had grown fast but the UX hadn't kept up. Multiple product areas were siloed under inconsistent navigation. Users couldn't find what they needed.</p>
-    <p>My job is to make it cohesive while shipping on aggressive timelines with a lot of people to bring along.</p>
+    <h2>Make the platform understandable beyond its familiar parts</h2>
+    <p>In one usability session, a daily user told me he'd stopped exploring because navigation was too confusing. Other sessions exposed a similar problem: people couldn't reliably tell what a destination was or where a link would take them. Adding access to more products wasn't enough.</p>
+    <p>I proposed a hierarchical information architecture to give the growing platform a consistent structure. The tradeoff was depth: grouping destinations creates room to grow, but it can also bury what someone uses every day. I ran 1:1 interviews and usability sessions to test those choices, then brought the findings back into the design.</p>
+    <p>Testing caught a mistake I'd made. A navigation icon I chose read as Safari, so its purpose wasn't clear. I revised the icon choice. A participant also lost their sense of place when opening the menu changed the surrounding navigation; I revised that interaction so exploring destinations preserved the current context.</p>
+    <p>The feedback wasn't uniform. One participant found pinning easily; another couldn't discover it or tell whether it had worked. I treated that as an unresolved discoverability problem. Some personalization changes were deferred beyond the navigation release.</p>
+    <p>The team adopted the IA, and the global navigation shipped to production across BNY's AI applications in July 2026. That is the confirmed outcome. I don't have a measured improvement in findability to attach to it.</p>
   </div>
 
   <div class="cs-section">
-    <h2>Platform architecture &amp; navigation</h2>
-    <p>The existing Eliza platform used a workbench-style top navigation that couldn't scale. As BNY added more AI products (governance tools, performance dashboards, compliance workflows), the top nav was running out of room and users were getting lost.</p>
-    <p>I proposed a hierarchical IA that was adopted: top-level platform areas unified under a left-nav with a hub landing page as the front door. Significant structural change. The team needed something transformational enough to solve real problems and shippable enough to launch quickly.</p>
-    <h3>Key decisions</h3>
-    <ul>
-      <li><strong>Left nav over top nav.</strong> Scales as product areas expand. Hides when users drill into specific tools to maximize workspace.</li>
-      <li><strong>Hub landing page.</strong> A single front door for the bank's AI surface area. Eliza (chat) is the first item in navigation, not the entire platform. Reframes Eliza as one part of BNY's AI ecosystem.</li>
-      <li><strong>Logo changed from "Eliza" to "BNY".</strong> Subtle but important. The platform is bigger than the chatbot.</li>
-      <li><strong>Chat history in the nav.</strong> Pulls from local backend so users have persistent access to prior conversations.</li>
-    </ul>
-    <p>I ran independent user research alongside the design work. Interviewed Eliza users 1-on-1 about what they needed. Fed transcripts through an agent I built to synthesize findings. Designed off the synthesis. No research process was handed to me. I built the loop.</p>
-    <p>We launched the navigation redesign, marketplace redesign, chat history, and new landing page together. A coordinated release that changed how BNY's employees experience AI at the company. The global navigation has since shipped to production across the bank's AI applications.</p>
-    <h3>What testing changed</h3>
-    <p>Before rollout I ran 1-on-1 usability sessions on the navigation, and they reversed decisions I'd already made. My own miss: I used a compass icon for the global menu, and users read it as the Safari logo. Replaced. Sessions also showed the pin feature was undiscoverable and the global menu overwhelmed newer users, so the menu moved to a flyout and recents and pins merged into a single list. The point of the loop isn't validation. It's finding out where you're wrong while it's still cheap.</p>
-    <h3>What I said no to</h3>
-    <p>Some of the clearest decisions were refusals. A senior engineering leader wanted chat history bolted onto the landing page; I made the case that it was a surface patch for a deeper need (picking up where you left off) and answered it through the task and notification model instead. A dedicated notifications home page got killed: notifications should interrupt where work happens, not become another destination. And when "Default" was floated as the label for the default model, I pushed back because it implies dynamic routing the platform doesn't do.</p>
-    <h3>The placement framework</h3>
-    <p>After launch, the structural question kept coming: every new AI product at the bank asked the same thing. Does this live inside Eliza or not? I defined the placement framework that got adopted: <strong>Eliza-native</strong> (built inside the platform, governed by it), <strong>integrated</strong> (own surface, connected through navigation and tasks), or <strong>external</strong> (linked out). Three buckets with clear criteria, so placement is a rule instead of a per-project debate.</p>
+    <h2>Show where work comes from before asking people to act</h2>
+    <p>The next problem arrived as a notifications requirement. People needed to pick up unfinished work and understand what needed their attention. A feed ordered by arrival time couldn't answer that on its own.</p>
+    <p>I created a task model with three origins: work you <strong>create yourself</strong>, work <strong>assigned to you</strong>, and work <strong>AI proposes</strong>. The distinction matters because a suggestion from AI carries a different expectation from an assignment. I made the source part of the model, so people could judge what they were being asked to do.</p>
+    <p>The model was adopted and tested in 1:1 sessions. I then used it to explore prioritization and acting with enough context to avoid repeatedly leaving the work at hand. Early reviews exposed the next constraint: a combined list can become overwhelming when it meets real workloads. Consolidating work doesn't automatically make it manageable.</p>
+    <p>I'm validating that broader experience across different work styles. The open question is what deserves attention for each person, and what context they need before acting. The adopted taxonomy is a foundation for that work, not evidence that the whole experience has shipped.</p>
   </div>
 
-  <div class="cs-section">
-    <h2>From notifications to how work reaches people</h2>
-    <p>This started as a notifications requirement. Notifications weren't the real problem. Work was reaching people from colleagues, from systems, and from AI, spread across separate places with no shared sense of what mattered first. A better notification would have made that noise arrive faster. So I turned the requirement into a work-management model: where work comes from, how it gets ranked, and where people act on it.</p>
-    <p>The foundation is the task model that got adopted: tasks you <strong>create yourself</strong>, tasks you're <strong>given</strong>, and tasks <strong>AI proposes</strong>. Three origins, three different trust levels, one consistent surface. AI-proposed work is not like assigned work, and users need to see where a task came from before they act on it. I validated the model in 1-on-1 user testing alongside the navigation sessions.</p>
-    <p>On top of it sits a criticality and triage model, so the most important work surfaces first instead of the newest. The places people check today (a daily planner, a task list, a notification feed) are converging into one experience built on that model. The vision is set and it's in validation now.</p>
-    <p>For that validation I built a research framework that maps personas against work styles. Interviews target people whose days actually differ, instead of whoever is available, with interview paths specific to each group.</p>
-  </div>
-
-  <div class="cs-section">
-    <h2>The assistant's interaction layer</h2>
-    <p>An enterprise assistant stopped being a text box. It takes actions in email, calendars, chat, and documents. It runs more than one request at a time. It has a memory limit users can't see. Each of those is a design problem, not just a backend feature.</p>
-    <ul>
-      <li><strong>Queued and concurrent prompts.</strong> People keep working while a request runs, and can see what's still in flight.</li>
-      <li><strong>Context visibility.</strong> Showing how much of the conversation the model can still hold, so a long thread degrading isn't a mystery.</li>
-      <li><strong>Model selection.</strong> Choosing a model without the labels implying behavior the platform doesn't have.</li>
-      <li><strong>Actions in other apps.</strong> When the assistant can send, schedule, or edit on your behalf, people have to discover that it can, and the output has to be designed as carefully as the request.</li>
-    </ul>
-    <p>I supply production-candidate prototypes and work with engineering on what goes into each release.</p>
-  </div>
-
-  <div class="cs-section">
-    <h2>The mandate</h2>
-    <p>The navigation, notifications, and task work added up to a bigger mandate: I'm the design lead for Eliza's core experience, the app through which every employee at the bank meets AI. One design owner for the company's daily front door to AI.</p>
-    <p>That scope usually gets a team. The frameworks above are what make it tractable: placement rules that decide where products live, a task model that decides how work reaches people, and a design system built to generate consistent UI. Define the rules once, and the surface can grow faster than the team.</p>
-  </div>
-
-  <div class="cs-section">
-    <h2>Agent marketplace</h2>
-    <p>The marketplace is where BNY's AI agents live. Each agent handles a specific operational task and has capabilities, performance metrics, and a lifecycle from pilot through retirement.</p>
-    <p>I own the UX end-to-end. Defined the underlying data model, the filtering and integration surfaces, and the deployment pathways for getting new agents into the marketplace.</p>
-    <p>I also designed the manager dashboard with cross-platform capability views, so a manager could see all the agents they're responsible for across different systems. Health status uses a red/amber/green system based on accuracy thresholds, so degradation is visible before it becomes an incident.</p>
-    <h3>The real design challenge</h3>
-    <p>The hard part wasn't tables or naming. The marketplace was built inside a team whose goals and priorities changed weekly. Staying consistent in an environment like that is the actual design problem.</p>
-    <p>My counter was process. I sat down with the PM and recorded the conversations so nothing got missed. Reviewed the journey maps, then graphed the red routes so the critical paths were explicit. When priorities shifted again, we had a shared artifact to re-rank against instead of a fresh debate.</p>
-  </div>
-
-  <div class="cs-section">
-    <h2>Light mode in three days</h2>
-    <p>The team had 1,100+ hard-coded color references across 138 files in the monorepo, with dark/light tokens partially built but no working switching mechanism. Direct color inversion didn't achieve the desired aesthetic. The product had launched in light mode anyway, with quality that nobody was happy with.</p>
-    <p>I built a new V3 in light mode. Token-only consumption from the new design system, A11Y-compliant palette explorations, direct foundation-layer token mirroring for dark to light conversion.</p>
-    <p>Alongside it I built an automated design audit tool that screenshots inconsistencies across the system and files them as issue-tracker entries. The team gets faster QA without doing the QA. That tool keeps paying back.</p>
-  </div>
-
-  <div class="cs-section">
-    <h2>Shaping the AI-consumable design system</h2>
-    <p>Before paternity leave I shaped the strategy for an AI-consumable design system that becomes the foundation every product area inherits. The concrete moves:</p>
-    <ul>
-      <li><strong>Pushed component strategy toward LLM-friendly architecture.</strong> Larger semantic components with clear usage contracts instead of highly compositional Swiss Army knife patterns. Larger component APIs require more LLM processing and validation cycles. Smaller, focused, semantically-named components are easier for both humans and agents.</li>
-      <li><strong>Surfaced where traditional design systems break down for AI-driven UI.</strong> When AI is generating the UI, the system isn't a component library. It's instructions.</li>
-    </ul>
-    <p>Handed to a colleague for paternity leave.</p>
-  </div>
-
-  <div class="cs-section">
-    <h2>How I work, applied</h2>
-    <p>The biggest single impact I've had at BNY might not be any specific screen. It's how design feedback happens.</p>
-    <p>Time goes to collecting context, then iterating, testing, and shipping. On one occasion I delivered five prototype iterations in a single session: record a walkthrough with stakeholders, process notes in 10 minutes, iterate in 2 hours total. Compare that to the previous cycle of Figma mockup → review meeting → comments → revision → another meeting → handoff spec. Weeks compressed to hours.</p>
-    <p>The team is several months ahead of peer design groups on AI tool adoption. I also pushed for recording all product team meetings and advocated for user-testing data backing design decisions in leadership demos, rather than just showing mockups and hoping for buy-in.</p>
-  </div>
-
-  <div class="staff-signal">
-    <h4>What this shows</h4>
-    <p>The hardest problem wasn't the UI. It was defining what "managing AI" means for a bank that's almost as old as the country. I shaped the conceptual frameworks the team designs within: platform IA, the placement framework, the work-management model, agent lifecycle, observability. I also built force-multiplier tooling alongside the design work, because the highest-leverage thing a staff designer can do is make the rest of the team faster.</p>
-  </div>
-
+  <p>My wider scope includes the agent marketplace, the assistant's interaction design, and visual direction across the core experience. I also shaped design-system strategy before handing implementation to a colleague during paternity leave. Those responsibilities support the same work: keeping the experience coherent as the platform grows.</p>
 
 </div>
 </div>
