@@ -1,6 +1,6 @@
 # Case-study evidence review · 2026-09-19
 
-This is a local editing record, not portfolio copy. The four study fragments were rewritten in order: Qualcomm, BNY, T-Mobile, Overlay. No resumes were edited.
+This is a local editing record, not portfolio copy. The four study fragments were rewritten in order: Qualcomm, BNY, T-Mobile, Overlay. The initial rewrite did not edit resumes. On September 20, Wesley requested the same T-Mobile metric wording in his resumes; the main, AI Forward, and Assured source/export files were updated, along with the portfolio PDF copies.
 
 ## Source standard
 
@@ -32,7 +32,7 @@ Checked relevant original meeting notes in `/Users/wk/Projects/Obsidian/Wesley/M
 ## T-Mobile
 
 - **Resolved by Wesley on September 20, 2026:** the roughly 90%+ reduction is verified, and he prefers showing the underlying rates: about 13% → 0.7% of searches returned zero results. This direct confirmation supersedes the earlier −59% figure for this study. The rates imply about a 94.6% relative reduction; the portfolio uses the rates, without a relative-reduction headline. No new measurement periods are inferred.
-- The study now shows 13% → 0.7%, alongside search usage +24% and phone sales +11%. Alternate engagement/intention claims remain omitted. It does not attribute the aggregate results to a single UI control. The main resume's claim that an empty-results message caused the reduction is not reproduced.
+- The study now shows 13% → 0.7%, alongside search usage +24% and phone sales +11%. Alternate engagement/intention claims remain omitted. It does not attribute the aggregate results to a single UI control. The main resume's claim that an empty-results message caused the reduction is not reproduced. The September 20 resume update uses the same before/after rates and removes that single-control attribution from the main and Assured bullets.
 - **Navigation remains separate:** 16 → 30 sites and +23% usage come from the project rules; 40M+ reach comes from the resumes. July 31, `emi - me`, and January 17, `Nick DiRienzo and Wloka`, corroborate the navigation scope but not the search metrics.
 - **Decision evidence:** inspected `tmo5.png`, `tmo1.png`, and `tmo7.png`. They show query suggestions by category, product/support tabs, removable filters plus a filter panel, and the Sprint route. Captions describe those visible choices. Research methods and A/B testing are retained from the existing study/resumes; no new test result or participant anecdote is invented.
 
@@ -51,4 +51,4 @@ Checked relevant original meeting notes in `/Users/wk/Projects/Obsidian/Wesley/M
 3. Overlay: what consequential product decision was wrong, what exposed it, and what changed?
 4. BNY: confirm the placement-framework middle term and any further testing-led changes.
 
-Qualcomm and T-Mobile were resolved by Wesley on September 20, 2026. The Overlay and BNY questions remain open; claims dependent on those answers remain omitted or qualified. Resume discrepancies remain explicitly recorded here rather than silently changing resume files outside this task.
+Qualcomm and T-Mobile were resolved by Wesley on September 20, 2026. The Overlay and BNY questions remain open; claims dependent on those answers remain omitted or qualified. Other resume discrepancies remain recorded here. Only the T-Mobile search bullet was changed in the September 20 resume follow-up; PDF text comparisons confirmed no other wording changes, original page counts were preserved, and all rendered pages were inspected.
