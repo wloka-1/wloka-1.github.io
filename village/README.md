@@ -19,7 +19,7 @@ The chalets are BNY, Qualcomm, T-Mobile, and Overlay. Sketch-to-Revit and Iona d
 ## Interactions
 
 - Drag to pan, wheel or pinch to zoom. Fixed elevated camera, bounded movement. `+`, `-`, arrow keys, and `0` also control the view.
-- Chalet signs and the buildings themselves open studies. The desktop panel is on the right; mobile opens a full-screen panel. The camera stays still.
+- Chalet signs and the buildings themselves open studies. Desktop opens a centered overlay at 80% viewport width and height, with a 680px reading column and wider images; mobile opens a full-screen panel. Click the desktop backdrop, press Escape, or use the close button to return. Desktop keyboard focus stays inside the overlay. The camera stays still.
 - On mobile, the panel fills the viewport and respects device safe areas. The title and close button stay at the top while the case study scrolls beneath them.
 - The village is centered slightly above the viewport midpoint, without a ground shadow. The name sign sits below the island, with the exploration hints centered beneath it.
 - The welcome sign introduces Wesley. The trail directory opens the same studies. The mailbox links to email, the existing resume PDF, and LinkedIn.
