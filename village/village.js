@@ -5,6 +5,9 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const canvas = $('#landscape'), ctx = canvas.getContext('2d', {alpha:false});
 const W = 1500, H = 1130, OX = 760, OY = 390, NX = 72, NY = 60;
+// Frame the visible island, with room above its summit for the skier's backpack.
+const sceneFrame={x:826,top:120,bottom:1021};
+const intro=$('#village-intro'),welcome=$('#welcome');
 const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
 const mix = (a,b,t) => a+(b-a)*t;
 const hash = (x,y) => { const n = Math.sin(x*127.1+y*311.7)*43758.5453; return n-Math.floor(n); };
@@ -44,7 +47,6 @@ const pathNodes=[[13,43],[20,43],[23,38],[22,33],[19,31],[25,33],[31,36],[37,34]
 function pathPoints(nodes,steps=12){const out=[];for(let i=0;i<nodes.length-1;i++)for(let j=0;j<steps;j++){const t=j/steps,x=mix(nodes[i][0],nodes[i+1][0],t),y=mix(nodes[i][1],nodes[i+1][1],t);out.push({...point(x,y),wx:x,wy:y});}return out;}
 const road=pathPoints(pathNodes);
 const skiTop=point(30,22),skiBottom=point(35,26);
-function liftPoint(progress,lane=0){return {x:mix(skiBottom.x,skiTop.x,progress)-28+lane,y:mix(skiBottom.y,skiTop.y,progress)-18+Math.sin(progress*Math.PI)*5};}
 const riverRoute=[];
 for(let d=-72;d<=72;d+=.25){
  const sum=91+Math.sin(d/10)*3.3,x=(sum+d)/2,y=(sum-d)/2;
@@ -56,8 +58,6 @@ function closeToRoad(x,y,d=1.7){return road.some(p=>Math.hypot(p.wx-x,p.wy-y)<d)
 function drawTerrain(){
  ground.clearRect(0,0,W,H);
  waterTiles.length=0;
- // A quiet shadow beneath the cutaway landscape.
- ground.fillStyle='#8cab8b22';ground.beginPath();ground.ellipse(770,878,537,160,0,0,Math.PI*2);ground.fill();
  for(let sum=0;sum<NX+NY;sum++)for(let x=0;x<NX;x++){
   const y=sum-x;if(y<0||y>=NY)continue;
   const h=heights[y*NX+x];if(h<0)continue;
@@ -81,17 +81,6 @@ function drawTerrain(){
  const foot=pathPoints([[29,48],[30,51],[32,52]],10).map(p=>[p.x,p.y]);
  foot.push([point(32,52).x,point(32,52).y]);line(ground,foot,'#d6caa0',8);
  const farPath=pathPoints([[40,53],[42,54]],8).map(p=>[p.x,p.y]);line(ground,farPath,'#d6caa0',8);
- // Lift towers and both sides of the cable remain part of the cached terrain.
- for(const lane of [0,12]){
-  const cable=[];for(let i=0;i<=24;i++){const p=liftPoint(i/24,lane);cable.push([p.x,p.y-47]);}
-  line(ground,cable,'#64766b',1.5);
- }
- for(const u of [0,.5,1]){
-  const cable=liftPoint(u),base=point(mix(35,30,u),mix(26,22,u));
-  line(ground,[[cable.x+6,base.y],[cable.x+6,cable.y-50]],'#7b8674',4);
-  line(ground,[[cable.x-6,cable.y-48],[cable.x+24,cable.y-48]],'#566b60',4);
-  rect(ground,cable.x+1,base.y-2,10,4,'#a6b2a0');
- }
  for(let i=0;i<80;i++){
   const x=8+hash(i,7)*52,y=32+hash(i,19)*22;
   if(!landAt(x,y)||riverAt(x,y)||closeToRoad(x,y,1))continue;
@@ -99,7 +88,7 @@ function drawTerrain(){
  }
 }
 const spriteCache=new Map();
-function sprite(key,draw,canvasHeight=220){if(spriteCache.has(key))return spriteCache.get(key);const img=offscreen(200,canvasHeight),g=img.getContext('2d');g.translate(100,195);draw(g);const v={img,ax:100,ay:195};spriteCache.set(key,v);return v;}
+function sprite(key,draw,bounds=[-100,-195,100,25]){if(spriteCache.has(key))return spriteCache.get(key);const [left,top,right,bottom]=bounds,img=offscreen(Math.ceil(right-left),Math.ceil(bottom-top)),g=img.getContext('2d');g.translate(-left,-top);draw(g);const v={img,ax:-left,ay:-top};spriteCache.set(key,v);return v;}
 function shadow(g,w=16){poly(g,[[-w,-2],[0,-8],[w+6,0],[4,7]],'#38564223');}
 function pineSprite(variant=0){return sprite('pine'+variant,g=>{
  shadow(g,16);rect(g,-3,-15,7,18,'#846343');rect(g,2,-13,3,16,'#674e38');
@@ -148,14 +137,17 @@ function chaletSprite(c){return sprite(c.id,g=>{
  rect(g,-41,-16,8,7,'#ae7952');rect(g,-44,-22,12,8,'#719753');
  });}
 function actorSprite(kind,frame=0){return sprite(kind+frame,g=>{
- if(kind==='lift-rider'||kind==='lift-chair'){
-  line(g,[[0,-47],[0,-24],[-10,-17]],'#65766a',2);
-  line(g,[[-11,-17],[11,-17],[11,-7],[-11,-7],[-11,-17]],'#8b7960',3);
-  if(kind==='lift-rider'){
-   rect(g,-5,-27,10,13,'#b5754f');rect(g,-4,-36,8,9,'#d2a16e');rect(g,-5,-39,11,4,'#e4cc88');
-   line(g,[[-4,-14],[6,-12],[6,-2]],'#486778',4);line(g,[[2,-14],[11,-12],[11,-1]],'#486778',3);
-   line(g,[[-5,0],[15,4]],'#ba8256',2);line(g,[[1,-3],[21,1]],'#ba8256',2);
-  }
+ if(kind==='ski-hiker'){
+  shadow(g,12);
+  // A pair of skis strapped diagonally to the pack, clear of his walking legs.
+  line(g,[[-9,-12],[-18,-51],[-16,-55]],'#ba8256',3);
+  line(g,[[-3,-13],[-12,-52],[-10,-56]],'#d8b477',3);
+  rect(g,-11,-31,8,19,'#6e8463');line(g,[[-11,-25],[-3,-27]],'#d7ca9a',2);
+  rect(g,-5,-29,10,15,'#b5754f');rect(g,-3,-39,8,10,'#d2a16e');rect(g,-5,-42,11,4,'#e4cc88');rect(g,4,-36,2,2,'#4f5646');
+  line(g,[[-3,-14],[frame?-6:-1,-6],[frame?-8:0,1]],'#486778',4);
+  line(g,[[3,-14],[frame?6:2,-7],[frame?9:1,1]],'#486778',4);
+  line(g,[[6,-26],[frame?12:9,-16]],'#d2a16e',3);
+  line(g,[[11,-20],[15,2]],'#71847c',1);
   return;
  }
  if(kind==='fox'){shadow(g,12);rect(g,-12,-12,24,9,'#b97943');rect(g,8,-19,10,12,'#c68a4d');rect(g,7,-23,4,6,'#95633f');rect(g,15,-22,3,5,'#95633f');rect(g,16,-14,5,4,'#fff0c9');rect(g,14,-17,2,2,'#344d3d');rect(g,-20,-16,12,7,'#c78d4f');rect(g,-22,-17,6,6,'#f0dfb3');rect(g,-9,-4,3,5,'#70553e');rect(g,6,-4,3,5,'#70553e');return;}
@@ -203,7 +195,7 @@ const bridgeArt=sprite('river-bridge',g=>{
   for(const u of [0,.25,.5,.75,1]){const p=edge(u,side);line(g,[[p[0],p[1]-14],[p[0],p[1]+3]],'#826b4b',3);}
   const a=edge(0,side),b=edge(1,side);line(g,[[a[0],a[1]-14],[b[0],b[1]-14]],'#b49a70',3);
  }
-},280);
+},[Math.min(0,bridgeEnd.x-bridgeStart.x)-16,Math.min(0,bridgeEnd.y-bridgeStart.y)-28,Math.max(0,bridgeEnd.x-bridgeStart.x)+16,Math.max(0,bridgeEnd.y-bridgeStart.y)+16]);
 props.push({x:bridgeStart.x,y:bridgeStart.y,depth:93,art:bridgeArt,scale:1,id:'bridge'});
 // Vegetation is deterministic and deliberately kept clear of the paths and doors.
 for(let y=7;y<55;y+=1.65)for(let x=5;x<68;x+=1.65){
@@ -220,7 +212,7 @@ for(const [x,y,type] of [[23,45,'apple'],[20,49,'bloom'],[25,50,'bloom'],[17,47,
  const o=addProp(x,y,broadTree(type),1,'',true);if(x===23)places.apple={x:o.x,y:o.y-25};
 }
 for(const [x,y] of [[27,42],[28.5,42],[30,42],[27,43.5],[28.5,43.5],[30,43.5]])addProp(x,y,bushSprite(true),.8);
-places.welcome={...point(21,57)};places.welcome.y+=205;
+places.welcome={x:sceneFrame.x,y:sceneFrame.bottom};
 places.directory={...point(58,45)};places.directory.y+=9;
 places.mail={...point(65,20)};places.mail.y+=24;
 const mailbox=sprite('mailbox',g=>{shadow(g,10);rect(g,-2,-20,4,23,'#967149');rect(g,-9,-37,20,19,'#688e79');rect(g,-6,-40,14,3,'#92ae8a');rect(g,-9,-23,20,5,'#4f7561');rect(g,9,-40,2,16,'#76563d');rect(g,11,-39,8,5,'#c77f55');rect(g,-3,-32,8,5,'#f6e6bd');});
@@ -241,12 +233,13 @@ const conversations={
 const links='<div class="contact-links"><a href="mailto:wesley.kay@gmail.com">Email me</a><a href="Wesley-Kay-Resume.pdf" target="_blank" rel="noopener">Resume ↗</a><a href="https://linkedin.com/in/wesley-kay" target="_blank" rel="noopener">LinkedIn ↗</a></div>';
 const projectMeta={bny:['BNY','Making enterprise AI make sense.'],qds:['Qualcomm','A shared design language, built from scratch.'],tmo:['T-Mobile','Search and navigation at a very big scale.'],overlay:['Overlay','Co-founder. From zero to a DeFi protocol.']};
 let vw=innerWidth,vh=innerHeight,baseScale=1,zoom=1,panX=0,panY=0,tx=0,ty=0;
+let introHeight=0,welcomeHeight=0,homeLift=24;
 let frameId=0,lastPaint=0,sceneTime=0,previousTime=0,dirty=true;
 const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 let paused=motionQuery.matches,musicOn=false,audio=null,musicTimer=0,voiceIndex=0;
 let activeSpeech='',speechOrigin=null,activePanel='',panelOrigin=null,requestToken=0;
 const speech=$('#speech'),panel=$('#case-panel'),body=$('#panel-body');
-const signNodes=$$('[data-place]'),personNodes=$$('[data-person]');
+const signNodes=$$('[data-place]').filter(el=>el!==welcome),personNodes=$$('[data-person]');
 const effects=[];
 function toScreen(p){return {x:p.x*baseScale*zoom+tx,y:p.y*baseScale*zoom+ty};}
 function transform(){
@@ -254,12 +247,15 @@ function transform(){
  const maxX=Math.max(0,(W*s-vw)/2)+vw*.16*(zoom-1);
  const maxY=Math.max(0,(H*s-(vh-130))/2)+vh*.13*(zoom-1);
  panX=clamp(panX,-maxX,maxX);panY=clamp(panY,-maxY,maxY);
- tx=(vw-W*s)/2+panX;ty=(vh-H*s)/2+panY-8;
+ tx=vw/2-sceneFrame.x*s+panX;ty=(vh-introHeight-16)/2-homeLift-(sceneFrame.top+sceneFrame.bottom)/2*s+panY;
 }
-function resize(){vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);ctx?.setTransform(dpr,0,0,dpr,0,0);baseScale=Math.min((vw-(vw<760?10:90))/W,(vh-(vw<760?175:130))/H);baseScale=Math.max(.18,baseScale);transform();requestDraw();}
-function zoomAt(next,x=vw/2,y=vh/2){const old=baseScale*zoom,px=(x-tx)/old,py=(y-ty)/old;zoom=clamp(next,1,vw<760?4:2.7);const scale=baseScale*zoom;panX=x-px*scale-(vw-W*scale)/2;panY=y-py*scale-(vh-H*scale)/2+8;transform();closeSpeech(false);requestDraw();}
+function resize(){vw=innerWidth;vh=innerHeight;introHeight=intro.offsetHeight;welcomeHeight=welcome.offsetHeight;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);ctx?.setTransform(dpr,0,0,dpr,0,0);baseScale=Math.min((vw-(vw<760?10:90))/W,(vh-130-introHeight-16)/(sceneFrame.bottom-sceneFrame.top));baseScale=Math.max(.18,baseScale);homeLift=clamp((vh-(sceneFrame.bottom-sceneFrame.top)*baseScale-introHeight-16)/2-12,0,24);transform();requestDraw();}
+function zoomAt(next,x=vw/2,y=vh/2){const old=baseScale*zoom,px=(x-tx)/old,py=(y-ty)/old;zoom=clamp(next,1,vw<760?4:2.7);const scale=baseScale*zoom;panX=x-px*scale-vw/2+sceneFrame.x*scale;panY=y-py*scale-(vh-introHeight-16)/2+homeLift+(sceneFrame.top+sceneFrame.bottom)/2*scale;transform();closeSpeech(false);requestDraw();}
 function resetView(){zoom=1;panX=0;panY=0;transform();closeSpeech(false);requestDraw();}
 function positionNodes(){
+ const base=toScreen({x:sceneFrame.x,y:sceneFrame.bottom});
+ intro.style.left=Math.round(base.x)+'px';intro.style.top=Math.round(base.y+16)+'px';
+ places.welcome={x:sceneFrame.x,y:sceneFrame.bottom+(16+welcomeHeight/2)/(baseScale*zoom)};
  for(const el of signNodes){const p=toScreen(places[el.dataset.place]);el.style.left=Math.round(p.x)+'px';el.style.top=Math.round(p.y)+'px';}
  for(const el of personNodes){const p=toScreen(places[el.dataset.person]||{x:-1000,y:-1000});el.style.left=Math.round(p.x)+'px';el.style.top=Math.round(p.y)+'px';}
  $('#zoom-out').disabled=zoom<=1.001;$('#zoom-in').disabled=zoom>=(vw<760?4:2.7)-.001;
@@ -273,16 +269,14 @@ function actorsAt(t){
   let [x,y]=xy;if(id==='fox'){x+=Math.sin(t*.22)*.8;y+=Math.cos(t*.22)*.2;}
   const p=point(x,y),o={x:p.x,y:p.y,depth:x+y,art:actorSprite(id,Math.floor(t*1.5)%2),scale:1};list.push(o);places[id]={x:p.x,y:p.y-17};
  }
- // Ski down, board at the lower station, ride uphill, and step off at the top.
- const phase=t%42;let sp,skierArt='skier',skiDepth;
+ // Ski down, shoulder the skis, hike back up, and put them on for the next run.
+ const phase=t%48;let sp,skierArt='skier',skiDepth;
  if(phase<18){const u=phase/18,sx=mix(30,35,u)+Math.sin(u*Math.PI*4)*.6,sy=mix(22,26,u);sp=point(sx,sy);skiDepth=sx+sy;}
- else if(phase<20){const u=(phase-18)/2,p=liftPoint(0);sp={x:mix(skiBottom.x,p.x,u),y:mix(skiBottom.y,p.y,u)};skiDepth=61;}
- else if(phase<40){const u=(phase-20)/20;sp=liftPoint(u);skiDepth=mix(61,52,u);skierArt='lift-rider';}
- else{const u=(phase-40)/2,p=liftPoint(1);sp={x:mix(p.x,skiTop.x,u),y:mix(p.y,skiTop.y,u)};skiDepth=52;}
- list.push({...sp,depth:skiDepth,art:actorSprite(skierArt),scale:1,id:'skier',phase:skierArt==='lift-rider'?'lift':'ski'});places.skier={x:sp.x,y:sp.y-17};
- // Empty chairs circle back down the other side of the lift.
- const returnProgress=1-(t%20)/20,chair=liftPoint(returnProgress,12);
- list.push({...chair,depth:mix(61,52,returnProgress),art:actorSprite('lift-chair'),scale:1});
+ else if(phase<20){sp=skiBottom;skiDepth=61;skierArt='ski-hiker';}
+ else if(phase<46){const u=(phase-20)/26,sx=mix(35,30,u),sy=mix(26,22,u);sp=point(sx,sy);skiDepth=sx+sy;skierArt='ski-hiker';}
+ else{sp=skiTop;skiDepth=52;skierArt='ski-hiker';}
+ const hiking=skierArt==='ski-hiker',step=hiking&&phase>=20&&phase<46?Math.floor(t*4)%2:0;
+ list.push({...sp,depth:skiDepth,art:actorSprite(skierArt,step),scale:1,id:'skier',flip:hiking,phase:hiking?'hike':'ski'});places.skier={x:sp.x,y:sp.y-17};
  const ri=(t*3.3)%road.length,ra=road[Math.floor(ri)],rb=road[(Math.floor(ri)+1)%road.length];
  const bp={x:mix(ra.x,rb.x,ri%1),y:mix(ra.y,rb.y,ri%1)};list.push({...bp,depth:mix(ra.wx+ra.wy,rb.wx+rb.wy,ri%1),art:actorSprite('biker',Math.floor(t*5)%2),scale:1,flip:ri>=8*12,id:'biker'});places.biker={x:bp.x,y:bp.y-15};
  const travel=(1-Math.cos(t*Math.PI/24))/2,fi=travel*(riverRoute.length-1),fa=riverRoute[Math.floor(fi)],fb=riverRoute[Math.min(Math.floor(fi)+1,riverRoute.length-1)];
@@ -412,6 +406,6 @@ function chime(notes){if(!musicOn||!audio)return;notes.forEach((n,i)=>note(n,aud
 $('#music').addEventListener('click',async()=>{
  try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio){toast('Your browser has the quiet version.');return;}if(!audio)audio=new Audio();musicOn=!musicOn;if(musicOn){await audio.resume();scheduleMusic();}else{clearTimeout(musicTimer);await audio.suspend();}$('#music').innerHTML='<span aria-hidden="true">♫</span> music '+(musicOn?'on':'off');$('#music').setAttribute('aria-pressed',String(musicOn));}catch(error){musicOn=false;toast('Music couldn’t start. Try again in a moment.');}
 });
-if(ctx){drawTerrain();resize();updateMotion();applyRoute();document.fonts.ready.then(()=>{drawTerrain();requestDraw();});}
+if(ctx){drawTerrain();resize();updateMotion();applyRoute();document.fonts.ready.then(()=>{drawTerrain();resize();});}
 else{document.body.classList.add('no-canvas');applyRoute();}
 })();
