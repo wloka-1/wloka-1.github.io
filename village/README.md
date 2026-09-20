@@ -35,7 +35,7 @@ No framework, runtime dependencies, build step, remote font calls, downloaded sc
 
 The opening request set is `index.html`, `village/village.css`, `village/village.js`, and the locally bundled `pixelify-sans.woff2`. Together these are about 62 KB raw and 28 KB with gzip. Those figures are a file-size budget, not a measured first-paint time. The Python preview server sends the uncompressed files. A future host should compress HTML, CSS, and JS and cache static assets.
 
-Studies are separate HTML fragments requested on first opening and cached for the session. Their existing images use native lazy loading. The case studies were rewritten on September 19, 2026 against the resumes, Obsidian meeting notes, existing artifacts, and project content rules. See `EDITORIAL-SOURCES.md` for evidence and unresolved claims. Colleague quotes remain from the pre-experiment portfolio. The original resume PDF is unchanged. Pixelify Sans is redistributed under the SIL Open Font License in `fonts/OFL.txt`.
+Studies are separate HTML fragments requested on first opening and cached for the session. Their existing images use native lazy loading. The case studies were rewritten on September 19, 2026 against the resumes, Obsidian meeting notes, existing artifacts, and project content rules. See `EDITORIAL-SOURCES.md` for evidence and unresolved claims. Colleague quotes remain from the pre-experiment portfolio. The downloadable resume PDFs were updated on September 20, 2026 to use the confirmed T-Mobile zero-result rates (~13% to 0.7%). Pixelify Sans is redistributed under the SIL Open Font License in `fonts/OFL.txt`.
 
 ## Validation
 

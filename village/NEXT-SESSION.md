@@ -19,7 +19,7 @@ Questions were sent early in the rewrite session; no answers had arrived when th
 - Overlay: a consequential product mistake, what exposed it, and what changed. Current copy uses the documented arrival-confusion / market-discovery change without inventing a stronger anecdote or onboarding metric.
 - BNY: confirm the placement-framework middle term. Framework labels are omitted. The study uses the adopted IA, documented usability findings, and task origins. Broader task-experience validation is not presented as a shipped outcome.
 
-Both resumes still contain conflicting or unqualified claims; they were read but not edited. Do not restore omitted figures simply because a resume repeats them.
+At Wesley’s request on September 20, the T-Mobile search bullet now uses ~13% to 0.7% in the main and AI Forward Markdown/HTML resumes, the Assured HTML resume, all three PDF exports, and both portfolio PDF copies. Other resume content was preserved. Do not restore unrelated omitted figures simply because a resume repeats them.
 
 ## Branch and scope
 
