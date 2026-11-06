@@ -79,6 +79,11 @@
   body.open .item:hover .t { color: var(--ink); }
   .item:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
 
+  .label-other { margin-top: 88px; }
+  .cs .eyebrow { font-size: 13px; color: var(--gray); margin-bottom: 10px; }
+  .glance { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px 28px; padding: 20px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .glance dt { font-size: 13px; color: var(--gray); }
+  .glance dd { font-size: 15px; color: var(--ink); margin-top: 3px; line-height: 1.4; }
   .note { margin-top: 40px; font-size: 13px; color: var(--gray); line-height: 1.5; }
 
   .more { margin-top: 112px; }
@@ -207,6 +212,10 @@
     <nav><a href="Wesley-Kay-Resume.pdf">Resume</a> · <a href="https://linkedin.com/in/wesley-kay">LinkedIn</a> · <a href="mailto:wesley.kay@gmail.com">Email</a></nav>
   </header>
 
+  <h2 class="label">Case studies</h2>
+  <ol id="list-cs"></ol>
+
+  <h2 class="label label-other">Other work</h2>
   <ol id="list"></ol>
 
   <p class="note">Work marked private is under NDA.<br>Happy to walk through it in person.</p>
@@ -275,22 +284,190 @@ const projects = [
     id: "ai-navigation",
     title: "Navigation for an enterprise AI platform",
     org: "BNY", role: "Staff AI Designer", when: "2025 to now", private: true,
+    cs: true,
     body: `
-      <p class="lede">BNY's AI products grew faster than the experience connecting them. I proposed the information architecture the team adopted, led the navigation redesign through user testing, and partnered with engineering on the rollout.</p>
-      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
+      <p class="lede">BNY's AI platform, Eliza, grew faster than the experience connecting it. Every new AI product needed a place to live, and the top navigation had run out of room. I proposed the information architecture the team adopted, led the navigation redesign through user testing, and partnered with engineering to ship it bank-wide.</p>
+      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p><dl class="glance"><div><dt>Role</dt><dd>Product design for the core experience</dd></div><div><dt>Platforms</dt><dd>Web, mobile, tablet, desktop</dd></div><div><dt>Timeline</dt><dd>Oct 2025 to now</dd></div><div><dt>Shipped</dt><dd>Launched March 2026, bank-wide July 2026</dd></div><div><dt>Audience</dt><dd>About 40,000 employees</dd></div></dl>
 
       <h3>The problem</h3>
+      <p>The navigation was built for a handful of products. Each new one got squeezed into the top bar until there was no room left, and nothing told people how the products related to each other.</p>
       <p>In one usability session, a daily user told me he'd stopped exploring because navigation was too confusing. Other sessions showed the same thing: people couldn't tell what a destination was or where a link would take them. Adding more products to the menu wasn't going to fix that.</p>
 
-      <h3>The structure</h3>
-      <p>I proposed a hierarchical information architecture so the platform could keep growing without getting harder to read. The tradeoff was depth. Grouping creates room to grow, but it can bury the thing someone uses every day. I ran 1:1 interviews and usability sessions to test that tradeoff and brought the findings back into the design.</p>
+      <h3>Goals</h3>
+      <dl class="rows">
+        <div><dt>Absorb growth</dt><dd>New AI products should slot in without a navigation redesign each time.</dd></div>
+        <div><dt>Be legible</dt><dd>People should know what a destination is and where a link goes before they click.</dd></div>
+        <div><dt>Keep daily work close</dt><dd>The things someone uses every day stay one click away.</dd></div>
+      </dl>
 
-      <h3>What testing caught</h3>
-      <p>A navigation icon I chose read as Safari, so its purpose wasn't clear. I changed it. One participant lost their place when opening the menu changed the navigation around it, so I reworked that interaction to keep the current context. Pinning split people: one found it right away, another couldn't find it or tell if it worked. That one is still open.</p>
+      <h3>Deciding where things live</h3>
+      <p>Every new AI product reopened the same question: where does it go? I defined a simple rule. A product is native to Eliza, integrated into it, or external and linked out. That answer decides how it shows up in navigation, so teams stopped relitigating it product by product.</p>
+
+      <h3>A structure that can grow</h3>
+      <p>I proposed a hierarchical information architecture and a single front door for the whole platform. The tradeoff was depth. Grouping creates room to grow, but it can bury the thing someone uses every day, so pinning had to keep daily work close while the hierarchy held everything else.</p>
+
+      <h3>What testing changed</h3>
+      <p>I run my own 1:1 usability sessions on a standing cadence, and they reversed decisions I had already committed to.</p>
+      <dl class="rows">
+        <div><dt>An icon</dt><dd>A navigation icon I chose read as Safari, so its purpose wasn't clear. I changed it.</dd></div>
+        <div><dt>Lost context</dt><dd>Opening the menu changed the navigation around it, and one participant lost their place. I reworked the interaction to keep the current context.</dd></div>
+        <div><dt>Pinning</dt><dd>One participant found it right away. Another couldn't find it or tell if it worked. That one is still open.</dd></div>
+      </dl>
+
+      <h3>Shipping it</h3>
+      <p>I worked with engineering through the build and rollout. The new navigation launched in March 2026 and shipped to production across BNY's AI applications in July 2026.</p>
 
       <h3>Outcome</h3>
-      <p>The team adopted the IA and the global navigation shipped to production across BNY's AI applications in July 2026. I don't have a measured findability number to attach to it.</p>
-    `
+      <p>The team adopted the information architecture and the placement rule, and every new AI product now inherits them. The navigation is live bank-wide. I don't have a measured findability number to attach to it.</p>
+
+      <h3>What I'd do differently</h3>
+      <p>Get a findability baseline before launch. Without a before number, I can show that the structure shipped and held up as products were added, but not how much easier finding things got.</p>
+`
+  },
+  {
+    id: "icons",
+    title: "One icon system for three brands",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
+    cs: true,
+    body: `
+      <p class="lede">Qualcomm, Snapdragon, and Dragonwing needed one icon system that worked for dense product tools and expressive marketing pages. Three icon sets were already in use, and they disagreed. I audited them, set one ramp with two rule sets, and put a cost of entry on custom icons.</p>
+      <dl class="glance"><div><dt>Role</dt><dd>Design Systems Lead, contract</dd></div><div><dt>Timeline</dt><dd>Feb to Sept 2025</dd></div><div><dt>Scope</dt><dd>Utility and marketing icons across three brands</dd></div><div><dt>Library</dt><dd>1,500+ icons</dd></div><div><dt>Shipped</dt><dd>Enterprise beta, now public</dd></div></dl>
+
+      <h3>The problem</h3>
+      <p>A utility icon next to a table row and a marketing illustration do different jobs. Product teams needed small, legible controls. Marketing needed artwork with more personality. On top of that, three sets were already in circulation: the old system, marketing's, and the new system's draft. Nobody could say which rule was the rule.</p>
+
+      <h3>Start with an audit</h3>
+      <p>I lined up the three sets side by side: sizes, stroke widths, and names. Sizes mostly agreed, from 12 to 40 pixels. Strokes didn't. Product icons used fractional weights up to 3.33 pixels, and marketing barely changed weight at all as icons grew.</p>
+      <figure><img src="${IMG}qualcomm/icon-ramp-comparison.png" alt="Table comparing icon sizes and stroke widths across three icon sets with a recommendation column"><figcaption>Sizes, strokes, and names across three sets, with the recommendation on the right of each table.</figcaption></figure>
+
+      <h3>One ramp, two rule sets</h3>
+      <p>The recommendation keeps the shared sizes and steps stroke evenly from 1 to 2.25 pixels, so weight grows with size instead of jumping. Utility icons got fixed sizes and alignment rules. Marketing icons kept their scale, illustrative strokes, and more color freedom. Both sit on the same foundations.</p>
+      <figure><img src="${IMG}qualcomm/Ramp.png" alt="Icon stroke and size ramp"><figcaption>The utility ramp. Size and stroke move together.</figcaption></figure>
+      <figure><img src="${IMG}qualcomm/Sizing.png" alt="Icon sizing guidance"><figcaption>Pick from the ramp instead of scaling by eye.</figcaption></figure>
+
+      <h3>Rules people can follow</h3>
+      <p>Each rule shipped as a short page with a do and a don't, so a designer can check it quickly before handing off.</p>
+      <figure><img src="${IMG}qualcomm/icon-scaling.png" alt="Do and don't example for icon line weights"><figcaption>Each rule shipped with a do and a don't.</figcaption></figure>
+
+      <h3>A cost of entry for new icons</h3>
+      <p>Every custom icon costs design time, then upkeep in both the Figma library and the codebase. Some are worth it: a high-use icon that's off-standard, or one that will show up across the system. Most aren't. I turned the review into a decision tree so the default answer is reuse.</p>
+      <figure><img src="${IMG}qualcomm/icon-decision-tree.png" alt="Decision tree for whether to request a custom icon"><figcaption>Four of the five paths end in reusing an icon. Only one ends at a request to the system team.</figcaption></figure>
+
+      <h3>What didn't get solved</h3>
+      <p>Search. Tagging 1,500+ icons with metadata was too much manual work for the first version, so designers still leaned on the source library's search to find things.</p>
+
+      <h3>Outcome</h3>
+      <p>The icon system shipped with the enterprise beta, with guidelines, a governed review path, and one ramp across three brands. The system is now public.</p>
+
+      <h3>What I'd do differently</h3>
+      <p>Budget for metadata from day one. Tagging is cheap per icon and expensive in bulk, and without it a library is only as findable as wherever its icons came from.</p>
+`
+  },
+  {
+    id: "search",
+    title: "One search for shopping and support",
+    org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
+    cs: true,
+    body: `
+      <p class="lede">Searching "iPhone" on T-Mobile could mean buying one, finding a case, or fixing the one you have. One search had to serve shopping and support at once. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile.</p>
+      <dl class="glance"><div><dt>Role</dt><dd>Senior UX Designer, Lead</dd></div><div><dt>Team</dt><dd>Three people, one designer</dd></div><div><dt>Timeline</dt><dd>2020 to 2021</dd></div><div><dt>Platforms</dt><dd>Web and mobile</dd></div></dl>
+      <div class="stats"><div><b>13% → 0.7%</b><span>searches returning zero results</span></div><div><b>+24%</b><span>search usage</span></div><div><b>+11%</b><span>phone sales</span></div></div>
+
+      <h3>The problem</h3>
+      <p>About 13% of searches returned nothing at all. And the same query could mean shopping or support, with nothing in the experience to help someone say which.</p>
+
+      <h3>Constraints</h3>
+      <p>I joined mid-project, and the schedule didn't allow a fresh discovery phase. Mobile was the hard case: suggestions compete with the keyboard for a small screen.</p>
+
+      <h3>Research with what existed</h3>
+      <p>I worked with the research team on known search behavior, went through heatmaps and query analytics, and wrote the questions for in-house researchers and outside vendors. That let design move forward on evidence instead of waiting for new studies.</p>
+      <figure><img src="${IMG}tmo3.png" alt="Click heatmap of the old search results page"><figcaption>Clicks after searching "pay bill" on the old results page.</figcaption></figure>
+
+      <h3>Decision 1: help people form the query</h3>
+      <p>Recent and popular searches give people a starting point. As they type, suggestions include categories, so a partial query can head toward a phone or toward support before the results page. I kept the category cues close to the query so the choice didn't need another control.</p>
+      <figure><img src="${IMG}tmo5.png" alt="Search suggestions on mobile"><figcaption>A partial "iPh" offers both phones and support.</figcaption></figure>
+
+      <h3>Decision 2: keep buying and getting help equally close</h3>
+      <p>Results split into phones, accessories, and support, with an All view for people who hadn't narrowed down yet. Product results show images and prices. Support results show titles and descriptions. Tabs change direction without losing the query, and applied filters stay visible as removable chips.</p>
+      <figure><img src="${IMG}tmo1.png" alt="Search results with category tabs and filter chips"><figcaption>Same query across product and support views.</figcaption></figure>
+
+      <h3>Decision 3: admit the gap</h3>
+      <p>After the Sprint merger, some answers still lived on Sprint's site. A direct "Looking for Sprint results?" link said so, instead of pretending the results covered everything.</p>
+      <figure><img src="${IMG}tmo7.png" alt="Looking for Sprint results link"><figcaption>An explicit way out when the content lives elsewhere.</figcaption></figure>
+
+      <h3>Outcome</h3>
+      <p>We used A/B testing and search analytics through rollout. Zero-result searches fell from about 13% to 0.7%, search usage rose 24%, and phone sales rose 11%. Those numbers are for the redesign as a whole, not any single change.</p>
+
+      <h3>What I'd do differently</h3>
+      <p>Test changes in smaller pieces. Shipping as one redesign got the result, but it means I can't say which decision did the most work.</p>
+`
+  },
+  {
+    id: "civil-conflicts",
+    title: "Finding what's in the way before you dig",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    cs: true,
+    body: `
+      <p class="lede">Before a utility project breaks ground, someone has to find everything it might collide with: paving moratoria, other planned projects, city and county lines, existing utilities. I designed CivilGrid's intelligence reports to compile that from the map, then turned them into a list a team can work through.</p>
+      <dl class="glance"><div><dt>Role</dt><dd>Product design consultant</dd></div><div><dt>Client</dt><dd>CivilGrid, a mapping platform for civil engineers</dd></div><div><dt>Timeline</dt><dd>2024 to 2025</dd></div><div><dt>Platform</dt><dd>Web</dd></div></dl>
+
+      <h3>The problem</h3>
+      <p>The answers were scattered across agencies, documents, and map data. An engineer had to pull them together by hand for every project, and a missed moratorium or overlapping project means rework or a stalled permit.</p>
+
+      <h3>Where conflicts belong</h3>
+      <p>The first question was where this lives. We weighed making conflicts another map layer, a count on the project list, or a dashboard view. A layer would hide them among dozens of others, and a count says how many without saying what. They became their own section inside each project, next to land rights, utilities, and the other analysis.</p>
+      <figure><img src="${IMG}civilgrid/project-nav.png" alt="CivilGrid project page with left-hand navigation"><figcaption>Inside a project, the left nav groups general info, analysis, and the project's maps.</figcaption></figure>
+
+      <h3>Four inputs, then run</h3>
+      <p>Confirm the project dates, pick the segment on the map or draw a new shape, set a buffer around it, and name the report. The map stays live beside the form, so you can see exactly what area the report will cover.</p>
+      <figure><img src="${IMG}civilgrid/new-report.png" alt="New intelligence report form beside the map"><figcaption>The map stays live while you set up the report.</figcaption></figure>
+
+      <h3>A report you can read</h3>
+      <p>The report leads with the headline numbers for each category, like total overlap and the count of individual conflicts. Opening a category shows the rows: who the agency is, when the restriction runs, how much it overlaps, and who to call. Overlaps light up on the map next to it. The whole report exports to PDF.</p>
+      <figure><img src="${IMG}civilgrid/report.png" alt="Intelligence report showing paving moratoria overlapping a project"><figcaption>Moratoria within half a mile of the project, with overlap, dates, and a contact for each.</figcaption></figure>
+
+      <h3>Then a list you can work through</h3>
+      <p>A report is read once. Conflicts get resolved over weeks. The next version turned each conflict into a row with a status: not yet reviewed, coordinating, needs attention, resolved, not an issue. Each row's color matches its shape on the map, and each category shows how many still need attention. You can subscribe to moratoria updates instead of re-running the report.</p>
+      <figure><img src="${IMG}civilgrid/conflicts.png" alt="Conflicts panel with status per conflict, color matched to the map"><figcaption>Every conflict gets a status and a color that matches the map.</figcaption></figure>
+
+      <h3>Outcome</h3>
+      <p><span class="todo">Needs Wesley: did the reports or the conflicts view ship, and has anyone used them on a real project?</span></p>
+
+      <h3>What I'd do differently</h3>
+      <p>Design the tracking version first. The report was the obvious ask, but the real work happens after it's read, in the weeks of coordination that follow.</p>
+`
+  },
+  {
+    id: "overlay-app",
+    title: "A trading app that starts with the markets",
+    org: "Overlay", role: "Co-founder, Head of Design", when: "2021 to 2025",
+    cs: true,
+    body: `
+      <p class="lede">Overlay let people trade on niche data markets. The app had to explain what was there before asking anyone to take a position. Over four iterations I moved the first screen from trade controls to browsable markets, then featured markets.</p>
+      <dl class="glance"><div><dt>Role</dt><dd>Co-founder, COO &amp; Head of Design</dd></div><div><dt>Team</dt><dd>Grew from 3 to 25</dd></div><div><dt>Timeline</dt><dd>2021 to 2025</dd></div><div><dt>Funding</dt><dd>$4M seed</dd></div><div><dt>Platforms</dt><dd>Web app, mobile, marketing site</dd></div></dl>
+
+      <h3>The problem</h3>
+      <p>The early app opened on long and short, leverage, and an amount. That's a direct route for someone who already knows what to trade. It did nothing to explain why anyone was there, and most people arriving didn't know yet.</p>
+
+      <h3>First try: make it clearer</h3>
+      <p>I improved legibility first. People still arrived confused. The screen was clearer, but it was still the wrong first screen.</p>
+
+      <h3>The structural fix</h3>
+      <p>I made the first screen a list of markets with names, prices, and categories people could scan before opening a trade. Later, featured markets gave the more unusual offerings a visible place. The tradeoff was an extra step before trading, which I made on purpose so people could understand what they were betting on.</p>
+      <figure><img src="${IMG}overlay8.png" alt="Overlay mobile screens from trade-first to market-first"><figcaption>Left to right: trade controls first, then market discovery first.</figcaption></figure>
+      <figure><img src="${IMG}overlay9.png" alt="Overlay desktop app"><figcaption>The shipped desktop app.</figcaption></figure>
+
+      <h3>A direct line to users</h3>
+      <p>I ran small core-user groups in Telegram, plus Discord threads and polls. I could ask about one interaction and follow up with the same person.</p>
+      <figure><img src="${IMG}overlay2.png" alt="Telegram exchange with a user about gas costs"><figcaption>A working product could still be too expensive to use.</figcaption></figure>
+      <p>The limit: these were engaged people willing to talk to a founder. They couldn't stand in for the people who never understood the product well enough to join.</p>
+
+      <h3>Outcome</h3>
+      <p>We shipped the product through four app iterations, raised a $4M seed, and grew the team from 3 to 25. The community reached 77K on Twitter and 50K on Discord, which overlap and aren't a count of traders. I don't have a measured onboarding lift for the market-first change.</p>
+
+      <h3>What I'd do differently</h3>
+      <p>Recruit people who weren't already fans. The community told us a lot about the product, and very little about why newcomers left.</p>
+`
   },
   {
     id: "task-model",
@@ -346,30 +523,6 @@ const projects = [
     `
   },
   {
-    id: "icons",
-    title: "One icon system for three brands",
-    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
-    body: `
-      <p class="lede">Qualcomm, Snapdragon, and Dragonwing needed one icon library that worked for dense product tools and expressive marketing pages.</p>
-      <div class="stats"><div><b>1,500+</b><span>icons shipped with governance</span></div><div><b>3</b><span>brands on shared foundations</span></div></div>
-
-      <h3>Different jobs, shared rules</h3>
-      <p>A utility icon next to a table row and a marketing illustration do different jobs. I set separate sizing and stroke ramps for each, tied to the same foundations. Utility icons got fixed sizes and alignment rules. Marketing icons kept their scale, illustrative strokes, and more color freedom.</p>
-      <figure><img src="${IMG}qualcomm/Sizing.png" alt="Icon sizing guidance"><figcaption>Pick from the ramp instead of scaling by eye. Size and stroke weight move together.</figcaption></figure>
-      <figure><img src="${IMG}qualcomm/Ramp.png" alt="Icon stroke and size ramp"></figure>
-
-      <h3>Three icon sets, one ramp</h3>
-      <p>Three sets were already in use: the old system, marketing's, and the new system's draft. I lined up their sizes and stroke widths side by side. Sizes mostly agreed, from 12 to 40 pixels. Strokes didn't. Product icons used fractional weights up to 3.33 pixels, and marketing barely changed weight at all. The recommendation steps stroke evenly from 1 to 2.25 pixels as icons grow.</p>
-      <figure><img src="${IMG}qualcomm/icon-ramp-comparison.png" alt="Table comparing icon sizes and stroke widths across three icon sets with a recommendation column"><figcaption>Sizes, strokes, and names across three sets, with the recommendation on the right of each table.</figcaption></figure>
-      <figure><img src="${IMG}qualcomm/icon-scaling.png" alt="Do and don't example for icon line weights"><figcaption>Each rule shipped with a do and a don't.</figcaption></figure>
-
-      <h3>A cost of entry for new icons</h3>
-      <p>Every custom icon costs design time, then upkeep in both the Figma library and the codebase. I turned the review into a decision tree: does an icon already exist, does anything else work in its place, would a new one have more than one use, and is it worth what it costs to maintain. Most paths end at an existing icon. Only the last one ends at a request to the system team.</p>
-      <figure><img src="${IMG}qualcomm/icon-decision-tree.png" alt="Decision tree for whether to request a custom icon"><figcaption>Four of the five paths end in reusing an icon.</figcaption></figure>
-      <p>What didn't get solved: search. Tagging 1,500+ icons with metadata was too much manual work for v1, so designers still leaned on the source library's search.</p>
-    `
-  },
-  {
     id: "patterns",
     title: "UX patterns across Qualcomm's products",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
@@ -409,24 +562,6 @@ const projects = [
     `
   },
   {
-    id: "civil-conflicts",
-    title: "Finding what's in the way before you dig",
-    org: "CivilGrid", role: "Design consultant", when: "2025",
-    body: `
-      <p class="lede">Before a utility project breaks ground, someone has to find everything it might collide with: paving moratoria, other planned projects, city and county lines, existing utilities. I designed CivilGrid's intelligence reports to compile it from the map.</p>
-      <h3>Four inputs, then run</h3>
-      <p>Confirm the project dates, pick the segment on the map or draw a new shape, set a buffer around it, and name the report.</p>
-      <figure><img src="${IMG}civilgrid/new-report.png" alt="New intelligence report form beside the map"><figcaption>The map stays live while you set up the report.</figcaption></figure>
-      <h3>A report you can read</h3>
-      <p>The report leads with the headline numbers for each category, like total overlap and the count of individual conflicts. Opening a category shows the rows: who the agency is, when the restriction runs, how much it overlaps, and who to call. Overlaps light up on the map next to it. The whole report exports to PDF.</p>
-      <figure><img src="${IMG}civilgrid/report.png" alt="Intelligence report showing paving moratoria overlapping a project"><figcaption>Moratoria within half a mile of the project, with overlap, dates, and a contact for each.</figcaption></figure>
-      <h3>Then a list you can work through</h3>
-      <p>A report is read once. Conflicts get resolved over weeks. The next version turned each conflict into a row with a status: not yet reviewed, coordinating, needs attention, resolved, not an issue. Each row's color matches its shape on the map, and each category shows how many still need attention. You can subscribe to moratoria updates instead of re-running the report.</p>
-      <figure><img src="${IMG}civilgrid/conflicts.png" alt="Conflicts panel with status per conflict, color matched to the map"><figcaption>Every conflict gets a status and a color that matches the map.</figcaption></figure>
-      <p><span class="todo">Needs Wesley: when this was, and what shipped.</span></p>
-    `
-  },
-  {
     id: "civil-draw",
     title: "Drawing on the map before there's a project",
     org: "CivilGrid", role: "Design consultant", when: "2024 to 2025",
@@ -434,12 +569,12 @@ const projects = [
       <p class="lede">CivilGrid is a mapping platform for civil engineers. About 80% of new users don't have a project yet, but the business only earns when someone creates one. Civil Draw, its drawing tool, was the bridge. People forgot it existed after training.</p>
       <h3>Map first</h3>
       <p>The goal was to become the tool engineers open instead of Google Earth. I moved the app from tabs to a left-hand nav with map search at the top, and put Civil Draw front and center on the home screen. I cut the object list from the home screen too. People add about ten objects before saving, so it was clutter.</p>
-      <figure><img src="${IMG}civilgrid/project-nav.png" alt="CivilGrid project page with left-hand navigation"><figcaption>Inside a project, the left nav groups general info, analysis, and the project's maps.</figcaption></figure>
+      <figure><img src="${IMG}civilgrid/civil-draw.png" alt="Civil Draw drawing tools over a satellite map"><figcaption>Civil Draw on the map: drawing tools along the bottom, objects and modes in the corners.</figcaption></figure>
       <h3>Draw now, save later</h3>
       <p>The team was split on whether drawing should live inside or outside projects. Inside gives it a home. Outside matches what people actually do, like a quick measurement. I designed for both: draw right away, then save as a new project or into an existing one. Saving to an existing project previews its boundary, so annotations don't land in the wrong place. The save step explains why a project matters, and that drafts are free.</p>
       <h3>Make sharing obvious</h3>
       <p>Inviting someone took several clicks through org settings. I moved share to the top right, the way Figma and Google Docs do it, with view, comment, and edit access.</p>
-      <p><span class="todo">Needs Wesley: what shipped, and Civil Draw screens.</span></p>
+      <p><span class="todo">Needs Wesley: what shipped?</span></p>
     `
   },
   {
@@ -517,26 +652,6 @@ const projects = [
     `
   },
   {
-    id: "overlay-app",
-    title: "A trading app that starts with the markets",
-    org: "Overlay", role: "Co-founder, Head of Design", when: "2021 to 2025",
-    body: `
-      <p class="lede">Overlay let people trade on niche data markets. The app had to explain what was there before asking anyone to take a position. Over four iterations I moved the first screen from trade controls to browsable markets, then featured markets.</p>
-      <div class="stats"><div><b>$4M</b><span>seed round</span></div><div><b>3 → 25</b><span>team size</span></div><div><b>4</b><span>app iterations</span></div></div>
-
-      <h3>Markets before controls</h3>
-      <p>The early app opened on long and short, leverage, and an amount. Great if you already knew what to trade. Useless for explaining why you were there. I improved legibility and people still arrived confused, so the fix had to be structural: open on a list of markets with names, prices, and categories.</p>
-      <figure><img src="${IMG}overlay8.png" alt="Overlay mobile screens from trade-first to market-first"><figcaption>Left to right: trade controls first, then market discovery first.</figcaption></figure>
-      <figure><img src="${IMG}overlay9.png" alt="Overlay desktop app"><figcaption>The shipped desktop app.</figcaption></figure>
-      <p>That added a step before trading. I made the trade on purpose. I don't have a measured onboarding lift to claim for it.</p>
-
-      <h3>A direct line to users</h3>
-      <p>I ran small core-user groups in Telegram, plus Discord threads and polls. I could ask about one interaction and follow up with the same person.</p>
-      <figure><img src="${IMG}overlay2.png" alt="Telegram exchange with a user about gas costs"><figcaption>A working product could still be too expensive to use.</figcaption></figure>
-      <p>The limit: these were engaged people willing to talk to a founder. They couldn't stand in for the people who never understood the product well enough to join.</p>
-    `
-  },
-  {
     id: "overlay-brand",
     title: "Scientists and cats: a brand and component library",
     org: "Overlay", role: "Co-founder, Head of Design", when: "2021 to 2025",
@@ -550,29 +665,6 @@ const projects = [
       <p>It let us carry the same language into referrals, staking, and gamification without re-deciding every control.</p>
       <figure><img src="${IMG}overlay6.png" alt="Overlay referral screens"></figure>
       <p>Audience: 77K on Twitter, 50K on Discord. Those overlap, and they aren't a count of traders.</p>
-    `
-  },
-  {
-    id: "search",
-    title: "One search for shopping and support",
-    org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
-    body: `
-      <p class="lede">Searching "iPhone" could mean buying one, finding a case, or fixing the one you have. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile.</p>
-      <div class="stats"><div><b>13% → 0.7%</b><span>searches returning zero results</span></div><div><b>+24%</b><span>search usage</span></div><div><b>+11%</b><span>phone sales</span></div></div>
-
-      <h3>Start from existing evidence</h3>
-      <p>The schedule didn't allow a fresh discovery phase. I worked with research on known search behavior, went through heatmaps and query analytics, and wrote the questions for in-house researchers and outside vendors.</p>
-      <figure><img src="${IMG}tmo3.png" alt="Click heatmap of the old search results page"><figcaption>Clicks after searching "pay bill" on the old results page.</figcaption></figure>
-
-      <h3>Help people form the query</h3>
-      <p>Recent and popular searches give people a starting point. As they type, suggestions include categories, so a partial query can head toward a phone or toward support before the results page.</p>
-      <figure><img src="${IMG}tmo5.png" alt="Search suggestions on mobile"><figcaption>A partial "iPh" offers both phones and support. Results carry those categories forward.</figcaption></figure>
-
-      <h3>Keep buying and getting help equally close</h3>
-      <p>Results split into phones, accessories, and support, with an All view. Tabs change direction without losing the query. Applied filters stay visible as removable chips, so people can undo without reopening the panel.</p>
-      <figure><img src="${IMG}tmo1.png" alt="Search results with category tabs and filter chips"><figcaption>Same query across product and support views.</figcaption></figure>
-      <figure><img src="${IMG}tmo7.png" alt="Looking for Sprint results link"><figcaption>After the merger, some answers still lived on Sprint. A direct link said so instead of pretending the results covered everything.</figcaption></figure>
-      <p>We used A/B testing and search analytics through rollout. These numbers are for the redesign as a whole, not any single change.</p>
     `
   },
   {
@@ -592,16 +684,19 @@ const list = document.getElementById("list");
 const panel = document.getElementById("panel");
 const inner = document.getElementById("panel-inner");
 
-list.innerHTML = projects.map(p => `
+const itemHTML = p => `
   <li><button class="item" data-id="${p.id}">
     <span class="t">${p.title}</span>
     <span class="m">${p.org} · ${p.role} · ${p.when}${p.private ? ' <span class="p">· private</span>' : ""}</span>
-  </button></li>`).join("");
+  </button></li>`;
+document.getElementById("list-cs").innerHTML = projects.filter(p => p.cs).map(itemHTML).join("");
+list.innerHTML = projects.filter(p => !p.cs).map(itemHTML).join("");
 
 function render(p) {
   const i = projects.indexOf(p);
   const next = projects[(i + 1) % projects.length];
   inner.innerHTML = `<article class="cs">
+    ${p.cs ? '<p class="eyebrow">Case study</p>' : ''}
     <h2>${p.title}</h2>
     <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
     ${p.body}
