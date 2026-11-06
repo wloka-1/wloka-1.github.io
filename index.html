@@ -240,7 +240,7 @@
       <li><a class="t out" href="https://react.qui.qualcomm.com/components/overview" target="_blank" rel="noopener">Qualcomm<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior (Staff) Designer · Contract · 2024 to 2025</span></li>
       <li><span class="t">Contango</span><span class="m">Contract Product Designer · 2025 · Rubicon</span></li>
       <li><span class="t">Field Design Co.</span><span class="m">Founder, Principal Designer · 2023 to 2025 · CivilGrid and others</span></li>
-      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Contract Product Designer · 2024 to 2025 · Corn, Stalk</span></li>
+      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Contract Product Designer · 2024 to 2025 · Corn, Stalk, Oxbow</span></li>
       <li><a class="t out" href="https://overlay.market/" target="_blank" rel="noopener">Overlay Protocol<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Co-founder, COO &amp; Head of Design · 2021 to 2024</span></li>
       <li><a class="t out" href="https://www.t-mobile.com/" target="_blank" rel="noopener">T-Mobile<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior UX Designer, Lead · 2020 to 2021</span></li>
       <li><span class="t">Toptender</span><span class="m">UI/UX Consultant · 2019</span></li>
@@ -370,28 +370,41 @@ const projects = [
     cs: true,
     body: `
       <p class="lede">Searching "iPhone" on T-Mobile could mean buying one, finding a case, or fixing the one you have. One search had to serve shopping and support at once. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile.</p>
-      <dl class="glance"><div><dt>Role</dt><dd>Senior UX Designer, Lead</dd></div><div><dt>Team</dt><dd>Three people, one designer</dd></div><div><dt>Timeline</dt><dd>2020 to 2021</dd></div><div><dt>Platforms</dt><dd>Web and mobile</dd></div></dl>
+      <dl class="glance"><div><dt>Role</dt><dd>Senior UX Designer, Lead</dd></div><div><dt>Team</dt><dd>Three people, one designer</dd></div><div><dt>Timeline</dt><dd>Kicked off July 2020</dd></div><div><dt>Platforms</dt><dd>Web and mobile</dd></div></dl>
       <div class="stats"><div><b>13% → 0.7%</b><span>searches returning zero results</span></div><div><b>+24%</b><span>search usage</span></div><div><b>+11%</b><span>phone sales</span></div></div>
 
       <h3>The problem</h3>
       <p>About 13% of searches returned nothing at all. And the same query could mean shopping or support, with nothing in the experience to help someone say which.</p>
 
+      <h3>The brief</h3>
+      <p>We kicked off in July 2020 with a deliberately light first phase: the core path of searching from the homepage, narrowing by category, and refining with filters, plus suggestions, zero-result handling, and a route to Sprint. In-store results, personalization, and the app were out of scope. I wrote the objectives so every design decision had a business reason behind it.</p>
+      <figure><img src="${IMG}tmo/objectives.png" alt="Business and user objectives for the search redesign"><figcaption>The objectives from the project brief: reduce cost, increase revenue, improve CSAT, improve usability.</figcaption></figure>
+      <p>Two design principles came out of it. <b>Anticipate my needs:</b> instant results related to what I'm looking for, so I can keep going. <b>Progress naturally with confidence:</b> researching, refining, and filtering should feel like moving forward, and never end at a dead end.</p>
+
+      <h3>Who it's for</h3>
+      <p>Not everyone searching T-Mobile wants a phone. I wrote a user story around Sheela, the account holder for her family plan. She pays the bill once a month, so she never remembers how. She types "pay my bill," gets a few articles, opens one, can't find a payment link, and goes to Google. She ends up in the guest pay flow as a workaround. Next month she's forgotten and does it all again.</p>
+      <p>Search was failing her twice: no direct route to the task, and no memory of the last time.</p>
+
       <h3>Constraints</h3>
       <p>I joined mid-project, and the schedule didn't allow a fresh discovery phase. Mobile was the hard case: suggestions compete with the keyboard for a small screen.</p>
 
       <h3>Research with what existed</h3>
-      <p>I worked with the research team on known search behavior, went through heatmaps and query analytics, and wrote the questions for in-house researchers and outside vendors. That let design move forward on evidence instead of waiting for new studies.</p>
+      <p>I worked with the research team on known search behavior, went through Clicktale heatmaps, Adobe Analytics, and the search platform's query reports, pulled findings from Baymard's e-commerce search research, and reviewed how Verizon, Amazon, Dell, Google, REI, and Home Depot handle search. I wrote the questions for in-house researchers and outside vendors. That let design move forward on evidence instead of waiting for new studies.</p>
       <figure><img src="${IMG}tmo3.png" alt="Click heatmap of the old search results page"><figcaption>Clicks after searching "pay bill" on the old results page.</figcaption></figure>
 
       <h3>Decision 1: help people form the query</h3>
       <p>Recent and popular searches give people a starting point. As they type, suggestions include categories, so a partial query can head toward a phone or toward support before the results page. I kept the category cues close to the query so the choice didn't need another control.</p>
       <figure><img src="${IMG}tmo5.png" alt="Search suggestions on mobile"><figcaption>A partial "iPh" offers both phones and support.</figcaption></figure>
 
-      <h3>Decision 2: keep buying and getting help equally close</h3>
+      <h3>Decision 2: put account tasks first for account queries</h3>
+      <p>For Sheela's kind of search, the answer isn't an article. When a query is about managing an account, results open with direct links to the common tasks, like paying a bill, adding a line, upgrading, or checking an order, above the support articles.</p>
+      <figure><img src="${IMG}tmo/wireframe-pay-bill.png" alt="Wireframe of search results for pay my bill with account task links above support results"><figcaption>Wireframe for "pay my bill." The task is one click away, above the articles.</figcaption></figure>
+
+      <h3>Decision 3: keep buying and getting help equally close</h3>
       <p>Results split into phones, accessories, and support, with an All view for people who hadn't narrowed down yet. Product results show images and prices. Support results show titles and descriptions. Tabs change direction without losing the query, and applied filters stay visible as removable chips.</p>
       <figure><img src="${IMG}tmo1.png" alt="Search results with category tabs and filter chips"><figcaption>Same query across product and support views.</figcaption></figure>
 
-      <h3>Decision 3: admit the gap</h3>
+      <h3>Decision 4: admit the gap</h3>
       <p>After the Sprint merger, some answers still lived on Sprint's site. A direct "Looking for Sprint results?" link said so, instead of pretending the results covered everything.</p>
       <figure><img src="${IMG}tmo7.png" alt="Looking for Sprint results link"><figcaption>An explicit way out when the content lives elsewhere.</figcaption></figure>
 
@@ -649,6 +662,22 @@ const projects = [
       <p>Meme coins run on chatter, so I gave it a home: a global chat with wallet addresses as usernames, clickable cashtags, and comments on each token. On desktop it sits beside the market. On mobile it gets its own tab, next to a trade drawer that keeps buy and sell one thumb away.</p>
       <figure><img src="${IMG}stalk/mobile.png" alt="Three mobile screens: home, chat, and a token trade drawer"><figcaption>Mobile home, the troll box tab, and the trade drawer on a token page.</figcaption></figure>
       <p>Stalk Market launched.</p>
+    `
+  },
+  {
+    id: "oxbow",
+    title: "An admin console for a compliant privacy pool",
+    org: "Oxbow", role: "Product Designer, contract", when: "2025",
+    body: `
+      <p class="lede">Oxbow is a privacy pool. People deposit crypto and later withdraw it to a fresh address, with a zero-knowledge proof breaking the link between the two. To stay compliant, an approved set decides which deposits are allowed in. I designed the admin console where those decisions get made, and the deposit and withdrawal flows on the other side.</p>
+      <h3>The admin side</h3>
+      <p>Admins needed the state of the pool at a glance: how much has been accepted and declined, how many addresses are flagged, and what other admins have done. Below that, every deposit is a row with its status and compliance flag, filterable by date, amount, status, and flag.</p>
+      <figure><img src="${IMG}oxbow/admin.png" alt="Oxbow admin dashboard with totals and a filterable transactions table"><figcaption>Totals up top, every deposit below, with a date filter open.</figcaption></figure>
+      <p>Each row carries the actions a compliance reviewer actually takes: see the details, extend the review window, or add the deposit to the approved set or remove it. In review, we swapped the raw transaction hash for a chain and asset column with logos.</p>
+      <figure><img src="${IMG}oxbow/transactions.png" alt="Transactions table with status, compliance flag, and actions"><figcaption>Status and flag side by side, with the reviewer's actions at the end of each row.</figcaption></figure>
+      <h3>The user side</h3>
+      <p>Depositors sign in with a keyfile they create or import, then deposit. The keyfile is what lets them withdraw later. Withdrawing generates a zero-knowledge proof, which takes a few seconds, so the flow says so instead of looking frozen.</p>
+      <figure><img src="${IMG}oxbow/withdraw-proof.png" alt="Generating ZK proof modal during withdrawal"><figcaption>The wait, made visible.</figcaption></figure>
     `
   },
   {
