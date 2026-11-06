@@ -351,14 +351,14 @@ const projects = [
       <p>Every custom icon costs design time, then upkeep in both the Figma library and the codebase. Some are worth it: a high-use icon that's off-standard, or one that will show up across the system. Most aren't. I turned the review into a decision tree so the default answer is reuse.</p>
       <figure><img src="${IMG}qualcomm/icon-decision-tree.png" alt="Decision tree for whether to request a custom icon"><figcaption>Four of the five paths end in reusing an icon. Only one ends at a request to the system team.</figcaption></figure>
 
-      <h3>What didn't get solved</h3>
-      <p>Search. Tagging 1,500+ icons with metadata was too much manual work for the first version, so designers still leaned on Lucide's own site to find things.</p>
+      <h3>Making 1,500 icons findable</h3>
+      <p>A library is only as useful as its search. Tagging 1,500+ icons by hand was too much work, so at first designers went to Lucide's site to find an icon, then hunted for it in Figma. I used AI to build a JSON importer for Figma that fetched each icon's metadata and wrote it onto the components, so search inside Figma just works.</p>
 
       <h3>Outcome</h3>
-      <p>The icon system shipped with the enterprise beta, with guidelines, a governed review path, and one ramp across three brands. The system is now public.</p>
+      <p>The icon system shipped with the enterprise beta, with guidelines, a governed review path, searchable metadata, and one ramp across three brands. The system is now public.</p>
 
       <h3>What I'd do differently</h3>
-      <p>Budget for metadata from day one. Tagging is cheap per icon and expensive in bulk, and without it a library is only as findable as wherever its icons came from.</p>
+      <p>Build the tooling sooner. Metadata looked like a manual chore we'd get to later, and it sat as a gap until the importer turned it into an afternoon. I'd reach for that kind of automation at the start now.</p>
 `
   },
   {
