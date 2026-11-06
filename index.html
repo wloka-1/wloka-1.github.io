@@ -330,8 +330,8 @@ const projects = [
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
     cs: true,
     body: `
-      <p class="lede">Qualcomm, Snapdragon, and Dragonwing needed one icon system that worked for dense product tools and expressive marketing pages. Three icon sets were already in use, and they disagreed. I audited them, set one ramp with two rule sets, and put a cost of entry on custom icons.</p>
-      <dl class="glance"><div><dt>Role</dt><dd>Design Systems Lead, contract</dd></div><div><dt>Timeline</dt><dd>Feb to Sept 2025</dd></div><div><dt>Scope</dt><dd>Utility and marketing icons across three brands</dd></div><div><dt>Library</dt><dd>1,500+ icons</dd></div><div><dt>Shipped</dt><dd>Enterprise beta, now public</dd></div></dl>
+      <p class="lede">Qualcomm, Snapdragon, and Dragonwing needed one icon system that worked for dense product tools and expressive marketing pages. Three icon sets were already in use, and they disagreed. Instead of drawing 1,500 icons from scratch, we built the utility set on Lucide, an open-source library, and made it Qualcomm's: I audited the existing sets, set one ramp with two rule sets, and put a cost of entry on custom icons.</p>
+      <dl class="glance"><div><dt>Role</dt><dd>Design Systems Lead, contract</dd></div><div><dt>Timeline</dt><dd>Feb to Sept 2025</dd></div><div><dt>Scope</dt><dd>Utility and marketing icons across three brands</dd></div><div><dt>Library</dt><dd>1,500+ icons, built on Lucide</dd></div><div><dt>Shipped</dt><dd>Enterprise beta, now public</dd></div></dl>
 
       <h3>The problem</h3>
       <p>A utility icon next to a table row and a marketing illustration do different jobs. Product teams needed small, legible controls. Marketing needed artwork with more personality. On top of that, three sets were already in circulation: the old system, marketing's, and the new system's draft. Nobody could say which rule was the rule.</p>
@@ -341,7 +341,7 @@ const projects = [
       <figure><img src="${IMG}qualcomm/icon-ramp-comparison.png" alt="Table comparing icon sizes and stroke widths across three icon sets with a recommendation column"><figcaption>Sizes, strokes, and names across three sets, with the recommendation on the right of each table.</figcaption></figure>
 
       <h3>One ramp, two rule sets</h3>
-      <p>The recommendation keeps the shared sizes and steps stroke evenly from 1 to 2.25 pixels, so weight grows with size instead of jumping. Utility icons got fixed sizes and alignment rules. Marketing icons kept their scale, illustrative strokes, and more color freedom. Both sit on the same foundations.</p>
+      <p>The recommendation keeps the shared sizes and steps stroke evenly from 1 to 2.25 pixels, so weight grows with size instead of jumping. Lucide ships one stroke weight, so these custom weights are what make the set look like Qualcomm's at every size. Utility icons got fixed sizes and alignment rules. Marketing icons kept their scale, illustrative strokes, and more color freedom. Both sit on the same foundations.</p>
       <figure><img src="${IMG}qualcomm/Ramp.png" alt="Icon stroke and size ramp"><figcaption>The utility ramp. Size and stroke move together.</figcaption></figure>
       <figure><img src="${IMG}qualcomm/Sizing.png" alt="Icon sizing guidance"><figcaption>Pick from the ramp instead of scaling by eye.</figcaption></figure>
 
@@ -354,7 +354,7 @@ const projects = [
       <figure><img src="${IMG}qualcomm/icon-decision-tree.png" alt="Decision tree for whether to request a custom icon"><figcaption>Four of the five paths end in reusing an icon. Only one ends at a request to the system team.</figcaption></figure>
 
       <h3>What didn't get solved</h3>
-      <p>Search. Tagging 1,500+ icons with metadata was too much manual work for the first version, so designers still leaned on the source library's search to find things.</p>
+      <p>Search. Tagging 1,500+ icons with metadata was too much manual work for the first version, so designers still leaned on Lucide's own site to find things.</p>
 
       <h3>Outcome</h3>
       <p>The icon system shipped with the enterprise beta, with guidelines, a governed review path, and one ramp across three brands. The system is now public.</p>
