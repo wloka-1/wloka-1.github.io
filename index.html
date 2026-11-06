@@ -9,6 +9,7 @@
 <meta property="og:description" content="Senior product designer. Currently design lead for the core experience of Eliza, BNY's enterprise AI platform.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light only">
 <link rel="icon" href="data:,">
 <style>
   :root {
@@ -23,6 +24,7 @@
     --dur: 650ms;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { color-scheme: light only; }
   html, body { height: 100%; background: #fff; }
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -92,7 +94,7 @@
   .plain .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
   .todo { color: #b0621c; }
   a.out { text-decoration: none; }
-  .arr { font-size: 0.75em; color: var(--gray); margin-left: 4px; position: relative; top: -1px; transition: color 150ms; }
+  .arr { width: 0.62em; height: 0.62em; color: var(--gray); margin-left: 4px; vertical-align: 0.05em; transition: color 150ms; }
   a.out:hover .arr { color: var(--ink); }
   .cs .meta a.out { color: inherit; }
   .cs .meta a.out:hover { color: var(--ink); }
@@ -188,7 +190,7 @@
     .panel { left: 0; background: #fff; transform: translateX(100%); opacity: 1; z-index: 4; }
     body.open .panel { transform: none; transition-delay: 0ms; }
     .panel-inner { padding: 88px 24px 80px; }
-    .close { z-index: 5; top: 24px; right: 24px; font-size: 15px; }
+    .close { z-index: 5; top: 16px; right: 16px; font-size: 14px; color: var(--ink); padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
     .rows div { grid-template-columns: 1fr; gap: 2px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -225,15 +227,15 @@
   <section class="more">
     <h2 class="label">Experience</h2>
     <ol class="plain">
-      <li><a class="t out" href="https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html" target="_blank" rel="noopener">BNY<span class="arr" aria-hidden="true">↗</span></a><span class="m">Senior (Staff) Designer · Contract · 2025 to now</span></li>
-      <li><a class="t out" href="https://react.qui.qualcomm.com/components/overview" target="_blank" rel="noopener">Qualcomm<span class="arr" aria-hidden="true">↗</span></a><span class="m">Senior (Staff) Designer · Contract · 2024 to 2025</span></li>
+      <li><a class="t out" href="https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html" target="_blank" rel="noopener">BNY<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior (Staff) Designer · Contract · 2025 to now</span></li>
+      <li><a class="t out" href="https://react.qui.qualcomm.com/components/overview" target="_blank" rel="noopener">Qualcomm<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior (Staff) Designer · Contract · 2024 to 2025</span></li>
       <li><span class="t">Contango</span><span class="m">Contract Product Designer · 2025 · Rubicon</span></li>
       <li><span class="t">Field Design Co.</span><span class="m">Founder, Principal Designer · 2023 to 2025 · CivilGrid and others</span></li>
-      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<span class="arr" aria-hidden="true">↗</span></a><span class="m">Contract Product Designer · 2024 to 2025 · Corn, Stalk</span></li>
-      <li><a class="t out" href="https://overlay.market/" target="_blank" rel="noopener">Overlay Protocol<span class="arr" aria-hidden="true">↗</span></a><span class="m">Co-founder, COO &amp; Head of Design · 2021 to 2024</span></li>
-      <li><a class="t out" href="https://www.t-mobile.com/" target="_blank" rel="noopener">T-Mobile<span class="arr" aria-hidden="true">↗</span></a><span class="m">Senior UX Designer, Lead · 2020 to 2021</span></li>
+      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Contract Product Designer · 2024 to 2025 · Corn, Stalk</span></li>
+      <li><a class="t out" href="https://overlay.market/" target="_blank" rel="noopener">Overlay Protocol<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Co-founder, COO &amp; Head of Design · 2021 to 2024</span></li>
+      <li><a class="t out" href="https://www.t-mobile.com/" target="_blank" rel="noopener">T-Mobile<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior UX Designer, Lead · 2020 to 2021</span></li>
       <li><span class="t">Toptender</span><span class="m">UI/UX Consultant · 2019</span></li>
-      <li><a class="t out" href="https://opolis.co/" target="_blank" rel="noopener">Opolis<span class="arr" aria-hidden="true">↗</span></a><span class="m">UI/UX Designer · 2018 to 2019</span></li>
+      <li><a class="t out" href="https://opolis.co/" target="_blank" rel="noopener">Opolis<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">UI/UX Designer · 2018 to 2019</span></li>
       <li><span class="t">Master of Architecture</span><span class="m">University of Colorado Denver · 2017</span></li>
     </ol>
   </section>
@@ -265,7 +267,7 @@ const ORG_LINKS = {
   "Opolis": "https://opolis.co/"
 };
 const orgLink = org => ORG_LINKS[org]
-  ? `<a class="out" href="${ORG_LINKS[org]}" target="_blank" rel="noopener">${org}<span class="arr" aria-hidden="true">↗</span></a>`
+  ? `<a class="out" href="${ORG_LINKS[org]}" target="_blank" rel="noopener">${org}<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`
   : org;
 
 const projects = [
@@ -318,21 +320,12 @@ const projects = [
     title: "Light mode, pitched and shipped in three days",
     org: "BNY", role: "Staff AI Designer", when: "2026", private: true,
     body: `
-      <p class="lede">I set the initial visual direction for the platform's design system. Then I pitched a light mode to the Head of Design, got the yes, and shipped it in three days.</p>
+      <p class="lede">Eliza had no defined light mode, so dev teams started building their own. Management asked for one. I pitched it to the Head of Design and shipped it in three days.</p>
       <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
+      <h3>Before it forked</h3>
+      <p>Every team inventing its own light theme meant the platform was about to split into versions that didn't match. A single defined light mode stopped that before it spread.</p>
       <h3>How three days happened</h3>
-      <p><span class="todo">Needs Wesley: why light mode mattered, what made it fast, and what had to change in the system to support two themes.</span></p>
-    `
-  },
-  {
-    id: "design-audit",
-    title: "A bot that does the design QA",
-    org: "BNY", role: "Staff AI Designer", when: "2026", private: true,
-    body: `
-      <p class="lede">I built an automated design audit tool. It screenshots visual inconsistencies in the product and files each one in the issue tracker, so the team gets the QA without doing the QA.</p>
-      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
-      <h3>How it works</h3>
-      <p><span class="todo">Needs Wesley: what counts as an inconsistency, how many issues it has filed, and whether engineers trust it.</span></p>
+      <p>I used AI to plan the work and build out several complete directions quickly, instead of sketching one and iterating. I put the options in front of the Head of Design side by side. The answer: pick the one you like best. That's what shipped.</p>
     `
   },
   {
@@ -391,9 +384,8 @@ const projects = [
       <p>I separated reusable layouts from guidance on when and how to use them. That let teams handle different densities and workflows while working from the same rules. I used the research to get leadership agreement on the roadmap.</p>
       <p>This set the framework and priorities. It wasn't a finished pattern library for every product.</p>
       <h3>Naming the layers</h3>
-      <p>Teams used "pattern," "template," and "component" to mean different things. The proposal split the system into three libraries: UX patterns for guidance and flows, components for the interface pieces, and foundations for the tokens underneath. Each layer got a definition and an example.</p>
+      <p>Teams used "pattern," "template," and "component" to mean different things. My proposal split the system into three libraries: UX patterns for guidance and flows, components for the interface pieces, and foundations for the tokens underneath. Each layer got a definition and an example.</p>
       <figure><img src="${IMG}qualcomm/system-definitions.png" alt="Table defining the UX pattern, component, and foundations libraries"><figcaption>One vocabulary for the whole system, from design patterns down to primitives.</figcaption></figure>
-      <p><span class="todo">Needs Wesley: confirm this proposal was yours. The board's examples are dated 2023.</span></p>
     `
   },
   {
@@ -413,7 +405,7 @@ const projects = [
 
       <h3>Filling the site</h3>
       <p>Manual transfer took about two hours a page. I built a Claude-assisted workflow to draft docs and convert them into CMS content, with designers reviewing the output. Automation filled the site. Structure, examples, and review still took design judgment.</p>
-      <p><a href="https://react.qui.qualcomm.com/components/overview">See the public component library ↗</a></p>
+      <p><a href="https://react.qui.qualcomm.com/components/overview">See the public component library<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
     `
   },
   {
@@ -521,7 +513,7 @@ const projects = [
       <h3>A troll box</h3>
       <p>Meme coins run on chatter, so I gave it a home: a global chat with wallet addresses as usernames, clickable cashtags, and comments on each token. On desktop it sits beside the market. On mobile it gets its own tab, next to a trade drawer that keeps buy and sell one thumb away.</p>
       <figure><img src="${IMG}stalk/mobile.png" alt="Three mobile screens: home, chat, and a token trade drawer"><figcaption>Mobile home, the troll box tab, and the trade drawer on a token page.</figcaption></figure>
-      <p><span class="todo">Needs Wesley: did it launch? Also swap the sample content: the mockups use a real livestream and a coin with a real CEO's photo.</span></p>
+      <p>Stalk Market launched.</p>
     `
   },
   {
