@@ -2,48 +2,676 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#daeef0">
-<title>Wesley Kay · A little corner of the Gorge</title>
-<meta name="description" content="Product designer, skier, cyclist, wing foiler. Wander my little corner of the Columbia Gorge and explore work for BNY, Qualcomm, T-Mobile, and Overlay.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wesley Kay · Product designer</title>
+<meta name="description" content="Wesley Kay, product designer. Selected projects from BNY, Qualcomm, T-Mobile, Overlay, CivilGrid, and more.">
 <meta property="og:title" content="Wesley Kay · Product designer">
 <meta property="og:description" content="Senior product designer. Currently design lead for the core experience of Eliza, BNY's enterprise AI platform.">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="village/village.css?v=7">
-<script src="village/village.js?v=7" defer></script>
+<style>
+  :root {
+    --ink: #000;          /* titles */
+    --ink-2: #2b2b2b;     /* body copy */
+    --ink-3: #555;        /* secondary copy, captions */
+    --gray: #959595;      /* meta lines */
+    --rule: #ececec;
+    --col: 380px;
+    --gutter: 56px;
+    --ease: cubic-bezier(.22, .7, .12, 1);
+    --dur: 650ms;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #fff; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink-2);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+  a { color: inherit; }
+
+  /* ---------- the list column ---------- */
+  /* the list column: a full-width scroller so the wheel works anywhere on the page */
+  .col {
+    position: fixed;
+    top: 0; bottom: 0; left: 0; right: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    z-index: 2;
+  }
+  .col::-webkit-scrollbar { display: none; }
+  /* when a case study is open, the scroller shrinks to the left column so the panel scrolls on its own */
+  body.open .col { right: auto; width: calc(var(--gutter) + var(--col) + var(--gutter)); }
+  .col-inner {
+    width: var(--col);
+    margin-left: calc(50vw - var(--col) / 2);
+    padding: 18vh 0 14vh;
+    transition: margin-left var(--dur) var(--ease);
+  }
+  body.open .col-inner { margin-left: var(--gutter); }
+
+  header { margin-bottom: 72px; }
+  header h1 { font-size: 15px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+  header p { font-size: 15px; color: var(--gray); margin-top: 4px; }
+  header nav { margin-top: 4px; font-size: 15px; color: var(--gray); }
+  header nav a { text-decoration: none; color: var(--gray); transition: color 150ms; }
+  header nav a:hover { color: var(--ink); }
+
+  .group-label { font-size: 12px; color: var(--gray); letter-spacing: 0.02em; margin: 0 0 20px; }
+
+  ol { list-style: none; }
+  li + li { margin-top: 30px; }
+  .item {
+    display: block; width: 100%; text-align: left;
+    background: none; border: 0; cursor: pointer;
+    font: inherit; color: inherit;
+  }
+  .item .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.35; transition: color 200ms; }
+  .item .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
+  .item .p { color: #bdbdbd; }
+  .item:hover .t { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  body.open .item .t { color: var(--gray); }
+  body.open .item[aria-current="true"] .t { color: var(--ink); }
+  body.open .item:hover .t { color: var(--ink); }
+  .item:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+
+  .note { margin-top: 40px; font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+  .more { margin-top: 112px; }
+  .label { font-size: 13px; font-weight: 400; color: var(--gray); margin-bottom: 24px; }
+  blockquote + blockquote { margin-top: 28px; }
+  blockquote p { font-size: 15px; line-height: 1.5; color: var(--ink); }
+  blockquote cite { display: block; font-style: normal; font-size: 15px; color: var(--gray); margin-top: 6px; }
+  .prose { font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+  .prose + .prose { margin-top: 12px; }
+  .plain { list-style: none; }
+  .plain li + li { margin-top: 18px; }
+  .plain .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; line-height: 1.35; }
+  .plain .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
+  .todo { color: #b0621c; }
+  a.out { text-decoration: none; }
+  .arr { font-size: 0.75em; color: var(--gray); margin-left: 4px; position: relative; top: -1px; transition: color 150ms; }
+  a.out:hover .arr { color: var(--ink); }
+  .cs .meta a.out { color: inherit; }
+  .cs .meta a.out:hover { color: var(--ink); }
+  a.t:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+  footer { margin-top: 112px; font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+  /* ---------- the case study panel ---------- */
+  .panel {
+    position: fixed;
+    top: 0; bottom: 0; right: 0;
+    left: calc(var(--gutter) + var(--col) + var(--gutter));
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateX(32px);
+    pointer-events: none;
+    transition: opacity 400ms var(--ease), transform var(--dur) var(--ease);
+  }
+  body.open .panel {
+    opacity: 1; transform: none; pointer-events: auto;
+    transition-delay: 180ms;
+  }
+  .panel-inner { max-width: 680px; padding: 18vh var(--gutter) 18vh 0; }
+  .panel.swap .panel-inner { opacity: 0; transform: translateY(8px); }
+  .panel-inner { transition: opacity 260ms ease, transform 360ms var(--ease); }
+
+  .close {
+    position: fixed; top: 28px; right: 32px;
+    background: none; border: 0; cursor: pointer;
+    font: inherit; font-size: 13px; color: var(--gray);
+    opacity: 0; pointer-events: none; transition: opacity 300ms, color 150ms;
+    z-index: 3;
+  }
+  body.open .close { opacity: 1; pointer-events: auto; transition-delay: 300ms; }
+  .close:hover { color: var(--ink); }
+
+  .cs h2 { font-size: 28px; font-weight: 500; color: var(--ink); letter-spacing: -0.015em; line-height: 1.15; }
+  .cs .meta { font-size: 15px; color: var(--gray); margin-top: 8px; }
+  .cs .lede { font-size: 19px; line-height: 1.45; color: var(--ink); margin-top: 40px; letter-spacing: -0.005em; }
+  .cs h3 { font-size: 15px; font-weight: 500; color: var(--ink); margin: 56px 0 12px; }
+  .cs p { font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+  .cs p + p { margin-top: 14px; }
+  .cs .nda {
+    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--rule);
+    font-size: 13px; line-height: 1.5; color: var(--gray);
+  }
+  .cs figure { margin: 40px 0; }
+  .cs figure img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+
+  /* click an image to see it full size */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10;
+    background: rgba(255,255,255,.97);
+    display: flex; overflow: auto;
+    opacity: 0; pointer-events: none; transition: opacity 250ms ease;
+    cursor: zoom-out;
+  }
+  .lightbox.on { opacity: 1; pointer-events: auto; }
+  .lightbox img {
+    margin: auto; padding: 48px;
+    max-width: 100%; max-height: 100vh; object-fit: contain;
+    transform: scale(.98); transition: transform 300ms var(--ease);
+  }
+  .lightbox.on img { transform: none; }
+  /* wide images (tables, flows) get their real size and scroll sideways instead of shrinking */
+  .lightbox.wide img { max-width: none; max-height: none; width: auto; height: calc(100vh - 96px); }
+  /* tall images get their real width and scroll down */
+  .lightbox.tall img { max-height: none; width: min(100%, 1100px); height: auto; margin: 0 auto; }
+  .lightbox .cap { position: fixed; left: 0; right: 0; bottom: 20px; text-align: center; font-size: 13px; color: var(--gray); pointer-events: none; }
+  .cs figcaption { font-size: 13px; line-height: 1.5; color: var(--gray); margin-top: 12px; max-width: 520px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; margin-top: 48px; }
+  .stats b { display: block; font-size: 28px; font-weight: 400; color: var(--ink); letter-spacing: -0.02em; }
+  .stats span { display: block; font-size: 13px; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+
+  .rows { margin-top: 24px; border-top: 1px solid var(--rule); }
+  .rows div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; }
+  .rows dt { color: var(--ink); font-weight: 500; }
+  .rows dd { color: var(--ink-3); }
+
+  .next { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .next button { background: none; border: 0; cursor: pointer; font: inherit; text-align: left; }
+  .next .l { display: block; font-size: 13px; color: var(--gray); }
+  .next .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); margin-top: 4px; }
+
+  /* ---------- small screens: panel slides over the list ---------- */
+  @media (max-width: 900px) {
+    :root { --col: min(380px, calc(100vw - 48px)); --gutter: 24px; }
+    .col-inner { padding-top: 12vh; }
+    .col { transition: opacity 300ms; }
+    body.open .col { right: 0; width: auto; opacity: 0; pointer-events: none; }
+    body.open .col-inner { margin-left: calc(50vw - var(--col) / 2); }
+    .panel { left: 0; background: #fff; transform: translateX(100%); opacity: 1; z-index: 4; }
+    body.open .panel { transform: none; transition-delay: 0ms; }
+    .panel-inner { padding: 88px 24px 80px; }
+    .close { z-index: 5; top: 24px; right: 24px; font-size: 15px; }
+    .rows div { grid-template-columns: 1fr; gap: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 1ms !important; transition-delay: 0ms !important; }
+  }
+</style>
 </head>
 <body>
-<a class="skip-link" href="#trail-directory">Skip to the projects</a>
-<main id="world" aria-label="Wesley's alpine village">
-<canvas id="landscape" aria-label="A pixel mountain with snowy slopes, four project chalets, an orchard, and a river. Use the signs to explore the work." role="img"></canvas>
-<div id="world-signs">
-<div id="village-intro"><button class="village-sign welcome-sign" id="welcome" data-place="welcome" aria-label="About Wesley Kay"><span class="sign-eyebrow">welcome to my little corner</span><strong>Wesley Kay</strong><span>product designer &amp; outside person</span></button>
-<div class="explore-hint"><span class="desktop-hint">drag to wander · scroll to look closer</span><span class="mobile-hint">drag to wander · pinch to look closer</span><span>the little signs open the work</span></div></div>
-<button class="village-sign project-sign" data-place="bny" data-project="bny" aria-label="Open BNY case study"><span class="sign-number">01</span> BNY <span class="sign-arrow" aria-hidden="true">↗</span></button>
-<button class="village-sign project-sign" data-place="qds" data-project="qds" aria-label="Open Qualcomm case study"><span class="sign-number">02</span> Qualcomm <span class="sign-arrow" aria-hidden="true">↗</span></button>
-<button class="village-sign project-sign" data-place="tmo" data-project="tmo" aria-label="Open T-Mobile case study"><span class="sign-number">03</span> T-Mobile <span class="sign-arrow" aria-hidden="true">↗</span></button>
-<button class="village-sign project-sign" data-place="overlay" data-project="overlay" aria-label="Open Overlay case study"><span class="sign-number">04</span> Overlay <span class="sign-arrow" aria-hidden="true">↗</span></button>
-<button class="village-sign small-sign" id="trail-directory" data-place="directory" aria-label="Open trail directory of projects">the work <span aria-hidden="true">↗</span></button>
-<button class="village-sign small-sign" data-place="mail" aria-label="Contact Wesley and read his resume">say hello <span aria-hidden="true">✉</span></button>
-<button class="world-person" data-person="skier" aria-label="Talk to Wesley the skier"><span>skiing</span></button>
-<button class="world-person" data-person="biker" aria-label="Talk to Wesley the cyclist"><span>cycling</span></button>
-<button class="world-person" data-person="foiler" aria-label="Talk to Wesley the wing foiler"><span>wing foiling</span></button>
-<button class="world-person" data-person="picker" aria-label="Talk to Wesley picking blueberries"><span>blueberry picking</span></button>
-<button class="world-person" data-person="lan" aria-label="Hear from Lan, a colleague"><span>a word from Lan</span></button>
-<button class="world-person" data-person="irene" aria-label="Hear from Irene, a colleague"><span>a word from Irene</span></button>
-<button class="world-person" data-person="josh" aria-label="Hear from Josh, a colleague"><span>a word from Josh</span></button>
-<button class="world-person" data-person="fox" aria-label="Say hello to the fox"><span>a little fox</span></button>
-<button class="world-person" data-person="apple" aria-label="Pick an apple"><span>pick an apple</span></button>
-<button class="world-person" data-person="sheep" aria-label="Pet the sheep"><span>pet the sheep</span></button>
-</div>
-<div class="ambience-controls" aria-label="Ambience"><button id="music" class="quiet-button" aria-pressed="false"><span aria-hidden="true">♫</span> music off</button><button id="motion" class="quiet-button" aria-pressed="false" aria-label="Pause village animation"><span aria-hidden="true">Ⅱ</span> pause</button></div>
-<nav class="view-controls" aria-label="Village view"><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset-view" aria-label="Show the whole village">whole village</button><button id="zoom-in" aria-label="Zoom in">+</button></nav>
-<section id="speech" class="speech" role="dialog" aria-label="Village conversation" hidden><button class="speech-close" aria-label="Close conversation">×</button><div class="speech-who" id="speech-who"></div><div id="speech-content"></div></section>
-<div id="toast" class="toast" role="status"></div>
-</main>
-<div id="panel-backdrop" class="panel-backdrop" aria-hidden="true"></div>
-<section id="case-panel" class="case-panel" role="dialog" aria-labelledby="panel-title" hidden><header class="panel-toolbar"><span id="panel-title"></span><button id="close-panel" aria-label="Close panel">×</button></header><div id="panel-body" class="panel-body" tabindex="0"></div></section>
-<noscript><div class="no-script"><h1>Wesley Kay</h1><p>Product designer in White Salmon, Washington.</p><p>Explore my work: <a href="village/studies/bny.html">BNY</a> · <a href="village/studies/qds.html">Qualcomm</a> · <a href="village/studies/tmo.html">T-Mobile</a> · <a href="village/studies/overlay.html">Overlay</a>.</p><a href="mailto:wesley.kay@gmail.com">Email me</a> · <a href="Wesley-Kay-Resume.pdf">Resume</a></div></noscript>
+
+<div class="col" id="col"><div class="col-inner">
+  <header>
+    <h1>Wesley Kay</h1>
+    <p>Product designer</p>
+    <nav><a href="Wesley-Kay-Resume.pdf">Resume</a> · <a href="https://linkedin.com/in/wesley-kay">LinkedIn</a> · <a href="mailto:wesley.kay@gmail.com">Email</a></nav>
+  </header>
+
+  <ol id="list"></ol>
+
+  <p class="note">Work marked private is under NDA.<br>Happy to walk through it in person.</p>
+
+  <section class="more">
+    <h2 class="label">Kind words</h2>
+    <blockquote><p>“Overlay wouldn’t be where it is today without the work we’ve done with Wesley. What sets him apart is his ability to see the bigger picture.”</p><cite>Lan Wolfer · CEO, Overlay Foundation</cite></blockquote>
+    <blockquote><p>“Wesley is a holistic and critical thinker. It was a joy to collaborate with him on intricate design challenges.”</p><cite>Irene Barber · Design Director, Blink UX</cite></blockquote>
+    <blockquote><p>“Wesley handled everything with what felt like ease, from design strategy and UX to marketing and branding.”</p><cite>Josh Mackanic · CEO &amp; Co-Founder, CivilGrid</cite></blockquote>
+  </section>
+
+  <section class="more">
+    <h2 class="label">About</h2>
+    <p class="prose">I design products. Before UX I got a Masters in Architecture, and I still think in systems. ~Ten years in, I've done enterprise AI, design systems, consumer navigation and search, and a DeFi startup I co-founded.</p>
+    <p class="prose">Home is the PNW. When I'm not designing I'm with my kids skiing, cycling or picking blueberries.</p>
+  </section>
+
+  <section class="more">
+    <h2 class="label">Experience</h2>
+    <ol class="plain">
+      <li><a class="t out" href="https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html" target="_blank" rel="noopener">BNY<span class="arr" aria-hidden="true">↗</span></a><span class="m">Senior (Staff) Designer · Contract · 2025 to now</span></li>
+      <li><a class="t out" href="https://react.qui.qualcomm.com/components/overview" target="_blank" rel="noopener">Qualcomm<span class="arr" aria-hidden="true">↗</span></a><span class="m">Senior (Staff) Designer · Contract · 2024 to 2025</span></li>
+      <li><span class="t">Contango</span><span class="m">Contract Product Designer · 2025 · Rubicon</span></li>
+      <li><span class="t">Field Design Co.</span><span class="m">Founder, Principal Designer · 2023 to 2025 · CivilGrid and others</span></li>
+      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<span class="arr" aria-hidden="true">↗</span></a><span class="m">Contract Product Designer · 2024 to 2025 · Corn, Stalk</span></li>
+      <li><a class="t out" href="https://overlay.market/" target="_blank" rel="noopener">Overlay Protocol<span class="arr" aria-hidden="true">↗</span></a><span class="m">Co-founder, COO &amp; Head of Design · 2021 to 2024</span></li>
+      <li><a class="t out" href="https://www.t-mobile.com/" target="_blank" rel="noopener">T-Mobile<span class="arr" aria-hidden="true">↗</span></a><span class="m">Senior UX Designer, Lead · 2020 to 2021</span></li>
+      <li><span class="t">Toptender</span><span class="m">UI/UX Consultant · 2019</span></li>
+      <li><a class="t out" href="https://opolis.co/" target="_blank" rel="noopener">Opolis<span class="arr" aria-hidden="true">↗</span></a><span class="m">UI/UX Designer · 2018 to 2019</span></li>
+      <li><span class="t">Master of Architecture</span><span class="m">University of Colorado Denver · 2017</span></li>
+    </ol>
+  </section>
+
+  <section class="more">
+    <h2 class="label">On the side</h2>
+    <ol class="plain">
+      <li><span class="t">Sketch to Revit</span><span class="m">Hand-drawn architecture sketches in, a BIM model out · 2026 · alpha</span></li>
+    </ol>
+  </section>
+
+  <footer>Wesley Kay · 2026 · Built with Claude.</footer>
+</div></div>
+
+<button class="close" id="close" aria-label="Close case study">Close</button>
+
+<section class="panel" id="panel" aria-live="polite">
+  <div class="panel-inner" id="panel-inner"></div>
+</section>
+
+<script>
+const IMG = "images/";
+
+const ORG_LINKS = {
+  "BNY": "https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html",
+  "Qualcomm": "https://react.qui.qualcomm.com/components/overview",
+  "Overlay": "https://overlay.market/",
+  "T-Mobile": "https://www.t-mobile.com/",
+  "Opolis": "https://opolis.co/"
+};
+const orgLink = org => ORG_LINKS[org]
+  ? `<a class="out" href="${ORG_LINKS[org]}" target="_blank" rel="noopener">${org}<span class="arr" aria-hidden="true">↗</span></a>`
+  : org;
+
+const projects = [
+  {
+    id: "ai-navigation",
+    title: "Navigation for an enterprise AI platform",
+    org: "BNY", role: "Staff AI Designer", when: "2025 to now", private: true,
+    body: `
+      <p class="lede">BNY's AI products grew faster than the experience connecting them. I proposed the information architecture the team adopted, led the navigation redesign through user testing, and partnered with engineering on the rollout.</p>
+      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
+
+      <h3>The problem</h3>
+      <p>In one usability session, a daily user told me he'd stopped exploring because navigation was too confusing. Other sessions showed the same thing: people couldn't tell what a destination was or where a link would take them. Adding more products to the menu wasn't going to fix that.</p>
+
+      <h3>The structure</h3>
+      <p>I proposed a hierarchical information architecture so the platform could keep growing without getting harder to read. The tradeoff was depth. Grouping creates room to grow, but it can bury the thing someone uses every day. I ran 1:1 interviews and usability sessions to test that tradeoff and brought the findings back into the design.</p>
+
+      <h3>What testing caught</h3>
+      <p>A navigation icon I chose read as Safari, so its purpose wasn't clear. I changed it. One participant lost their place when opening the menu changed the navigation around it, so I reworked that interaction to keep the current context. Pinning split people: one found it right away, another couldn't find it or tell if it worked. That one is still open.</p>
+
+      <h3>Outcome</h3>
+      <p>The team adopted the IA and the global navigation shipped to production across BNY's AI applications in July 2026. I don't have a measured findability number to attach to it.</p>
+    `
+  },
+  {
+    id: "task-model",
+    title: "A task model for human and AI work",
+    org: "BNY", role: "Staff AI Designer", when: "2026", private: true,
+    body: `
+      <p class="lede">A notifications requirement turned into a bigger question: when work comes from people and from AI, how do you show someone what actually needs them?</p>
+      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
+
+      <h3>Where work comes from</h3>
+      <p>A feed sorted by arrival time can't answer that. I created a task model built on where work originates, because a suggestion from AI carries a different expectation than an assignment from your manager.</p>
+      <dl class="rows">
+        <div><dt>Self-created</dt><dd>Work you started and haven't finished.</dd></div>
+        <div><dt>Assigned</dt><dd>Work someone handed to you.</dd></div>
+        <div><dt>AI-proposed</dt><dd>Work the platform thinks you should do. You decide.</dd></div>
+      </dl>
+
+      <h3>What I learned</h3>
+      <p>The model was adopted and tested in 1:1 sessions. Early reviews exposed the next problem: one combined list gets overwhelming fast under real workloads. Consolidating work doesn't make it manageable on its own.</p>
+
+      <h3>Where it is now</h3>
+      <p>I'm validating the broader experience across different work styles. The open question is what deserves attention for each person, and what context they need before acting. The model is adopted. The full experience hasn't shipped yet.</p>
+    `
+  },
+  {
+    id: "light-mode",
+    title: "Light mode, pitched and shipped in three days",
+    org: "BNY", role: "Staff AI Designer", when: "2026", private: true,
+    body: `
+      <p class="lede">I set the initial visual direction for the platform's design system. Then I pitched a light mode to the Head of Design, got the yes, and shipped it in three days.</p>
+      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
+      <h3>How three days happened</h3>
+      <p><span class="todo">Needs Wesley: why light mode mattered, what made it fast, and what had to change in the system to support two themes.</span></p>
+    `
+  },
+  {
+    id: "design-audit",
+    title: "A bot that does the design QA",
+    org: "BNY", role: "Staff AI Designer", when: "2026", private: true,
+    body: `
+      <p class="lede">I built an automated design audit tool. It screenshots visual inconsistencies in the product and files each one in the issue tracker, so the team gets the QA without doing the QA.</p>
+      <p class="nda">This work is under NDA, so there are no screens here. I'm happy to walk through it in person.</p>
+      <h3>How it works</h3>
+      <p><span class="todo">Needs Wesley: what counts as an inconsistency, how many issues it has filed, and whether engineers trust it.</span></p>
+    `
+  },
+  {
+    id: "rubicon",
+    title: "Staking and bridging, simple enough to do drunk",
+    org: "Contango", role: "Product Designer, contract", when: "2025",
+    body: `
+      <p class="lede">Project Rubicon lets Bittensor holders stake their tokens and bridge them to Base for liquidity pools. Under the hood that's four steps across three chains. The founder's usability bar: can you do this drunk?</p>
+      <h3>Show the whole trip</h3>
+      <p>The steps couldn't merge. Staking mints a synthetic token, and bridging moves it cross-chain through a separate protocol. So instead of hiding them, I made them one numbered column: migrate, stake, bridge, deposit. Each step names the chains it moves between, shows the rate and fees, and asks for the wallet it needs right where it needs it. People who already hold Alpha skip step one.</p>
+      <figure><img src="${IMG}contango/stake.png" alt="Project Rubicon stake page with four numbered steps"><figcaption>Four steps, one column. The chain chips on each step say where your tokens are going.</figcaption></figure>
+      <p>A toggle at the top flips the column to unstake, with the steps in reverse order. Before anything crosses chains, a confirmation names the amount, the wallet it leaves, and the pool it lands in.</p>
+      <figure><img src="${IMG}contango/confirm.png" alt="Bridge confirmation modal"><figcaption>The last check before a cross-chain move.</figcaption></figure>
+      <h3>Your money first, then the market</h3>
+      <p>After launch I designed the dashboard. Your positions sit on top: total value, fees, yield, and links to where each token is. Protocol analytics sit below: value locked, reserves and exchange rate, daily volumes, and share of all Alpha deposited. Logged-out visitors see only the public half.</p>
+      <figure><img src="${IMG}contango/dashboard.png" alt="Analytics dashboard wireframe"><figcaption>Dashboard wireframe. Area charts for value and volume, lines for reserves and rate, columns for market share.</figcaption></figure>
+      <p>The platform launched in November 2025.</p>
+    `
+  },
+  {
+    id: "icons",
+    title: "One icon system for three brands",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
+    body: `
+      <p class="lede">Qualcomm, Snapdragon, and Dragonwing needed one icon library that worked for dense product tools and expressive marketing pages.</p>
+      <div class="stats"><div><b>1,500+</b><span>icons shipped with governance</span></div><div><b>3</b><span>brands on shared foundations</span></div></div>
+
+      <h3>Different jobs, shared rules</h3>
+      <p>A utility icon next to a table row and a marketing illustration do different jobs. I set separate sizing and stroke ramps for each, tied to the same foundations. Utility icons got fixed sizes and alignment rules. Marketing icons kept their scale, illustrative strokes, and more color freedom.</p>
+      <figure><img src="${IMG}qualcomm/Sizing.png" alt="Icon sizing guidance"><figcaption>Pick from the ramp instead of scaling by eye. Size and stroke weight move together.</figcaption></figure>
+      <figure><img src="${IMG}qualcomm/Ramp.png" alt="Icon stroke and size ramp"></figure>
+
+      <h3>Three icon sets, one ramp</h3>
+      <p>Three sets were already in use: the old system, marketing's, and the new system's draft. I lined up their sizes and stroke widths side by side. Sizes mostly agreed, from 12 to 40 pixels. Strokes didn't. Product icons used fractional weights up to 3.33 pixels, and marketing barely changed weight at all. The recommendation steps stroke evenly from 1 to 2.25 pixels as icons grow.</p>
+      <figure><img src="${IMG}qualcomm/icon-ramp-comparison.png" alt="Table comparing icon sizes and stroke widths across three icon sets with a recommendation column"><figcaption>Sizes, strokes, and names across three sets, with the recommendation on the right of each table.</figcaption></figure>
+      <figure><img src="${IMG}qualcomm/icon-scaling.png" alt="Do and don't example for icon line weights"><figcaption>Each rule shipped with a do and a don't.</figcaption></figure>
+
+      <h3>A cost of entry for new icons</h3>
+      <p>Every custom icon costs design time, then upkeep in both the Figma library and the codebase. I turned the review into a decision tree: does an icon already exist, does anything else work in its place, would a new one have more than one use, and is it worth what it costs to maintain. Most paths end at an existing icon. Only the last one ends at a request to the system team.</p>
+      <figure><img src="${IMG}qualcomm/icon-decision-tree.png" alt="Decision tree for whether to request a custom icon"><figcaption>Four of the five paths end in reusing an icon.</figcaption></figure>
+      <p>What didn't get solved: search. Tagging 1,500+ icons with metadata was too much manual work for v1, so designers still leaned on the source library's search.</p>
+    `
+  },
+  {
+    id: "patterns",
+    title: "UX patterns across Qualcomm's products",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
+    body: `
+      <p class="lede">Component specs couldn't answer what product designers kept asking me. Should filters live above the table or in its columns? Does a 20-field form still belong in a modal?</p>
+
+      <h3>Research</h3>
+      <p>I interviewed designers and design leadership, collected examples from shipping products, and compared them across navigation, forms, and tables. Navigation and data tables came up again and again.</p>
+      <figure><img src="${IMG}qualcomm/pattern-sidenav.png" alt="Side navigation audit across products"><figcaption>From the side-nav audit: one product's nav collapsed, partly open, and fully open, beside a tree five levels deep. A shared component alone wouldn't settle how deep navigation should go.</figcaption></figure>
+
+      <h3>The framework</h3>
+      <p>I separated reusable layouts from guidance on when and how to use them. That let teams handle different densities and workflows while working from the same rules. I used the research to get leadership agreement on the roadmap.</p>
+      <p>This set the framework and priorities. It wasn't a finished pattern library for every product.</p>
+      <h3>Naming the layers</h3>
+      <p>Teams used "pattern," "template," and "component" to mean different things. The proposal split the system into three libraries: UX patterns for guidance and flows, components for the interface pieces, and foundations for the tokens underneath. Each layer got a definition and an example.</p>
+      <figure><img src="${IMG}qualcomm/system-definitions.png" alt="Table defining the UX pattern, component, and foundations libraries"><figcaption>One vocabulary for the whole system, from design patterns down to primitives.</figcaption></figure>
+      <p><span class="todo">Needs Wesley: confirm this proposal was yours. The board's examples are dated 2023.</span></p>
+    `
+  },
+  {
+    id: "docs",
+    title: "Design system docs, written 120x faster",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
+    body: `
+      <p class="lede">I owned the documentation structure for Qualcomm's design system, drew its component illustrations, and built the AI-assisted workflow that got 60+ docs out for enterprise beta.</p>
+      <div class="stats"><div><b>120x</b><span>less writing effort</span></div><div><b>95%</b><span>less CMS page creation time</span></div><div><b>60+</b><span>component docs at beta</span></div></div>
+
+      <h3>Docs that show the system</h3>
+      <p>I designed the page templates, worked with engineering on the storefront, and drew every component illustration by hand. A shared grid and connector-line logic hold very different components together. Engineering rebuilt them in code so they respond to brand themes and light and dark modes.</p>
+      <figure><img src="${IMG}qualcomm/doc-wireframes.png" alt="Wireframes for the documentation home, foundations, color, and checkbox pages"><figcaption>Page templates for home, foundations, a foundation page, and a component page.</figcaption></figure>
+      <figure><img src="${IMG}qualcomm/qds-components-1.png" alt="Component illustrations in the published system"></figure>
+      <figure><img src="${IMG}qualcomm/qds-components-2.png" alt="More component illustrations"><figcaption>The repeated grid and connectors keep the family consistent while each drawing explains a different component.</figcaption></figure>
+      <figure><img src="${IMG}qualcomm/doc-illustration-howto.png" alt="Illustration of a component library feeding buttons into an interface"><figcaption>The same language for guideline pages: a library feeding components into a product.</figcaption></figure>
+
+      <h3>Filling the site</h3>
+      <p>Manual transfer took about two hours a page. I built a Claude-assisted workflow to draft docs and convert them into CMS content, with designers reviewing the output. Automation filled the site. Structure, examples, and review still took design judgment.</p>
+      <p><a href="https://react.qui.qualcomm.com/components/overview">See the public component library ↗</a></p>
+    `
+  },
+  {
+    id: "civil-conflicts",
+    title: "Finding what's in the way before you dig",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    body: `
+      <p class="lede">Before a utility project breaks ground, someone has to find everything it might collide with: paving moratoria, other planned projects, city and county lines, existing utilities. I designed CivilGrid's intelligence reports to compile it from the map.</p>
+      <h3>Four inputs, then run</h3>
+      <p>Confirm the project dates, pick the segment on the map or draw a new shape, set a buffer around it, and name the report.</p>
+      <figure><img src="${IMG}civilgrid/new-report.png" alt="New intelligence report form beside the map"><figcaption>The map stays live while you set up the report.</figcaption></figure>
+      <h3>A report you can read</h3>
+      <p>The report leads with the headline numbers for each category, like total overlap and the count of individual conflicts. Opening a category shows the rows: who the agency is, when the restriction runs, how much it overlaps, and who to call. Overlaps light up on the map next to it. The whole report exports to PDF.</p>
+      <figure><img src="${IMG}civilgrid/report.png" alt="Intelligence report showing paving moratoria overlapping a project"><figcaption>Moratoria within half a mile of the project, with overlap, dates, and a contact for each.</figcaption></figure>
+      <h3>Then a list you can work through</h3>
+      <p>A report is read once. Conflicts get resolved over weeks. The next version turned each conflict into a row with a status: not yet reviewed, coordinating, needs attention, resolved, not an issue. Each row's color matches its shape on the map, and each category shows how many still need attention. You can subscribe to moratoria updates instead of re-running the report.</p>
+      <figure><img src="${IMG}civilgrid/conflicts.png" alt="Conflicts panel with status per conflict, color matched to the map"><figcaption>Every conflict gets a status and a color that matches the map.</figcaption></figure>
+      <p><span class="todo">Needs Wesley: when this was, and what shipped.</span></p>
+    `
+  },
+  {
+    id: "civil-draw",
+    title: "Drawing on the map before there's a project",
+    org: "CivilGrid", role: "Design consultant", when: "2024 to 2025",
+    body: `
+      <p class="lede">CivilGrid is a mapping platform for civil engineers. About 80% of new users don't have a project yet, but the business only earns when someone creates one. Civil Draw, its drawing tool, was the bridge. People forgot it existed after training.</p>
+      <h3>Map first</h3>
+      <p>The goal was to become the tool engineers open instead of Google Earth. I moved the app from tabs to a left-hand nav with map search at the top, and put Civil Draw front and center on the home screen. I cut the object list from the home screen too. People add about ten objects before saving, so it was clutter.</p>
+      <figure><img src="${IMG}civilgrid/project-nav.png" alt="CivilGrid project page with left-hand navigation"><figcaption>Inside a project, the left nav groups general info, analysis, and the project's maps.</figcaption></figure>
+      <h3>Draw now, save later</h3>
+      <p>The team was split on whether drawing should live inside or outside projects. Inside gives it a home. Outside matches what people actually do, like a quick measurement. I designed for both: draw right away, then save as a new project or into an existing one. Saving to an existing project previews its boundary, so annotations don't land in the wrong place. The save step explains why a project matters, and that drafts are free.</p>
+      <h3>Make sharing obvious</h3>
+      <p>Inviting someone took several clicks through org settings. I moved share to the top right, the way Figma and Google Docs do it, with view, comment, and edit access.</p>
+      <p><span class="todo">Needs Wesley: what shipped, and Civil Draw screens.</span></p>
+    `
+  },
+  {
+    id: "civil-downloads",
+    title: "Data downloads people can finish themselves",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    body: `
+      <p class="lede">Engineers download utility, parcel, and topo data for their project area. About half of the download requests didn't actually need approval. They came from confusing defaults, and they delayed people who could have had the data right away.</p>
+      <h3>What was going wrong</h3>
+      <p>Layers were pre-selected even when there were no assets in the area. Restrictions showed up late, and people missed the warnings.</p>
+      <h3>The redesign</h3>
+      <p>I turned it into a two-step wizard: pick layers, then confirm settings. Layers split into what's included, what's available, and what's restricted, with restricted kept clearly apart. Layers with no assets inside the project boundary can't be selected. Restrictions show at the section level, and when several agencies overlap, the strictest one wins. Warnings and errors look different. The map previews what you're about to get.</p>
+      <p>Anything that does need approval goes through a separate request with the project narrative attached, tracked until it's approved.</p>
+      <p><span class="todo">Needs Wesley: what shipped, and whether request volume dropped.</span></p>
+    `
+  },
+  {
+    id: "civil-ai",
+    title: "AI answers from agency rulebooks",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    body: `
+      <p class="lede">Civil engineers dig through long agency PDFs for permit rules, clearances, and slope requirements. CivilGrid wanted an LLM to read them and answer per project. I designed how that shows up in the app.</p>
+      <h3>Insights, with sources</h3>
+      <p>Each project gets three to five pre-loaded insights based on its boundary, city, and agencies. You can ask more. Every answer cites the section of the source document, because an engineer won't trust a clearance number without it. A general assistant lives in the left panel. Project-specific insights live inside the project.</p>
+      <h3>An icon for AI</h3>
+      <p>A hard hat read as construction, not intelligence. An engineering drawing fell apart at small sizes. We landed on a sharp-angled sparkle in the brand orange, which reads like intersecting lines on a drawing.</p>
+      <p>This was early exploration when my engagement ended.</p>
+    `
+  },
+  {
+    id: "corn-bridge",
+    title: "A Bitcoin bridge you can read at a glance",
+    org: "Corn", role: "Product Designer, contract", when: "2025",
+    body: `
+      <p class="lede">Corn is a Bitcoin DeFi network heading for a mainstream launch. The team wanted it to feel like something Nintendo put out. The bridge was where people got stuck, so I started there.</p>
+      <h3>Say what's actually happening</h3>
+      <p>The old bridge had several inputs and a summary that repeated them. I cut it to one input and spelled out the transfer in plain terms: what you send, what you get ("12 ETH to 12 ETH"), how long it takes, gas, and fees. One arrow flips direction between networks.</p>
+      <p>It had to handle three kinds of transfer behind the same screen: standard bridging, converting WBTC to Corn's native Bitcoin token, and moving funds out of locked vaults.</p>
+      <h3>Keep the history in view</h3>
+      <p>Bridge on the left, activity on the right and open by default. Each row shows sent or received, the networks, and status. Status changes arrive as toasts, so you don't have to watch the list.</p>
+      <p><span class="todo">Needs Wesley: what shipped, and screens from Figma.</span></p>
+    `
+  },
+  {
+    id: "corn-token",
+    title: "Checking, claiming, and staking an airdrop",
+    org: "Corn", role: "Product Designer, contract", when: "2025",
+    body: `
+      <p class="lede">Corn was replacing its points program with a token. I designed the pages people use to find out what they got and claim it, on a schedule set by launch day.</p>
+      <h3>Six ways to arrive</h3>
+      <p>Someone might check a wallet address or an X account, logged in or not, with the wallet that's eligible or a different one. I mapped six flows so each case ended in the same place: an X account's airdrop assigned to a wallet that can claim it.</p>
+      <h3>Show where the tokens came from</h3>
+      <p>Tokens came from a chain of conversions: partner points became Corn points, which became tokens. Showing the whole chain was too much. The dashboard shows your balance, with the breakdown on hover for anyone who wants to check the math.</p>
+      <h3>Claim, then decide</h3>
+      <p>Claiming opens a choice: take the tokens or stake them. Staking picks a lock period, from two weeks to a year, with the yield for each shown up front. The new vault got a full-width spot on the dashboard because it was the launch's main product.</p>
+      <p><span class="todo">Needs Wesley: what shipped at launch, and screens.</span></p>
+    `
+  },
+  {
+    id: "stalk",
+    title: "A meme coin launcher styled like a trading terminal",
+    org: "Stalk", role: "Product Designer, contract", when: "2024",
+    body: `
+      <p class="lede">Stalk Market was a meme coin launchpad in the Corn ecosystem. It had to feel familiar to people coming from pump.fun and still look like its own thing.</p>
+      <h3>From friendly to terminal</h3>
+      <p>The early concepts were rounded and soft. The brief was to differentiate with small, deliberate changes instead of a new layout. I took it toward a trading terminal: sharp corners, a black base, orange as the brand accent, and green and red for buying, selling, and price.</p>
+      <figure><img src="${IMG}stalk/concepts.png" alt="Five mobile concepts moving from rounded and soft to sharp and dark"><figcaption>Five concepts, left to right. The layout barely moves. The attitude does.</figcaption></figure>
+      <h3>The market at a glance</h3>
+      <p>The home screen leads with what traders actually watch: a ticker of recent trades, coins about to graduate off their bonding curve, and cards showing holders, volume, market cap, and progress toward the curve.</p>
+      <figure><img src="${IMG}stalk/home-desktop.png" alt="Stalk Market desktop home with token cards and a live chat panel"><figcaption>Desktop home. Tokens on the left, live video and the troll box on the right.</figcaption></figure>
+      <h3>A troll box</h3>
+      <p>Meme coins run on chatter, so I gave it a home: a global chat with wallet addresses as usernames, clickable cashtags, and comments on each token. On desktop it sits beside the market. On mobile it gets its own tab, next to a trade drawer that keeps buy and sell one thumb away.</p>
+      <figure><img src="${IMG}stalk/mobile.png" alt="Three mobile screens: home, chat, and a token trade drawer"><figcaption>Mobile home, the troll box tab, and the trade drawer on a token page.</figcaption></figure>
+      <p><span class="todo">Needs Wesley: did it launch? Also swap the sample content: the mockups use a real livestream and a coin with a real CEO's photo.</span></p>
+    `
+  },
+  {
+    id: "overlay-app",
+    title: "A trading app that starts with the markets",
+    org: "Overlay", role: "Co-founder, Head of Design", when: "2021 to 2025",
+    body: `
+      <p class="lede">Overlay let people trade on niche data markets. The app had to explain what was there before asking anyone to take a position. Over four iterations I moved the first screen from trade controls to browsable markets, then featured markets.</p>
+      <div class="stats"><div><b>$4M</b><span>seed round</span></div><div><b>3 → 25</b><span>team size</span></div><div><b>4</b><span>app iterations</span></div></div>
+
+      <h3>Markets before controls</h3>
+      <p>The early app opened on long and short, leverage, and an amount. Great if you already knew what to trade. Useless for explaining why you were there. I improved legibility and people still arrived confused, so the fix had to be structural: open on a list of markets with names, prices, and categories.</p>
+      <figure><img src="${IMG}overlay8.png" alt="Overlay mobile screens from trade-first to market-first"><figcaption>Left to right: trade controls first, then market discovery first.</figcaption></figure>
+      <figure><img src="${IMG}overlay9.png" alt="Overlay desktop app"><figcaption>The shipped desktop app.</figcaption></figure>
+      <p>That added a step before trading. I made the trade on purpose. I don't have a measured onboarding lift to claim for it.</p>
+
+      <h3>A direct line to users</h3>
+      <p>I ran small core-user groups in Telegram, plus Discord threads and polls. I could ask about one interaction and follow up with the same person.</p>
+      <figure><img src="${IMG}overlay2.png" alt="Telegram exchange with a user about gas costs"><figcaption>A working product could still be too expensive to use.</figcaption></figure>
+      <p>The limit: these were engaged people willing to talk to a founder. They couldn't stand in for the people who never understood the product well enough to join.</p>
+    `
+  },
+  {
+    id: "overlay-brand",
+    title: "Scientists and cats: a brand and component library",
+    org: "Overlay", role: "Co-founder, Head of Design", when: "2021 to 2025",
+    body: `
+      <p class="lede">The protocol was technically deep. The brand didn't have to be. I wrote the design ethos, built the early identity, and later brought in an agency as it matured.</p>
+      <figure><img src="${IMG}overlay3.png" alt="Overlay design ethos document"><figcaption>The ethos. Cats knock things off the shelf, which is a decent way to design for everything.</figcaption></figure>
+
+      <h3>Consistent behavior, not just looks</h3>
+      <p>I built a shared component library with our front-end lead. It covered interaction states as well as styling: pending buttons, selected tabs, open dropdowns, headers at different widths. Developer notes lived next to the components.</p>
+      <figure><img src="${IMG}overlay4.png" alt="Component library with interaction states"><figcaption>Pending, inactive, and selected states alongside responsive headers.</figcaption></figure>
+      <p>It let us carry the same language into referrals, staking, and gamification without re-deciding every control.</p>
+      <figure><img src="${IMG}overlay6.png" alt="Overlay referral screens"></figure>
+      <p>Audience: 77K on Twitter, 50K on Discord. Those overlap, and they aren't a count of traders.</p>
+    `
+  },
+  {
+    id: "search",
+    title: "One search for shopping and support",
+    org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
+    body: `
+      <p class="lede">Searching "iPhone" could mean buying one, finding a case, or fixing the one you have. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile.</p>
+      <div class="stats"><div><b>13% → 0.7%</b><span>searches returning zero results</span></div><div><b>+24%</b><span>search usage</span></div><div><b>+11%</b><span>phone sales</span></div></div>
+
+      <h3>Start from existing evidence</h3>
+      <p>The schedule didn't allow a fresh discovery phase. I worked with research on known search behavior, went through heatmaps and query analytics, and wrote the questions for in-house researchers and outside vendors.</p>
+      <figure><img src="${IMG}tmo3.png" alt="Click heatmap of the old search results page"><figcaption>Clicks after searching "pay bill" on the old results page.</figcaption></figure>
+
+      <h3>Help people form the query</h3>
+      <p>Recent and popular searches give people a starting point. As they type, suggestions include categories, so a partial query can head toward a phone or toward support before the results page.</p>
+      <figure><img src="${IMG}tmo5.png" alt="Search suggestions on mobile"><figcaption>A partial "iPh" offers both phones and support. Results carry those categories forward.</figcaption></figure>
+
+      <h3>Keep buying and getting help equally close</h3>
+      <p>Results split into phones, accessories, and support, with an All view. Tabs change direction without losing the query. Applied filters stay visible as removable chips, so people can undo without reopening the panel.</p>
+      <figure><img src="${IMG}tmo1.png" alt="Search results with category tabs and filter chips"><figcaption>Same query across product and support views.</figcaption></figure>
+      <figure><img src="${IMG}tmo7.png" alt="Looking for Sprint results link"><figcaption>After the merger, some answers still lived on Sprint. A direct link said so instead of pretending the results covered everything.</figcaption></figure>
+      <p>We used A/B testing and search analytics through rollout. These numbers are for the redesign as a whole, not any single change.</p>
+    `
+  },
+  {
+    id: "unav",
+    title: "Universal navigation across 30 sites",
+    org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
+    body: `
+      <p class="lede">I led T-Mobile's universal navigation, the shared header and menu framework across its web properties.</p>
+      <div class="stats"><div><b>16 → 30</b><span>sites on the framework</span></div><div><b>+23%</b><span>navigation usage</span></div><div><b>40M+</b><span>monthly users</span></div></div>
+      <h3>Placeholder</h3>
+      <p>Needs a real writeup: what was broken, the main decision, and one or two screens. The current site only mentions this in a single line.</p>
+    `
+  },
+];
+
+const list = document.getElementById("list");
+const panel = document.getElementById("panel");
+const inner = document.getElementById("panel-inner");
+
+list.innerHTML = projects.map(p => `
+  <li><button class="item" data-id="${p.id}">
+    <span class="t">${p.title}</span>
+    <span class="m">${p.org} · ${p.role} · ${p.when}${p.private ? ' <span class="p">· private</span>' : ""}</span>
+  </button></li>`).join("");
+
+function render(p) {
+  const i = projects.indexOf(p);
+  const next = projects[(i + 1) % projects.length];
+  inner.innerHTML = `<article class="cs">
+    <h2>${p.title}</h2>
+    <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
+    ${p.body}
+    <div class="next"><button data-id="${next.id}"><span class="l">Next</span><span class="t">${next.title}</span></button></div>
+  </article>`;
+  panel.scrollTop = 0;
+}
+
+function open(id, push = true) {
+  const p = projects.find(x => x.id === id);
+  if (!p) return close(false);
+  const wasOpen = document.body.classList.contains("open");
+  document.querySelectorAll(".item").forEach(b => b.setAttribute("aria-current", b.dataset.id === id));
+  if (wasOpen) {
+    panel.classList.add("swap");
+    setTimeout(() => { render(p); panel.classList.remove("swap"); }, 220);
+  } else {
+    render(p);
+    document.body.classList.add("open");
+  }
+  if (push) history.pushState(null, "", "#" + id);
+}
+
+function close(push = true) {
+  document.body.classList.remove("open");
+  document.querySelectorAll(".item").forEach(b => b.removeAttribute("aria-current"));
+  if (push) history.pushState(null, "", location.pathname);
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-id]");
+  if (!b) return;
+  if (b.classList.contains("item") && b.getAttribute("aria-current") === "true") return close();
+  open(b.dataset.id);
+});
+document.getElementById("close").addEventListener("click", () => close());
+const lb = document.createElement("div");
+lb.className = "lightbox";
+lb.innerHTML = '<img alt=""><div class="cap"></div>';
+document.body.appendChild(lb);
+const lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".cap");
+function openLightbox(img) {
+  lbImg.src = img.src; lbImg.alt = img.alt;
+  const cap = img.closest("figure")?.querySelector("figcaption");
+  lbCap.textContent = cap ? cap.textContent : "";
+  // very wide images would be unreadable shrunk to the window, so show them tall and let them scroll
+  const ratio = img.naturalWidth / img.naturalHeight;
+  lb.classList.toggle("wide", ratio > 2.6);
+  lb.classList.toggle("tall", ratio < 0.6);
+  lb.classList.add("on");
+  lb.scrollLeft = 0; lb.scrollTop = 0;
+}
+function closeLightbox() { lb.classList.remove("on"); }
+inner.addEventListener("click", e => { const img = e.target.closest("figure img"); if (img) openLightbox(img); });
+lb.addEventListener("click", closeLightbox);
+
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if (lb.classList.contains("on")) closeLightbox(); else close();
+});
+window.addEventListener("popstate", () => location.hash ? open(location.hash.slice(1), false) : close(false));
+if (location.hash) open(location.hash.slice(1), false);
+</script>
 </body>
 </html>
