@@ -38,14 +38,17 @@
   /* the list column: a full-width scroller so the wheel works anywhere on the page */
   .col {
     position: fixed;
-    top: 0; bottom: 0; left: 0; right: 0;
+    top: 0; bottom: 0; left: 0;
+    width: 100vw;
     overflow-y: auto;
     scrollbar-width: none;
     z-index: 2;
+    transition: width 0s;
   }
   .col::-webkit-scrollbar { display: none; }
   /* when a case study is open, the scroller shrinks to the left column so the panel scrolls on its own */
-  body.open .col { right: auto; width: calc(var(--gutter) + var(--col) + var(--gutter)); }
+  /* shrink only after the slide finishes, so the list never gets clipped mid-animation (closing expands it instantly) */
+  body.open .col { width: calc(var(--gutter) + var(--col) + var(--gutter)); transition: width 0s var(--dur); }
   .col-inner {
     width: var(--col);
     margin-left: calc(50vw - var(--col) / 2);
@@ -192,7 +195,7 @@
     :root { --col: min(380px, calc(100vw - 48px)); --gutter: 24px; }
     .col-inner { padding-top: 12vh; }
     .col { transition: opacity 300ms; }
-    body.open .col { right: 0; width: auto; opacity: 0; pointer-events: none; }
+    body.open .col { width: 100vw; opacity: 0; pointer-events: none; }
     body.open .col-inner { margin-left: calc(50vw - var(--col) / 2); }
     .panel { left: 0; background: #fff; transform: translateX(100%); opacity: 1; z-index: 4; }
     body.open .panel { transform: none; transition-delay: 0ms; }
