@@ -11,6 +11,9 @@
   const detectiveWalkImage = new Image();
   const detectiveWalkURL = new URL('images/pixel-wesley/detective-walk-smooth.webp', script.src).href;
   const detectiveWalkReady = new Promise(resolve => { detectiveWalkImage.onload = () => resolve(true); detectiveWalkImage.onerror = () => resolve(false); });
+  const aboutImage = new Image();
+  const aboutURL = new URL('images/pixel-wesley/about-wave.webp', script.src).href;
+  const aboutReady = new Promise(resolve => { aboutImage.onload = () => resolve(true); aboutImage.onerror = () => resolve(false); });
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let cells, detectiveCells, detectiveWalkCells;
   const scenes = {
@@ -44,16 +47,19 @@
   }
 
   function mount(host, kind) {
-    if (!image.src) image.src = atlasURL;
+    // The homepage wave only needs its own sheet; skip the case-study poses there.
+    const usesAtlas = kind !== 'about';
+    if (usesAtlas && !image.src) image.src = atlasURL;
     if (kind === 'search' && !detectiveImage.src) detectiveImage.src = detectiveURL;
     if (kind === 'search' && !detectiveWalkImage.src) detectiveWalkImage.src = detectiveWalkURL;
+    if (kind === 'about' && !aboutImage.src) aboutImage.src = aboutURL;
     const canvas = document.createElement('canvas');
     canvas.setAttribute('aria-hidden', 'true');
     host.append(canvas);
     const g = canvas.getContext('2d');
     let width = 320, height = 138, raf = 0, visible = false, disposed = false;
     let elapsed = 0, lastTick = performance.now();
-    const baseline = 128;
+    const baseline = kind === 'about' ? 96 : 128;
     const rect = (x, y, w, h, color) => { g.fillStyle = color; g.fillRect(Math.round(x), Math.round(y), w, h); };
     function line(points, color, size = 2) {
       g.strokeStyle = color; g.lineWidth = size; g.lineJoin = 'miter';
@@ -243,10 +249,26 @@
       }
     }
 
+    function about(t) {
+      // A brief greeting, then five seconds with arms down. Keep eye contact.
+      const p = t % 8;
+      let frame = 0;
+      if (p >= .65 && p < .85) frame = 1;
+      else if (p >= .85 && p < 2.45) frame = [2, 3, 4, 5][Math.floor((p - .85) / .2) % 4];
+      else if (p >= 2.45 && p < 2.7) frame = 6;
+      // Use fixed cells rather than trimmed bounds so the waving hand can't
+      // shift the character's body sideways or change its scale.
+      const cw = aboutImage.naturalWidth / 4, ch = aboutImage.naturalHeight / 2;
+      const h = 96, w = cw / ch * h, x = 46;
+      shadow(x, 34);
+      g.drawImage(aboutImage, (frame % 4) * cw, Math.floor(frame / 4) * ch, cw, ch,
+        Math.round(x - w / 2), baseline - h + 2, Math.round(w), h);
+    }
+
     function paint(t) {
       if (reduced.matches) t = kind === 'market' ? 4 : kind === 'map' ? 6 : 0;
       g.clearRect(0,0,width,height);
-      ({map,icons,search:detective,dig:digging,market}[kind] || map)(t);
+      ({map,icons,search:detective,dig:digging,market,about}[kind] || map)(t);
     }
     function tick(now) {
       raf=0;
@@ -263,7 +285,7 @@
       if(visible && !document.hidden) { lastTick=performance.now(); raf=requestAnimationFrame(tick); }
     }
     const resize=new ResizeObserver(entries=>{
-      width=Math.max(150,Math.round(entries[0].contentRect.width));
+      width=Math.max(kind === 'about' ? 92 : 150,Math.round(entries[0].contentRect.width));
       const density = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width=Math.round(width*density); canvas.height=Math.round(height*density);
       g.setTransform(density,0,0,density,0,0); g.imageSmoothingEnabled=false;
@@ -271,11 +293,11 @@
     });
     const observer=new IntersectionObserver(entries=>{ visible=entries[0].isIntersecting; resume(); });
     const visibility=()=>resume();
-    Promise.all([ready, kind === 'search' ? detectiveReady : true, kind === 'search' ? detectiveWalkReady : true]).then(results=>{
+    Promise.all([usesAtlas ? ready : true, kind === 'search' ? detectiveReady : true, kind === 'search' ? detectiveWalkReady : true, kind === 'about' ? aboutReady : true]).then(results=>{
       const ok = results.every(Boolean);
       if(disposed) return;
       if(!ok) {host.hidden=true;return;}
-      cells ||= extractCells();
+      if (usesAtlas) cells ||= extractCells();
       if (kind === 'search') {
         detectiveCells ||= extractCells(detectiveImage, 2, 2);
         detectiveWalkCells ||= extractCells(detectiveWalkImage, 4, 2);
