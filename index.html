@@ -100,7 +100,6 @@
   .plain li + li { margin-top: 18px; }
   .plain .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; line-height: 1.35; }
   .plain .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
-  .todo { color: #b0621c; }
   a.out { text-decoration: none; }
   .arr { width: 0.62em; height: 0.62em; color: var(--gray); margin-left: 4px; vertical-align: 0.05em; transition: color 150ms; }
   a.out:hover .arr { color: var(--ink); }
@@ -209,6 +208,12 @@
     * { transition-duration: 1ms !important; transition-delay: 0ms !important; }
   }
 </style>
+<style>
+  .case-animation { width: min(100%, 340px); height: 138px; margin: -34px 0 18px; overflow: hidden; pointer-events: none; }
+  .case-animation canvas { display: block; width: 100%; height: 138px; image-rendering: pixelated; }
+  @media (max-width: 600px) { .case-animation { margin-top: -20px; } }
+</style>
+<script src="case-animations.js"></script>
 </head>
 <body>
 
@@ -443,8 +448,6 @@ const projects = [
       <p>A report is read once. Conflicts get resolved over weeks. The next version turned each conflict into a row with a status: not yet reviewed, coordinating, needs attention, resolved, not an issue. Each row's color matches its shape on the map, and each category shows how many still need attention. You can subscribe to moratoria updates instead of re-running the report.</p>
       <figure><img src="${IMG}civilgrid/conflicts.png" alt="Conflicts panel with status per conflict, color matched to the map"><figcaption>Every conflict gets a status and a color that matches the map.</figcaption></figure>
 
-      <h3>Outcome</h3>
-      <p><span class="todo">Needs Wesley: did the reports or the conflicts view ship, and has anyone used them on a real project?</span></p>
 
       <h3>What I'd do differently</h3>
       <p>Design the tracking version first. The report was the obvious ask, but the real work happens after it's read, in the weeks of coordination that follow.</p>
@@ -587,7 +590,6 @@ const projects = [
       <p>The team was split on whether drawing should live inside or outside projects. Inside gives it a home. Outside matches what people actually do, like a quick measurement. I designed for both: draw right away, then save as a new project or into an existing one. Saving to an existing project previews its boundary, so annotations don't land in the wrong place. The save step explains why a project matters, and that drafts are free.</p>
       <h3>Make sharing obvious</h3>
       <p>Inviting someone took several clicks through org settings. I moved share to the top right, the way Figma and Google Docs do it, with view, comment, and edit access.</p>
-      <p><span class="todo">Needs Wesley: what shipped?</span></p>
     `
   },
   {
@@ -601,7 +603,6 @@ const projects = [
       <h3>The redesign</h3>
       <p>I turned it into a two-step wizard: pick layers, then confirm settings. Layers split into what's included, what's available, and what's restricted, with restricted kept clearly apart. Layers with no assets inside the project boundary can't be selected. Restrictions show at the section level, and when several agencies overlap, the strictest one wins. Warnings and errors look different. The map previews what you're about to get.</p>
       <p>Anything that does need approval goes through a separate request with the project narrative attached, tracked until it's approved.</p>
-      <p><span class="todo">Needs Wesley: what shipped, and whether request volume dropped.</span></p>
     `
   },
   {
@@ -628,7 +629,6 @@ const projects = [
       <p>It had to handle three kinds of transfer behind the same screen: standard bridging, converting WBTC to Corn's native Bitcoin token, and moving funds out of locked vaults.</p>
       <h3>Keep the history in view</h3>
       <p>Bridge on the left, activity on the right and open by default. Each row shows sent or received, the networks, and status. Status changes arrive as toasts, so you don't have to watch the list.</p>
-      <p><span class="todo">Needs Wesley: what shipped, and screens from Figma.</span></p>
     `
   },
   {
@@ -643,7 +643,6 @@ const projects = [
       <p>Tokens came from a chain of conversions: partner points became Corn points, which became tokens. Showing the whole chain was too much. The dashboard shows your balance, with the breakdown on hover for anyone who wants to check the math.</p>
       <h3>Claim, then decide</h3>
       <p>Claiming opens a choice: take the tokens or stake them. Staking picks a lock period, from two weeks to a year, with the yield for each shown up front. The new vault got a full-width spot on the dashboard because it was the launch's main product.</p>
-      <p><span class="todo">Needs Wesley: what shipped at launch, and screens.</span></p>
     `
   },
   {
@@ -703,8 +702,6 @@ const projects = [
     body: `
       <p class="lede">I led T-Mobile's universal navigation, the shared header and menu framework across its web properties.</p>
       <div class="stats"><div><b>16 → 30</b><span>sites on the framework</span></div><div><b>+23%</b><span>navigation usage</span></div><div><b>40M+</b><span>monthly users</span></div></div>
-      <h3>Placeholder</h3>
-      <p>Needs a real writeup: what was broken, the main decision, and one or two screens. The current site only mentions this in a single line.</p>
     `
   },
 ];
@@ -721,16 +718,21 @@ const itemHTML = p => `
 document.getElementById("list-cs").innerHTML = projects.filter(p => p.cs).map(itemHTML).join("");
 list.innerHTML = projects.filter(p => !p.cs).map(itemHTML).join("");
 
+let disposeCaseAnimation;
 function render(p) {
+  disposeCaseAnimation?.();
   const i = projects.indexOf(p);
   const next = projects[(i + 1) % projects.length];
   inner.innerHTML = `<article class="cs">
+    ${p.cs && window.CaseAnimations?.kind(p.id) ? '<div class="case-animation" aria-hidden="true"></div>' : ''}
     ${p.cs ? '<p class="eyebrow">Case study</p>' : ''}
     <h2>${p.title}</h2>
     <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
     ${p.body}
     <div class="next"><button data-id="${next.id}"><span class="l">Next</span><span class="t">${next.title}</span></button></div>
   </article>`;
+  const animation = inner.querySelector('.case-animation');
+  disposeCaseAnimation = animation ? CaseAnimations.mount(animation, p.id) : undefined;
   panel.scrollTop = 0;
 }
 
@@ -750,6 +752,8 @@ function open(id, push = true) {
 }
 
 function close(push = true) {
+  disposeCaseAnimation?.();
+  disposeCaseAnimation = undefined;
   document.body.classList.remove("open");
   document.querySelectorAll(".item").forEach(b => b.removeAttribute("aria-current"));
   if (push) history.pushState(null, "", location.pathname);
