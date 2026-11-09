@@ -2,14 +2,14 @@
 (() => {
   'use strict';
   const script = document.currentScript;
-  const atlasURL = new URL('images/pixel-wesley/poses.png', script.src).href;
+  const atlasURL = new URL('images/pixel-wesley/poses.webp', script.src).href;
   const image = new Image();
   const ready = new Promise(resolve => { image.onload = () => resolve(true); image.onerror = () => resolve(false); });
   const detectiveImage = new Image();
-  const detectiveURL = new URL('images/pixel-wesley/detective.png', script.src).href;
+  const detectiveURL = new URL('images/pixel-wesley/detective.webp', script.src).href;
   const detectiveReady = new Promise(resolve => { detectiveImage.onload = () => resolve(true); detectiveImage.onerror = () => resolve(false); });
   const detectiveWalkImage = new Image();
-  const detectiveWalkURL = new URL('images/pixel-wesley/detective-walk-smooth.png', script.src).href;
+  const detectiveWalkURL = new URL('images/pixel-wesley/detective-walk-smooth.webp', script.src).href;
   const detectiveWalkReady = new Promise(resolve => { detectiveWalkImage.onload = () => resolve(true); detectiveWalkImage.onerror = () => resolve(false); });
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let cells, detectiveCells, detectiveWalkCells;
