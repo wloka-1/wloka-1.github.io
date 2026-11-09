@@ -77,6 +77,8 @@
       g.drawImage(c.bitmap, 0, 0, c.w, c.h, -Math.round(actualW / 2), -Math.round(actualH), Math.round(actualW), Math.round(actualH));
       g.restore();
     }
+    // Half the drawn width of a pose, so a scene can put its left edge flush with the text column.
+    function half(n) { const c = cells[n], w = c.w / c.h * 90; return Math.round((n >= 14 ? w * .76 : w) / 2); }
     function shadow(x, w = 39) { rect(x - w / 2, baseline + 1, w, 2, '#e9e8e4'); }
     const walk = t => [1, 2, 3, 4][Math.floor(t * 8) % 4];
     const ease = t => t * t * (3 - 2 * t);
@@ -113,14 +115,14 @@
       }
     }
     function icons(t) {
-      const p = t % 12, x = Math.max(34, Math.min(70, width * .22));
+      const p = t % 12, x = half(9);
       const target = Math.min(width - 28, x + 90);
       let active = -1, pose = 9;
       if (p < 2.5) { pose = 6; active = 0; }
       else if (p < 5) { pose = 7; active = 1; }
       else if (p < 7.5) pose = 9;
       else if (p < 10.5) { pose = 8; active = 2; }
-      shadow(x); sprite(pose, x);
+      shadow(x); sprite(pose, half(pose));
       icon(target - 12, 28, 0, active === 0, t);
       icon(target + 12, 64, 1, active === 1, t);
       icon(target - 4, 101, 2, active === 2, t);
@@ -148,12 +150,12 @@
       }
     }
     function digging(t) {
-      const p = t % 17, x = Math.max(35, Math.min(80, width * .28)), hole = x + 45;
+      const p = t % 17, x = half(10), hole = x + 45;
       const digging = p < 5, spray = p >= 5 && p < 10.5, covering = p >= 10.5 && p < 14;
       let pose = digging ? (Math.floor(p*1.6)%2 ? 11 : 10) : spray ? 12 : covering ? (Math.floor(p*2.4)%2 ? 10 : 11) : 13;
       shadow(x); dirt(hole, p < 5 ? 1 : covering ? 1 - (p-10.5)/3.5 : p >= 14 ? 0 : 1);
       if (p >= 3 && p < 14) { rect(hole-9,123,19,4,'#6e5641'); rect(hole-5,123,12,2,'#78949b'); }
-      sprite(pose, x, { tilt: spray ? Math.sin(t*23)*.035 : 0 });
+      sprite(pose, half(pose), { tilt: spray ? Math.sin(t*23)*.035 : 0 });
       if (digging && pose === 11) for(let i=0;i<4;i++) {
         const f = (p*1.6)%1;
         rect(hole + 5 + i*4 + f*11, 92 - Math.sin(f*Math.PI)*13+i*3, 3, 3, '#a88b63');
@@ -207,10 +209,10 @@
     }
 
     function market(t) {
-      const p=t%15, happy=p<7, x=Math.max(34,Math.min(70,width*.24)), monitor=x+69;
+      const p=t%15, happy=p<7, x=half(14), monitor=x+69;
       const color=happy?'#5b956a':'#c47672';
       // The stool is already in the sprite; the desk uses the same warm wood ramp.
-      sprite(happy?14:15,x,{y:baseline});
+      sprite(happy?14:15,half(happy?14:15),{y:baseline});
       rect(x+16,100,95,6,'#62432e');
       rect(x+17,99,93,3,'#c5945c');
       rect(x+19,99,88,1,'#e2b87c');

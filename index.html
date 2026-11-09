@@ -128,17 +128,20 @@
   .panel.swap .panel-inner { opacity: 0; transform: translateY(8px); }
   .panel-inner { transition: opacity 260ms ease, transform 360ms var(--ease); }
 
+  /* Same pill on every screen size: "< Close" on desktop, "< Back" on mobile */
   .close {
-    position: fixed; top: 28px; right: 32px;
-    background: none; border: 0; cursor: pointer;
-    font: inherit; font-size: 13px; color: var(--gray);
-    opacity: 0; pointer-events: none; transition: opacity 300ms, color 150ms;
-    z-index: 3;
+    /* Desktop: flush with the case study's left edge. Mobile resets this to the corner. */
+    position: fixed; top: 16px; left: calc(var(--gutter) + var(--col) + var(--gutter)); z-index: 5;
+    display: inline-flex; align-items: center; gap: 4px;
+    border: 0; cursor: pointer; font: inherit; font-size: 14px; color: var(--ink);
+    padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+    opacity: 0; pointer-events: none; transition: opacity 300ms, box-shadow 150ms;
   }
   body.open .close { opacity: 1; pointer-events: auto; transition-delay: 300ms; }
-  .close:hover { color: var(--ink); }
-  .close .lbl-back { display: none; align-items: center; gap: 4px; }
-  .close .lbl-back svg { width: 12px; height: 12px; margin-left: -3px; }
+  .close:hover { box-shadow: 0 0 0 1px rgba(0,0,0,.2); }
+  .close svg { width: 12px; height: 12px; margin-left: -3px; }
+  .close .lbl-back { display: none; }
 
   .cs h2 { font-size: 28px; font-weight: 500; color: var(--ink); letter-spacing: -0.015em; line-height: 1.15; }
   .cs .meta { font-size: 15px; color: var(--gray); margin-top: 8px; }
@@ -200,8 +203,8 @@
     body.open .panel { transform: none; transition-delay: 0ms; }
     .panel-inner { padding: 88px 24px 80px; }
     .close .lbl-close { display: none; }
-    .close .lbl-back { display: inline-flex; }
-    .close { z-index: 5; top: 16px; left: 16px; right: auto; font-size: 14px; color: var(--ink); padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+    .close .lbl-back { display: inline; }
+    .close { left: 16px; }
     .rows div { grid-template-columns: 1fr; gap: 2px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -270,7 +273,7 @@
   <footer>Wesley Kay · 2026 · Built with Claude.</footer>
 </div></div>
 
-<button class="close" id="close" aria-label="Close case study"><span class="lbl-close">Close</span><span class="lbl-back"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M6.5 2L3.5 5l3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</span></button>
+<button class="close" id="close" aria-label="Close case study"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M6.5 2L3.5 5l3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="lbl-close">Close</span><span class="lbl-back">Back</span></button>
 
 <section class="panel" id="panel" aria-live="polite">
   <div class="panel-inner" id="panel-inner"></div>
