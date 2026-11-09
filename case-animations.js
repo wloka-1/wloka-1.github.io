@@ -58,6 +58,9 @@
     host.append(canvas);
     const g = canvas.getContext('2d');
     let width = 320, height = 138, raf = 0, visible = false, disposed = false;
+    // Case scenes get a strip of canvas left of the text edge, so effects like tears can spill past it.
+    // Scene x = 0 stays on the text edge; the host's CSS pulls it left by the same amount.
+    const bleed = kind === 'about' ? 0 : 24;
     let elapsed = 0, lastTick = performance.now();
     const baseline = kind === 'about' ? 96 : 128;
     const rect = (x, y, w, h, color) => { g.fillStyle = color; g.fillRect(Math.round(x), Math.round(y), w, h); };
@@ -269,7 +272,7 @@
 
     function paint(t) {
       if (reduced.matches) t = kind === 'market' ? 4 : kind === 'map' ? 6 : 0;
-      g.clearRect(0,0,width,height);
+      g.clearRect(-bleed,0,width+bleed,height);
       ({map,icons,search:detective,dig:digging,market,about}[kind] || map)(t);
     }
     function tick(now) {
@@ -287,10 +290,10 @@
       if(visible && !document.hidden) { lastTick=performance.now(); raf=requestAnimationFrame(tick); }
     }
     const resize=new ResizeObserver(entries=>{
-      width=Math.max(kind === 'about' ? 92 : 150,Math.round(entries[0].contentRect.width));
+      width=Math.max(kind === 'about' ? 92 : 150,Math.round(entries[0].contentRect.width)-bleed);
       const density = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width=Math.round(width*density); canvas.height=Math.round(height*density);
-      g.setTransform(density,0,0,density,0,0); g.imageSmoothingEnabled=false;
+      canvas.width=Math.round((width+bleed)*density); canvas.height=Math.round(height*density);
+      g.setTransform(density,0,0,density,bleed*density,0); g.imageSmoothingEnabled=false;
       paint(elapsed/1000);
     });
     const observer=new IntersectionObserver(entries=>{ visible=entries[0].isIntersecting; resume(); });

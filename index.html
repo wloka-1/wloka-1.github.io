@@ -212,7 +212,8 @@
   }
 </style>
 <style>
-  .case-animation { width: min(100%, 340px); height: 138px; margin: -34px 0 18px; overflow: hidden; pointer-events: none; }
+  /* Pulled 24px left (the script's bleed) so the scene's x = 0 still sits on the text edge */
+  .case-animation { width: min(calc(100% + 24px), 364px); height: 138px; margin: -34px 0 18px -24px; overflow: hidden; pointer-events: none; }
   .case-animation canvas { display: block; width: 100%; height: 138px; image-rendering: pixelated; }
   .about-content { display: flow-root; }
   .about-animation { float: right; width: 92px; height: 100px; margin: 0 0 12px 18px; overflow: hidden; pointer-events: none; }
