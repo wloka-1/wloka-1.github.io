@@ -8,8 +8,9 @@
 <meta property="og:title" content="Wesley Kay · Product designer">
 <meta property="og:description" content="Senior product designer. Currently design lead for the core experience of Eliza, BNY's enterprise AI platform.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#ffffff">
-<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:,">
 <style>
   :root {
@@ -18,14 +19,27 @@
     --ink-3: #555;        /* secondary copy, captions */
     --gray: #959595;      /* meta lines */
     --rule: #ececec;
+    --bg: #fff;
+    --pill: rgba(255,255,255,.78);
+    --ring: rgba(0,0,0,.08);
+    --ring-hover: rgba(0,0,0,.2);
+    --dot: #9a9a9a;
+    --veil: rgba(255,255,255,.97);
     --col: 380px;
     --gutter: 56px;
     --ease: cubic-bezier(.22, .7, .12, 1);
     --dur: 650ms;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { color-scheme: light only; }
-  html, body { height: 100%; background: #fff; }
+  :root { color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f2f2f2; --ink-2: #d4d4d4; --ink-3: #a6a6a6; --gray: #8c8c8c; --rule: #2b2b2b;
+      --bg: #141414; --pill: rgba(28,28,28,.8); --ring: rgba(255,255,255,.12); --ring-hover: rgba(255,255,255,.28);
+      --dot: #5e5e5e; --veil: rgba(20,20,20,.97);
+    }
+  }
+  html, body { height: 100%; background: var(--bg); }
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: var(--ink-2);
@@ -72,7 +86,7 @@
   .deck h2 { font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; }
   .deck h2 + .meta { margin-top: 4px; margin-bottom: 16px; }
   .dots { display: none; flex-direction: column; gap: 10px; position: fixed; left: 10px; top: 50%; transform: translateY(-50%); z-index: 6; }
-  .dots button { position: relative; width: 4px; height: 4px; padding: 0; border: 0; background: #9a9a9a; cursor: pointer; }
+  .dots button { position: relative; width: 4px; height: 4px; padding: 0; border: 0; background: var(--dot); cursor: pointer; }
   .dots button::before { content: ""; position: absolute; inset: -3px -8px; }
   .dots button.on { background: var(--ink); }
   body.open .peek { opacity: 1; pointer-events: auto; }
@@ -80,7 +94,7 @@
   @media (min-width: 1101px) {
     body:not(.full) .panel, body:not(.full) .close { display: none !important; }
     /* clicking an image opens the phone-style view: full screen, dots on the left */
-    body.full .panel { left: 0; background: #fff; opacity: 1; transform: none; pointer-events: auto; z-index: 4; overflow: hidden; transition: none; }
+    body.full .panel { left: 0; background: var(--bg); opacity: 1; transform: none; pointer-events: auto; z-index: 4; overflow: hidden; transition: none; }
     body.full .panel-inner { max-width: none; min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 0 48px; }
     /* the current slide sits centered; slides are only as wide as their image, so the next one always peeks in */
     body.full .panel .slide { flex-basis: min(560px, calc(100% - 96px)); }
@@ -111,7 +125,7 @@
   }
   .item .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.35; transition: color 200ms; }
   .item .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
-  .item .p { color: #bdbdbd; }
+  .item .p { color: var(--gray); }
   .item:hover .t { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   body.open .item .t { color: var(--gray); }
   body.open .item[aria-current="true"] .t { color: var(--ink); }
@@ -172,12 +186,12 @@
     position: fixed; top: 16px; left: calc(var(--gutter) + var(--col) + var(--gutter)); z-index: 5;
     display: inline-flex; align-items: center; gap: 4px;
     border: 0; cursor: pointer; font: inherit; font-size: 14px; color: var(--ink);
-    padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78);
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+    padding: 8px 14px; border-radius: 999px; background: var(--pill);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px var(--ring);
     opacity: 0; pointer-events: none; transition: opacity 300ms, box-shadow 150ms;
   }
   body.open .close { opacity: 1; pointer-events: auto; transition-delay: 300ms; }
-  .close:hover { box-shadow: 0 0 0 1px rgba(0,0,0,.2); }
+  .close:hover { box-shadow: 0 0 0 1px var(--ring-hover); }
   .close svg { width: 12px; height: 12px; margin-left: -3px; }
   .close .lbl-back { display: none; }
 
@@ -197,7 +211,7 @@
   /* click an image to see it full size */
   .lightbox {
     position: fixed; inset: 0; z-index: 10;
-    background: rgba(255,255,255,.97);
+    background: var(--veil);
     display: flex; overflow: auto;
     opacity: 0; pointer-events: none; transition: opacity 250ms ease;
     cursor: zoom-out;
@@ -237,7 +251,7 @@
     .col-inner { padding-top: 12vh; }
     .col { transition: opacity 300ms; }
     body.open .col { width: 100vw; opacity: 0; pointer-events: none; }
-    .panel { left: 0; background: #fff; transform: translateX(100%); opacity: 1; z-index: 4; }
+    .panel { left: 0; background: var(--bg); transform: translateX(100%); opacity: 1; z-index: 4; }
     body.open .panel { transform: none; transition-delay: 0ms; }
     .panel-inner { padding: 88px 24px 80px; }
     /* phones: no page scroll in the panel. Up and down switch projects, sideways moves through the slides */
@@ -321,6 +335,114 @@
 
 <script>
 const IMG = "images/";
+
+// ---------- analytics: sends visit events to Wesley's own collector ----------
+// Add ?notrack to any URL to stop tracking this browser (?track turns it back on).
+const T = (() => {
+  const ENDPOINT = location.hostname === "127.0.0.1" ? "http://127.0.0.1:8787/e" : "";
+  const store = (s, k, v) => { try { if (v === undefined) return s.getItem(k); s.setItem(k, v); } catch (e) {} };
+  const qs = new URLSearchParams(location.search);
+  if (qs.has("notrack")) store(localStorage, "pa_off", "1");
+  if (qs.has("track")) { try { localStorage.removeItem("pa_off"); } catch (e) {} }
+  const noop = { via: null, project() {}, slide() {}, event() {} };
+  if (!ENDPOINT || store(localStorage, "pa_off") || navigator.webdriver) return noop;
+
+  const id = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let visitor = store(localStorage, "pa_v");
+  if (!visitor) { visitor = id(); store(localStorage, "pa_v", visitor); }
+  // a new session after 30 minutes away
+  let session = store(sessionStorage, "pa_s");
+  const lastSeen = +store(sessionStorage, "pa_t") || 0;
+  if (!session || Date.now() - lastSeen > 30 * 60 * 1000) { session = id(); store(sessionStorage, "pa_s", session); store(sessionStorage, "pa_m", ""); }
+  let needMeta = !store(sessionStorage, "pa_m");
+  let active = +store(sessionStorage, "pa_a") || 0;
+
+  let queue = [];
+  const send = beacon => {
+    store(sessionStorage, "pa_t", String(Date.now()));
+    store(sessionStorage, "pa_a", String(Math.round(activeNow())));
+    if (!queue.length && !beacon) return;
+    const body = { s: session, v: visitor, active: Math.round(activeNow()), ev: queue };
+    if (needMeta) body.meta = { ref: document.referrer, url: location.href, hash: location.hash,
+      screen: `${screen.width}x${screen.height}`, lang: navigator.language,
+      tz: Intl.DateTimeFormat().resolvedOptions().timeZone };
+    queue = [];
+    const data = JSON.stringify(body);
+    // text/plain keeps this a simple request, so the browser sends it without a preflight
+    const ok = beacon && navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, new Blob([data], { type: "text/plain" }));
+    if (!ok) fetch(ENDPOINT, { method: "POST", body: data, keepalive: true, headers: { "Content-Type": "text/plain" } }).catch(() => {});
+    needMeta = false; store(sessionStorage, "pa_m", "1");
+  };
+  // send a few seconds after something happens, so little is lost if the tab is killed
+  let soon;
+  const push = e => { queue.push({ t: Date.now(), ...e }); clearTimeout(soon); soon = setTimeout(send, 3000); if (queue.length > 40) send(); };
+
+  // time only counts while the tab is visible
+  let visibleSince = document.visibilityState === "visible" ? performance.now() : null;
+  const activeNow = () => active + (visibleSince != null ? performance.now() - visibleSince : 0);
+  const timer = () => ({ ms: 0, since: visibleSince != null ? performance.now() : null });
+  const pause = t => { if (t && t.since != null) { t.ms += performance.now() - t.since; t.since = null; } };
+  const resume = t => { if (t && t.since == null) t.since = performance.now(); };
+  const total = t => t.ms + (t.since != null ? performance.now() - t.since : 0);
+
+  let proj = null, slide = null;
+  const endSlide = () => { if (slide) { push({ type: "slide", p: slide.p, i: slide.i, d: Math.round(total(slide.t)), how: slide.how }); slide = null; } };
+  const endProject = () => { endSlide(); if (proj) { push({ type: "project", p: proj.p, d: Math.round(total(proj.t)), how: proj.how }); proj = null; } };
+
+  const api = {
+    via: null,
+    project(p) {
+      if (proj && proj.p === p) return;
+      endProject();
+      if (p) proj = { p, t: timer(), how: api.via || "url" };
+    },
+    slide(p, i) {
+      if (!p || (slide && slide.p === p && slide.i === i)) return;
+      endSlide();
+      slide = { p, i, t: timer(), how: api.via || "open" };
+    },
+    event(type, extra = {}) { push({ type, p: proj?.p, ...extra }); },
+  };
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      if (visibleSince != null) { active += performance.now() - visibleSince; visibleSince = null; }
+      pause(proj?.t); pause(slide?.t);
+      // close out what's open so a tab that never comes back still reports it
+      const p = proj?.p, s = slide;
+      endProject(); send(true);
+      proj = p ? { p, t: { ms: 0, since: null }, how: "resume" } : null;
+      slide = s ? { p: s.p, i: s.i, t: { ms: 0, since: null }, how: "resume" } : null;
+    } else {
+      visibleSince = performance.now();
+      resume(proj?.t); resume(slide?.t);
+    }
+  });
+  addEventListener("pagehide", () => { endProject(); send(true); });
+  setInterval(() => send(), 15000);
+
+  // how far down the page people get
+  const seen = new Set();
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    const name = en.target.querySelector("h2")?.textContent.trim();
+    if (en.isIntersecting && name && !seen.has(name)) { seen.add(name); push({ type: "section", name }); }
+  }), { threshold: 0.4 });
+  document.querySelectorAll("section.more").forEach(s => io.observe(s));
+
+  // outbound links: resume, LinkedIn, email, company links
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const label = a.textContent.trim().slice(0, 60) || a.hostname;
+    push({ type: "link", label, href: a.href.slice(0, 200) });
+    send(true);
+  }, true);
+
+  push({ type: "view", hash: location.hash });
+  send();
+  return api;
+})();
+
 
 const ORG_LINKS = {
   "BNY": "https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html",
@@ -515,6 +637,7 @@ let cur = -1, si = 0;
 function setSlide(n, animate = true) {
   const max = (projects[cur]?.shots || []).length;
   si = Math.max(0, Math.min(max, n));
+  T.slide(projects[cur]?.id, si);
   for (const track of document.querySelectorAll(".track")) {
     const el = track.children[si];
     // in the desktop full-screen view the current slide is centered
@@ -554,6 +677,7 @@ function open(id, push = true, dir = 1) {
   const p = projects[i];
   const wasOpen = document.body.classList.contains("open");
   cur = i;
+  T.project(id);
   document.querySelectorAll(".item").forEach(b => b.setAttribute("aria-current", b.dataset.id === id));
   dots.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.id === id));
   if (wasOpen) {
@@ -569,10 +693,11 @@ function open(id, push = true, dir = 1) {
 }
 
 const full = () => document.body.classList.contains("full");
-function enterFull() { document.body.classList.add("full"); setSlide(si, false); }
+function enterFull() { document.body.classList.add("full"); setSlide(si, false); T.event("full", { i: si }); }
 function exitFull() { document.body.classList.remove("full"); setSlide(si, false); placePeek(); }
 function close(push = true) {
   cur = -1;
+  T.project(null);
   document.body.classList.remove("open", "full");
   document.querySelectorAll(".item").forEach(b => b.removeAttribute("aria-current"));
   if (push) history.pushState(null, "", location.pathname);
@@ -592,6 +717,7 @@ function step(d) {
 }
 
 document.addEventListener("click", e => {
+  T.via = e.target.closest(".dots") ? "dot" : "click";
   const slide = e.target.closest(".slide");
   if (slide) {
     if (!slide.classList.contains("on")) return setSlide([...slide.parentNode.children].indexOf(slide));
@@ -616,6 +742,7 @@ document.addEventListener("click", e => {
 // new swipe shows up as the deltas growing again, and that unlocks right away
 let wx = 0, wy = 0, wLock = false, wFading = false, wLast = 0, wTimer;
 document.addEventListener("wheel", e => {
+  T.via = "trackpad";
   if (!document.body.classList.contains("open") || !desktop.matches) return;
   const sideways = Math.abs(e.deltaX) > Math.abs(e.deltaY);
   if (!sideways && !full()) return;
@@ -656,6 +783,7 @@ panel.addEventListener("touchmove", e => {
   }
 }, { passive: false });
 panel.addEventListener("touchend", () => {
+  T.via = "swipe";
   if (!touch) return;
   const { axis, dx, dy } = touch;
   touch = null;
@@ -694,6 +822,7 @@ lb.addEventListener("click", closeLightbox);
 document.addEventListener("keydown", e => document.body.classList.toggle("tabbing", e.key === "Tab"), true);
 document.addEventListener("pointerdown", () => document.body.classList.remove("tabbing"), true);
 document.addEventListener("keydown", e => {
+  T.via = "key";
   if (e.key === "Escape") return lb.classList.contains("on") ? closeLightbox() : full() ? exitFull() : close();
   if (lb.classList.contains("on") || e.metaKey || e.ctrlKey || e.altKey) return;
   const isOpen = document.body.classList.contains("open");
@@ -706,7 +835,7 @@ document.addEventListener("keydown", e => {
   else if (isOpen && e.key === "ArrowRight") { e.preventDefault(); setSlide(si + 1); }
   else if (isOpen && e.key === "ArrowLeft") { e.preventDefault(); setSlide(si - 1); }
 });
-window.addEventListener("popstate", () => location.hash ? open(location.hash.slice(1), false) : close(false));
+window.addEventListener("popstate", () => (T.via = "back", location.hash) ? open(location.hash.slice(1), false) : close(false));
 if (location.hash) open(location.hash.slice(1), false);
 </script>
 </body>
