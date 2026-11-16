@@ -339,7 +339,8 @@ const IMG = "images/";
 // ---------- analytics: sends visit events to Wesley's own collector ----------
 // Add ?notrack to any URL to stop tracking this browser (?track turns it back on).
 const T = (() => {
-  const ENDPOINT = location.hostname === "127.0.0.1" ? "http://127.0.0.1:8787/e" : "";
+  const ENDPOINT = location.hostname === "127.0.0.1" ? "http://127.0.0.1:8787/e"
+    : location.hostname === "wloka-1.github.io" ? "https://snousty-1.tailc765e1.ts.net/portfolio-stats/e" : "";
   const store = (s, k, v) => { try { if (v === undefined) return s.getItem(k); s.setItem(k, v); } catch (e) {} };
   const qs = new URLSearchParams(location.search);
   if (qs.has("notrack")) store(localStorage, "pa_off", "1");
