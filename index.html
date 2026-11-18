@@ -72,19 +72,22 @@
     width: calc(50vw - var(--col) / 2 - var(--gutter));
     opacity: 0; pointer-events: none; transition: opacity 260ms ease;
   }
-  /* a row of slides: the text first, then any visuals. Slides that aren't current sit faded to the right */
-  .deck { overflow: hidden; }
+  /* the text, then a strip of images below it that scrolls sideways */
+  .cs { min-width: 0; max-width: 100%; }
+  .deck { overflow: hidden; margin-top: 28px; max-width: 100%; }
   .track { position: relative; display: flex; align-items: center; gap: 24px; transition: transform 450ms var(--ease); }
   .track.drag { transition: none; }
-  .slide { flex: 0 0 min(460px, calc(100% - 64px)); opacity: .2; transition: opacity 300ms; cursor: pointer; }
-  .slide.on { opacity: 1; cursor: auto; }
-  .deck figure.slide { margin: 0; }
-  .deck figure.slide { flex-basis: calc(100% - 40px); }
-  .deck .slide img { display: block; width: auto; max-width: 100%; max-height: 70vh; cursor: zoom-in; }
-  .deck .slide:not(.on) img { cursor: pointer; }
-  .deck figcaption { font-size: 13px; line-height: 1.5; color: var(--gray); margin-top: 10px; }
-  .deck h2 { font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; }
-  .deck h2 + .meta { margin-top: 4px; margin-bottom: 16px; }
+  .track { align-items: flex-start; gap: 16px; }
+  .deck figure.slide { flex: 0 0 auto; width: min-content; margin: 0; transition: opacity 300ms; }
+  .deck figure.slide figcaption { min-width: 240px; }
+  .deck .slide img { display: block; width: auto; height: auto; max-height: var(--imgh, 32vh); max-width: calc(50vw - var(--col) / 2 - var(--gutter) - 48px); cursor: zoom-in; }
+  .deck figcaption { font-size: 13px; line-height: 1.5; color: var(--gray); margin-top: 10px; max-width: 320px; }
+  .strip-nav { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 13px; color: var(--gray); font-variant-numeric: tabular-nums; }
+  .strip-nav button { width: 32px; height: 32px; border: 1px solid var(--rule); border-radius: 50%; background: none; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; }
+  .strip-nav button:hover:not(:disabled) { border-color: var(--ink); }
+  .strip-nav button:disabled { opacity: .3; cursor: default; }
+  .cs h2 { font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; }
+  .cs h2 + .meta { margin-top: 4px; margin-bottom: 16px; }
   .dots { display: none; flex-direction: column; gap: 10px; position: fixed; left: 10px; top: 50%; transform: translateY(-50%); z-index: 6; }
   .dots button { position: relative; width: 4px; height: 4px; padding: 0; border: 0; background: var(--dot); cursor: pointer; }
   .dots button::before { content: ""; position: absolute; inset: -3px -8px; }
@@ -97,12 +100,15 @@
     body.full .panel { left: 0; background: var(--bg); opacity: 1; transform: none; pointer-events: auto; z-index: 4; overflow: hidden; transition: none; }
     body.full .panel-inner { max-width: none; min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 0 48px; }
     /* the current slide sits centered; slides are only as wide as their image, so the next one always peeks in */
-    body.full .panel .slide { flex-basis: min(560px, calc(100% - 96px)); }
-    body.full .panel .deck figure.slide { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    body.full .panel .deck .slide img { max-height: 78vh; max-width: calc(100vw - 300px); cursor: auto; }
+    body.full .panel .text { display: none; }
+    body.full .panel .deck { margin-top: 0; }
+    body.full .panel .track { align-items: center; gap: 24px; }
+    body.full .panel .deck figure.slide { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    body.full .panel .deck figure.slide:not(.on) { opacity: .4; cursor: pointer; }
+    body.full .panel .deck .slide img { height: auto; max-height: 78vh; max-width: calc(100vw - 300px); cursor: auto; }
     body.full .panel .deck figcaption { max-width: 560px; }
-    body.full .panel .slide.past { opacity: 0; }
-    body.full .panel .deck h2 { font-size: 28px; }
+    body.full .panel .deck figure.slide.past { opacity: 0; }
+    body.full .panel .strip-nav { display: none; }
     body.full .dots { display: flex; left: 28px; }
     body.full .close { left: 16px; opacity: 1; pointer-events: auto; transition-delay: 0ms; }
   }
@@ -254,14 +260,14 @@
     .panel { left: 0; background: var(--bg); transform: translateX(100%); opacity: 1; z-index: 4; }
     body.open .panel { transform: none; transition-delay: 0ms; }
     .panel-inner { padding: 88px 24px 80px; }
-    /* phones: no page scroll in the panel. Up and down switch projects, sideways moves through the slides */
-    .panel { overflow: hidden; touch-action: none; }
+    /* phones: the panel scrolls when a project is taller than the screen. Past either end, up and down
+       switch projects. Sideways moves through the images */
+    .panel { overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; }
+    .panel::-webkit-scrollbar { display: none; }
     .panel .panel-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 20px 48px 40px; }
     .panel .deck { margin-right: -20px; }
-    .panel .slide { flex-basis: calc(100% - 52px); }
-    .panel .deck figure.slide { flex-basis: calc(100% - 28px); }
-    .panel .deck .slide img { max-height: 62vh; }
-    .panel .deck h2 { font-size: 22px; }
+    .panel .deck .slide img { max-height: var(--imgh, 30vh); max-width: calc(100vw - 100px); }
+    .panel .cs h2 { font-size: 22px; }
     body.open .dots { display: flex; }
     .close .lbl-close { display: none; }
     .close .lbl-back { display: inline; }
@@ -476,32 +482,32 @@ const projects = [
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
     text: "Qualcomm, Snapdragon, and Dragonwing had three icon sets in use, and they disagreed. I audited them and set one size and stroke ramp, with separate rules for product icons and marketing icons. We built the 1,500+ icon library on Lucide, an open-source set, and I added a review path so custom icons had to earn their place. I also used AI to build a Figma importer that made every icon searchable. It shipped with the enterprise beta and is now public." ,
     shots: [
+      ["qualcomm/icon-decision-tree.png", "Four of the five paths end in reusing an icon. Only one ends at a request to the system team."],
       ["qualcomm/icon-ramp-comparison.png", "Sizes, strokes, and names across three sets, with the recommendation on the right of each table."],
       ["qualcomm/Ramp.png", "The utility ramp. Size and stroke move together."],
       ["qualcomm/Sizing.png", "Pick from the ramp instead of scaling by eye."],
       ["qualcomm/icon-scaling.png", "Each rule shipped with a do and a don't."],
-      ["qualcomm/icon-contextual-use.png", "Utility icons do a job. Decoration goes to the marketing set."],
-      ["qualcomm/icon-decision-tree.png", "Four of the five paths end in reusing an icon. Only one ends at a request to the system team."]
+      ["qualcomm/icon-contextual-use.png", "Utility icons do a job. Decoration goes to the marketing set."]
     ] },
   { id: "search", title: "One search for shopping and support",
     org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
     text: "Searching \"iPhone\" on T-Mobile could mean buying one, finding a case, or fixing the one you have, and about 13% of searches returned nothing. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile. Suggestions helped people form the query, account searches put tasks like paying a bill first, and results split into phones, accessories, and support. Zero-result searches fell to 0.7% because we built a page for searches with no results, and search usage rose 24% because we added a search button to the home page." ,
     shots: [
+      ["tmo1.png", "Same query across product and support views."],
       ["tmo/objectives.png", "The objectives from the project brief: reduce cost, increase revenue, improve CSAT, improve usability."],
       ["tmo3.png", "Clicks after searching \"pay bill\" on the old results page."],
       ["tmo5.png", "A partial \"iPh\" offers both phones and support."],
       ["tmo/wireframe-pay-bill.png", "Wireframe for \"pay my bill.\" The task is one click away, above the articles."],
-      ["tmo1.png", "Same query across product and support views."],
       ["tmo7.png", "An explicit way out when the content lives elsewhere."]
     ] },
   { id: "civil-conflicts", title: "Finding what's in the way before you dig",
     org: "CivilGrid", role: "Design consultant", when: "2025",
     text: "Before a utility project breaks ground, engineers have to find everything it could collide with: paving moratoria, other planned projects, city and county lines, existing utilities. They pulled it together by hand for every project. I designed CivilGrid's conflict reports, which compile it from the map in four inputs. Then I turned the report into a list teams work through over weeks, with a status on every conflict." ,
     shots: [
+      ["civilgrid/conflicts.png", "Every conflict gets a status and a color that matches the map."],
       ["civilgrid/project-nav.png", "Inside a project, the left nav groups general info, analysis, and the project's maps."],
       ["civilgrid/new-report.png", "The map stays live while you set up the report."],
-      ["civilgrid/report.png", "Moratoria within half a mile of the project, with overlap, dates, and a contact for each."],
-      ["civilgrid/conflicts.png", "Every conflict gets a status and a color that matches the map."]
+      ["civilgrid/report.png", "Moratoria within half a mile of the project, with overlap, dates, and a contact for each."]
     ] },
   { id: "overlay-app", title: "A trading app that starts with the markets",
     org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
@@ -534,8 +540,8 @@ const projects = [
     org: "Qualcomm", role: "Design Systems Lead", when: "2025", tools: "Claude",
     text: "I owned the documentation structure for Qualcomm's design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output. 60+ docs went out for the enterprise beta with 120x less writing effort." ,
     shots: [
-      ["qualcomm/doc-wireframes.png", "Page templates for home, foundations, a foundation page, and a component page."],
       ["qualcomm/qds-components-1.png", ""],
+      ["qualcomm/doc-wireframes.png", "Page templates for home, foundations, a foundation page, and a component page."],
       ["qualcomm/qds-components-2.png", "The repeated grid and connectors keep the family consistent while each drawing explains a different component."],
       ["qualcomm/doc-illustration-howto.png", "The same language for guideline pages: a library feeding components into a product."]
     ] },
@@ -561,8 +567,8 @@ const projects = [
     org: "Stalk", role: "Product Designer, contract", when: "2024",
     text: "Stalk Market was a meme coin launchpad that had to feel familiar to pump.fun users and still look like its own thing. I took it from soft and rounded to a trading terminal: sharp corners, a black base, an orange accent. The home screen leads with what traders watch, and a chat with clickable cashtags sits beside the market. It launched." ,
     shots: [
-      ["stalk/concepts.png", "Five concepts, left to right. The layout barely moves. The attitude does."],
       ["stalk/home-desktop.png", "Desktop home. Tokens on the left, live video and the troll box on the right."],
+      ["stalk/concepts.png", "Five concepts, left to right. The layout barely moves. The attitude does."],
       ["stalk/mobile.png", "Mobile home, the troll box tab, and the trade drawer on a token page."]
     ] },
   { id: "oxbow", title: "An admin console for a compliant privacy pool",
@@ -577,8 +583,8 @@ const projects = [
     org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
     text: "Overlay's protocol was technically deep, and the brand didn't have to be. I wrote the design ethos and built the early identity, then brought in an agency as it matured. With our front-end lead I built a shared component library that covered behavior as well as looks, so new features didn't re-decide every control." ,
     shots: [
-      ["overlay3.png", "The ethos. Cats knock things off the shelf, which is a decent way to design for everything."],
       ["overlay5.png", "The mark went from two rings to one with a wave, and the pixel cat grew up."],
+      ["overlay3.png", "The ethos. Cats knock things off the shelf, which is a decent way to design for everything."],
       ["overlay4.png", "Pending, inactive, and selected states alongside responsive headers."],
       ["overlay6.png", "Referrals on mobile: before connecting, entering a code, and earning."]
     ] },
@@ -586,6 +592,9 @@ const projects = [
     org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
     text: "I led T-Mobile's universal navigation, the shared header and menu across its websites. The framework grew from 16 to 30 sites, navigation usage rose 23%, and it serves 40M+ monthly users." },
 ];
+
+// BNY, Qualcomm, and CivilGrid's AI answers were built with Claude. Everything else was designed in Figma
+projects.forEach(p => { p.tools = p.org === "BNY" || p.org === "Qualcomm" || p.id === "civil-ai" ? "Claude" : "Figma"; });
 
 // group by company, newest company first, then newest project first within it.
 // Dates sort by start year, then end year ("now" counts as this year). Ties keep their written order
@@ -624,31 +633,38 @@ dots.className = "dots";
 dots.innerHTML = projects.map(p => `<button data-id="${p.id}" aria-label="${p.title}"></button>`).join("");
 document.body.appendChild(dots);
 
-const deckHTML = p => `<div class="deck cs"><div class="track">
-  <div class="slide on">
+const deckHTML = p => `<div class="cs"><div class="text">
     <h2>${p.title}</h2>
     <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
     <p>${p.text}</p>
     ${p.tools ? `<p class="meta">Tools · ${p.tools}</p>` : ""}
     ${p.org === "BNY" ? `<p class="meta">Under NDA, so no images.</p>` : ""}
   </div>
-  ${(p.shots || []).map(([src, cap]) => `<figure class="slide"><img src="${IMG}${src}" alt="${cap.replace(/"/g, "&quot;")}">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`).join("")}
-</div></div>`;
+  ${p.shots ? `<div class="deck"><div class="track">${p.shots.map(([src, cap]) => `<figure class="slide"><img src="${IMG}${src}" alt="${cap.replace(/"/g, "&quot;")}">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`).join("")}</div></div>` : ""}
+  ${p.shots?.length > 1 ? `<div class="strip-nav"><button data-d="-1" aria-label="Previous image">←</button><span class="count">1 / ${p.shots.length}</span><button data-d="1" aria-label="Next image">→</button></div>` : ""}
+</div>`;
 
 let cur = -1, si = 0;
 // animate only when someone moves between slides; layout fixes (opening, resizing, images loading) snap
 function setSlide(n, animate = true) {
-  const max = (projects[cur]?.shots || []).length;
+  const max = (projects[cur]?.shots || []).length - 1;
   si = Math.max(0, Math.min(max, n));
   T.slide(projects[cur]?.id, si);
   for (const track of document.querySelectorAll(".track")) {
     const el = track.children[si];
     // in the desktop full-screen view the current slide is centered
-    const shift = full() && track.closest(".panel") ? (track.parentNode.clientWidth - el.offsetWidth) / 2 : 0;
+    const centered = full() && track.closest(".panel");
+    const x = centered ? el.offsetLeft - (track.parentNode.clientWidth - el.offsetWidth) / 2
+      : Math.min(el.offsetLeft, Math.max(0, track.scrollWidth - track.parentNode.clientWidth));
     if (!animate) track.classList.add("drag");
-    track.style.transform = `translateX(${shift - el.offsetLeft}px)`;
+    track.style.transform = `translateX(${-x}px)`;
     if (!animate) { track.offsetWidth; track.classList.remove("drag"); }
     [...track.children].forEach((el, i) => { el.classList.toggle("on", i === si); el.classList.toggle("past", i < si); });
+  }
+  for (const nav of document.querySelectorAll(".strip-nav")) {
+    nav.querySelector(".count").textContent = `${si + 1} / ${max + 1}`;
+    nav.querySelector('[data-d="-1"]').disabled = si === 0;
+    nav.querySelector('[data-d="1"]').disabled = si === max;
   }
 }
 function placePeek() {
@@ -662,9 +678,17 @@ function keepOnScreen() {
   const by = r.bottom > innerHeight - 32 ? r.bottom - innerHeight + 64 : r.top < 32 ? r.top - 64 : 0;
   if (by) col.scrollBy({ top: by, behavior: "smooth" });
 }
+// phones: images shrink a little to fit under the text, but never so small they can't be read
+function fitImages() {
+  const deck = inner.querySelector(".deck");
+  if (!deck || desktop.matches) return;
+  const room = panel.clientHeight - 120 - inner.querySelector(".text").offsetHeight - 28 - 110;
+  deck.style.setProperty("--imgh", Math.round(Math.max(240, Math.min(room, innerHeight * 0.42))) + "px");
+}
 function render(p) {
   inner.innerHTML = deckHTML(p);
   peek.innerHTML = deckHTML(p);
+  fitImages();
   peek.querySelectorAll("img").forEach(img => img.addEventListener("load", placePeek));
   inner.querySelectorAll("img").forEach(img => img.addEventListener("load", () => full() && setSlide(si, false)));
   setSlide(0, false);
@@ -672,7 +696,7 @@ function render(p) {
   keepOnScreen();
   panel.scrollTop = 0;
 }
-addEventListener("resize", () => { setSlide(si, false); placePeek(); });
+addEventListener("resize", () => { fitImages(); setSlide(si, false); placePeek(); });
 
 function open(id, push = true, dir = 1) {
   const i = projects.findIndex(x => x.id === id);
@@ -721,11 +745,14 @@ function step(d) {
 
 document.addEventListener("click", e => {
   T.via = e.target.closest(".dots") ? "dot" : "click";
+  const sn = e.target.closest(".strip-nav button");
+  if (sn) return setSlide(si + +sn.dataset.d);
   const slide = e.target.closest(".slide");
   if (slide) {
-    if (!slide.classList.contains("on")) return setSlide([...slide.parentNode.children].indexOf(slide));
+    const n = [...slide.parentNode.children].indexOf(slide);
     const img = e.target.closest("img");
-    if (img && desktop.matches) { if (!full()) enterFull(); }
+    // desktop: any image opens the full-screen view on that image. Phones: the zoomable lightbox
+    if (desktop.matches) { if (!full()) { si = n; enterFull(); } else if (n !== si) setSlide(n); }
     else if (img) openLightbox(img);
     return;
   }
@@ -767,7 +794,8 @@ document.addEventListener("wheel", e => {
 let touch = null;
 panel.addEventListener("touchstart", e => {
   const t = e.touches[0];
-  touch = { x: t.clientX, y: t.clientY, dx: 0, dy: 0, axis: null };
+  touch = { x: t.clientX, y: t.clientY, dx: 0, dy: 0, axis: null,
+    top: panel.scrollTop <= 0, bottom: panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1 };
 }, { passive: true });
 panel.addEventListener("touchmove", e => {
   if (!touch) return;
@@ -775,11 +803,15 @@ panel.addEventListener("touchmove", e => {
   touch.dx = t.clientX - touch.x; touch.dy = t.clientY - touch.y;
   if (!touch.axis && Math.hypot(touch.dx, touch.dy) > 10) touch.axis = Math.abs(touch.dx) > Math.abs(touch.dy) ? "x" : "y";
   if (!touch.axis) return;
+  // vertical moves scroll the panel natively until it's at the end in that direction
+  if (touch.axis === "y" && !(touch.dy < 0 ? touch.bottom : touch.top)) { touch.axis = "scroll"; }
+  if (touch.axis === "scroll") return;
   e.preventDefault();
+  const track = inner.querySelector(".track");
+  if (touch.axis === "x" && !track) return;
   if (touch.axis === "x") {
-    const track = inner.querySelector(".track");
     track.classList.add("drag");
-    track.style.transform = `translateX(${-track.children[si].offsetLeft + touch.dx}px)`;
+    track.style.transform = `translateX(${-Math.min(track.children[si].offsetLeft, Math.max(0, track.scrollWidth - track.parentNode.clientWidth)) + touch.dx}px)`;
   } else {
     inner.style.transition = "none";
     inner.style.transform = `translateY(${touch.dy * 0.3}px)`;
@@ -791,7 +823,7 @@ panel.addEventListener("touchend", () => {
   const { axis, dx, dy } = touch;
   touch = null;
   if (axis === "x") {
-    inner.querySelector(".track").classList.remove("drag");
+    inner.querySelector(".track")?.classList.remove("drag");
     if (dx < -50) setSlide(si + 1);
     else if (dx > 50 && si === 0) close();
     else if (dx > 50) setSlide(si - 1);
