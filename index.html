@@ -66,10 +66,15 @@
     padding: 18vh 0 14vh;
     position: relative;
   }
-  /* desktop: the project opens beside the list, centered on the selected item */
+  /* desktop: the list starts a quarter of the way across, and the project opens beside it,
+     centered on the selected item, with a 32px gap */
+  @media (min-width: 1101px) {
+    .col-inner { margin-left: 25vw; }
+  }
   .peek {
-    position: absolute; left: calc(100% + var(--gutter));
-    width: calc(50vw - var(--col) / 2 - var(--gutter));
+    --peekw: calc(75vw - var(--col) - 32px);
+    position: absolute; left: calc(100% + 32px);
+    width: var(--peekw);
     opacity: 0; pointer-events: none; transition: opacity 260ms ease;
   }
   /* the text, then a strip of images below it that scrolls sideways */
@@ -80,7 +85,7 @@
   .track { align-items: flex-start; gap: 16px; }
   .deck figure.slide { flex: 0 0 auto; width: min-content; margin: 0; transition: opacity 300ms; }
   .deck figure.slide figcaption { min-width: 240px; }
-  .deck .slide img { display: block; width: auto; height: auto; max-height: var(--imgh, 32vh); max-width: calc(50vw - var(--col) / 2 - var(--gutter) - 48px); cursor: zoom-in; }
+  .deck .slide img { display: block; width: auto; height: auto; max-height: var(--imgh, 32vh); max-width: calc(var(--peekw, 100vw) - 64px); cursor: zoom-in; }
   .deck figcaption { font-size: 13px; line-height: 1.5; color: var(--gray); margin-top: 10px; max-width: 320px; }
   .strip-nav { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 13px; color: var(--gray); font-variant-numeric: tabular-nums; }
   .strip-nav button { width: 32px; height: 32px; border: 1px solid var(--rule); border-radius: 50%; background: none; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; }
@@ -93,7 +98,7 @@
   .dots button::before { content: ""; position: absolute; inset: -3px -8px; }
   .dots button.on { background: var(--ink); }
   /* keep the text off the window edge; the image strip still runs to the edge so the next image peeks in */
-  .peek .text { max-width: min(480px, calc(100% - 64px)); }
+  .peek .text { max-width: min(520px, calc(100% - 32px)); }
   body.open .peek { opacity: 1; pointer-events: auto; }
   body.open .peek.swap { opacity: 0; }
   @media (min-width: 1101px) {
