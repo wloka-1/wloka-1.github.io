@@ -480,6 +480,7 @@ const projects = [
       ["qualcomm/Ramp.png", "The utility ramp. Size and stroke move together."],
       ["qualcomm/Sizing.png", "Pick from the ramp instead of scaling by eye."],
       ["qualcomm/icon-scaling.png", "Each rule shipped with a do and a don't."],
+      ["qualcomm/icon-contextual-use.png", "Utility icons do a job. Decoration goes to the marketing set."],
       ["qualcomm/icon-decision-tree.png", "Four of the five paths end in reusing an icon. Only one ends at a request to the system team."]
     ] },
   { id: "search", title: "One search for shopping and support",
@@ -521,8 +522,7 @@ const projects = [
     text: "Project Rubicon lets Bittensor holders stake their tokens and bridge them to Base for liquidity pools. That's four steps across three chains, and the founder's bar was that you could do it drunk. I laid the steps out as one numbered column, with the chains, rate, fees, and wallet for each step shown right where you need them. After launch I designed the dashboard. It launched in November 2025." ,
     shots: [
       ["contango/stake.png", "Four steps, one column. The chain chips on each step say where your tokens are going."],
-      ["contango/confirm.png", "The last check before a cross-chain move."],
-      ["contango/dashboard.png", "Dashboard wireframe. Area charts for value and volume, lines for reserves and rate, columns for market share."]
+      ["contango/confirm.png", "The last check before a cross-chain move."]
     ] },
   { id: "patterns", title: "UX patterns across Qualcomm's products",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
@@ -578,8 +578,9 @@ const projects = [
     text: "Overlay's protocol was technically deep, and the brand didn't have to be. I wrote the design ethos and built the early identity, then brought in an agency as it matured. With our front-end lead I built a shared component library that covered behavior as well as looks, so new features didn't re-decide every control." ,
     shots: [
       ["overlay3.png", "The ethos. Cats knock things off the shelf, which is a decent way to design for everything."],
+      ["overlay5.png", "The mark went from two rings to one with a wave, and the pixel cat grew up."],
       ["overlay4.png", "Pending, inactive, and selected states alongside responsive headers."],
-      ["overlay6.png", ""]
+      ["overlay6.png", "Referrals on mobile: before connecting, entering a code, and earning."]
     ] },
   { id: "unav", title: "Universal navigation across 30 sites",
     org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
@@ -629,6 +630,7 @@ const deckHTML = p => `<div class="deck cs"><div class="track">
     <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
     <p>${p.text}</p>
     ${p.tools ? `<p class="meta">Tools · ${p.tools}</p>` : ""}
+    ${p.org === "BNY" ? `<p class="meta">Under NDA, so no images.</p>` : ""}
   </div>
   ${(p.shots || []).map(([src, cap]) => `<figure class="slide"><img src="${IMG}${src}" alt="${cap.replace(/"/g, "&quot;")}">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`).join("")}
 </div></div>`;
