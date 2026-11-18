@@ -66,14 +66,15 @@
     padding: 18vh 0 14vh;
     position: relative;
   }
-  /* desktop: the list starts a quarter of the way across, and the project opens beside it,
-     centered on the selected item, with a 32px gap */
+  /* desktop: the list starts a quarter of the way across, and the project opens beside it with a
+     32px gap. The project stays put, centered in the window, while the list scrolls */
   @media (min-width: 1101px) {
     .col-inner { margin-left: 25vw; }
   }
   .peek {
     --peekw: calc(75vw - var(--col) - 32px);
-    position: absolute; left: calc(100% + 32px);
+    position: fixed; top: 50%; transform: translateY(-50%); z-index: 3;
+    left: calc(25vw + var(--col) + 32px);
     width: var(--peekw);
     opacity: 0; pointer-events: none; transition: opacity 260ms ease;
   }
@@ -633,7 +634,7 @@ list.innerHTML = projects.map(itemHTML).join("");
 
 const peek = document.createElement("div");
 peek.className = "peek";
-document.querySelector(".col-inner").appendChild(peek);
+document.body.appendChild(peek);
 const col = document.getElementById("col");
 const desktop = matchMedia("(min-width: 1101px)");
 const dots = document.createElement("nav");
@@ -675,14 +676,14 @@ function setSlide(n, animate = true) {
     nav.querySelector('[data-d="1"]').disabled = si === max;
   }
 }
-function placePeek() {
-  const b = document.querySelector('.item[aria-current="true"]');
-  if (!b) return;
-  peek.style.top = Math.max(0, b.offsetTop + b.offsetHeight / 2 - peek.offsetHeight / 2) + "px";
-}
+// the project is fixed in place on desktop, so there's nothing to position
+function placePeek() {}
+// arrow keys can select an item that's scrolled out of view, so bring it back
 function keepOnScreen() {
   if (!desktop.matches) return;
-  const r = peek.getBoundingClientRect();
+  const b = document.querySelector('.item[aria-current="true"]');
+  if (!b) return;
+  const r = b.getBoundingClientRect();
   const by = r.bottom > innerHeight - 32 ? r.bottom - innerHeight + 64 : r.top < 32 ? r.top - 64 : 0;
   if (by) col.scrollBy({ top: by, behavior: "smooth" });
 }
@@ -783,7 +784,8 @@ document.addEventListener("wheel", e => {
   T.via = "trackpad";
   if (!document.body.classList.contains("open") || !desktop.matches) return;
   const sideways = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-  if (!sideways && !full()) return;
+  // the project sits over the right side, so pass vertical scrolling there through to the list
+  if (!sideways && !full()) { if (e.target.closest(".peek")) col.scrollTop += e.deltaY; return; }
   e.preventDefault();
   const mag = Math.max(Math.abs(e.deltaX), Math.abs(e.deltaY));
   if (wLock && mag < wLast) wFading = true;
