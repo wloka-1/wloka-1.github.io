@@ -392,11 +392,11 @@ const T = (() => {
   let soon;
   const push = e => { queue.push({ t: Date.now(), ...e }); clearTimeout(soon); soon = setTimeout(send, 3000); if (queue.length > 40) send(); };
 
-  // time only counts while the tab is visible
+  // time only counts while the tab is visible and someone has touched the page in the last minute
   let visibleSince = document.visibilityState === "visible" ? performance.now() : null;
   const activeNow = () => active + (visibleSince != null ? performance.now() - visibleSince : 0);
   const timer = () => ({ ms: 0, since: visibleSince != null ? performance.now() : null });
-  const pause = t => { if (t && t.since != null) { t.ms += performance.now() - t.since; t.since = null; } };
+  const pause = (t, at = performance.now()) => { if (t && t.since != null) { t.ms += Math.max(0, at - t.since); t.since = null; } };
   const resume = t => { if (t && t.since == null) t.since = performance.now(); };
   const total = t => t.ms + (t.since != null ? performance.now() - t.since : 0);
 
@@ -419,6 +419,24 @@ const T = (() => {
     event(type, extra = {}) { push({ type, p: proj?.p, ...extra }); },
   };
 
+  // idle: no mouse, wheel, key, or touch for a minute (not scroll events, which the page fires itself). The minute itself counts as reading time,
+  // then the clock stops until the next input. Catches windows left open behind other apps
+  const IDLE = 60 * 1000;
+  let lastInput = performance.now(), idle = false;
+  const start = () => { visibleSince = performance.now(); resume(proj?.t); resume(slide?.t); };
+  ["pointermove", "pointerdown", "keydown", "wheel", "touchstart"].forEach(type =>
+    addEventListener(type, () => {
+      lastInput = performance.now();
+      if (idle && document.visibilityState === "visible") { idle = false; start(); }
+    }, { capture: true, passive: true }));
+  setInterval(() => {
+    if (idle || visibleSince == null || performance.now() - lastInput < IDLE) return;
+    idle = true;
+    const at = lastInput + IDLE;
+    active += Math.max(0, at - visibleSince); visibleSince = null;
+    pause(proj?.t, at); pause(slide?.t, at);
+  }, 5000);
+
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
       if (visibleSince != null) { active += performance.now() - visibleSince; visibleSince = null; }
@@ -429,8 +447,8 @@ const T = (() => {
       proj = p ? { p, t: { ms: 0, since: null }, how: "resume" } : null;
       slide = s ? { p: s.p, i: s.i, t: { ms: 0, since: null }, how: "resume" } : null;
     } else {
-      visibleSince = performance.now();
-      resume(proj?.t); resume(slide?.t);
+      lastInput = performance.now(); idle = false;
+      start();
     }
   });
   addEventListener("pagehide", () => { endProject(); send(true); });
@@ -476,7 +494,7 @@ const projects = [
     text: "Eliza had a chat box and a daily planner, but nothing that told you what needed you. I designed a home for the assistant and built it as a coded prototype on real data: to-dos, updates from your agents, and suggestions in one place, with a way to act on each without leaving. Research showed people didn't trust it enough to act, so I shifted it from showing everything to showing what you should do next. It's still in progress." },
   { id: "ai-navigation", title: "Navigation for an enterprise AI platform",
     org: "BNY", role: "Staff AI Designer", when: "2025", tools: "Claude",
-    text: "When I joined BNY, Eliza (the bank's internal AI platform, used by about 50,000 employees) had a horizontal top bar plus three vertical navs, sometimes all on screen at once. I proposed a redesign and got the go-ahead. I mapped the information architecture, ran my own user research, wrote a categorization for apps that scales and was adopted, and led the design through implementation. The new navigation launched in March 2026, shipped bank-wide, and hasn't changed since." },
+    text: "The navigation I designed for Eliza (the bank's internal AI platform, used by about 50,000 employees) shipped bank-wide in March 2026 and hasn't changed since. Before, it had a horizontal top bar plus three vertical navs, sometimes all on screen at once. I proposed the redesign and got the go-ahead. I mapped the information architecture, ran my own user research, wrote a categorization for apps that scales and was adopted, and led the design through implementation." },
   { id: "agent-dashboard", title: "A dashboard for watching AI agents at work",
     org: "BNY", role: "Staff AI Designer", when: "2026",
     text: "The dashboard for BNY's AI agents showed everyone the same view, whether they managed a team or were troubleshooting one failure. I redesigned it around roles: managers see the full picture, everyone else sees what they need to fix things. I added sign-off tracking so the data gets reviewed instead of just sitting there, put the escalation path on the page, and made it easy to isolate one struggling agent among many. It's in progress." },
@@ -488,8 +506,9 @@ const projects = [
     text: "We added a model picker to the composer. I designed it." },
   { id: "icons", title: "One icon system for three brands",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
-    text: "Qualcomm, Snapdragon, and Dragonwing had three icon sets in use, and they disagreed. I audited them and set one size and stroke ramp, with separate rules for product icons and marketing icons. We built the 1,500+ icon library on Lucide, an open-source set, and I added a review path so custom icons had to earn their place. I also used AI to build a Figma importer that made every icon searchable. It shipped with the enterprise beta and is now public." ,
+    text: "Qualcomm's 1,500+ icon library shipped with the enterprise beta and is now public. Before it, Qualcomm, Snapdragon, and Dragonwing had three icon sets in use, and they disagreed. I audited them and set one size and stroke ramp, with separate rules for product icons and marketing icons. We built the library on Lucide, an open-source set, and I added a review path so custom icons had to earn their place. I also used AI to build a Figma importer that made every icon searchable." ,
     shots: [
+      ["covers/icons.jpg", ""],
       ["qualcomm/icon-decision-tree.png", "Four of the five paths end in reusing an icon. Only one ends at a request to the system team."],
       ["qualcomm/icon-ramp-comparison.png", "Sizes, strokes, and names across three sets, with the recommendation on the right of each table."],
       ["qualcomm/Ramp.png", "The utility ramp. Size and stroke move together."],
@@ -499,8 +518,9 @@ const projects = [
     ] },
   { id: "search", title: "One search for shopping and support",
     org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
-    text: "Searching \"iPhone\" on T-Mobile could mean buying one, finding a case, or fixing the one you have, and about 13% of searches returned nothing. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile. Suggestions helped people form the query, account searches put tasks like paying a bill first, and results split into phones, accessories, and support. Zero-result searches fell to 0.7% because we built a page for searches with no results, and search usage rose 24% because we added a search button to the home page." ,
+    text: "Zero-result searches fell to 0.7% because we built a page for searches with no results, and search usage rose 24% because we added a search button to the home page. Searching \"iPhone\" on T-Mobile could mean buying one, finding a case, or fixing the one you have, and about 13% of searches used to return nothing. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile. Suggestions helped people form the query, account searches put tasks like paying a bill first, and results split into phones, accessories, and support." ,
     shots: [
+      ["covers/search.jpg", ""],
       ["tmo1.png", "Same query across product and support views."],
       ["tmo/objectives.png", "The objectives from the project brief: reduce cost, increase revenue, improve CSAT, improve usability."],
       ["tmo3.png", "Clicks after searching \"pay bill\" on the old results page."],
@@ -512,42 +532,47 @@ const projects = [
     org: "CivilGrid", role: "Design consultant", when: "2025",
     text: "Before a utility project breaks ground, engineers have to find everything it could collide with: paving moratoria, other planned projects, city and county lines, existing utilities. They pulled it together by hand for every project. I designed CivilGrid's conflict reports, which compile it from the map in four inputs. Then I turned the report into a list teams work through over weeks, with a status on every conflict." ,
     shots: [
+      ["covers/civil-conflicts.jpg", ""],
       ["civilgrid/conflicts.png", "Every conflict gets a status and a color that matches the map."],
+      ["civilgrid/utility-data.png", "Click any utility on the map to see who owns it, what it's made of, and when the data was loaded."],
       ["civilgrid/project-nav.png", "Inside a project, the left nav groups general info, analysis, and the project's maps."],
       ["civilgrid/new-report.png", "The map stays live while you set up the report."],
       ["civilgrid/report.png", "Moratoria within half a mile of the project, with overlap, dates, and a contact for each."]
     ] },
   { id: "overlay-app", title: "A trading app that starts with the markets",
     org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
-    text: "I co-founded Overlay, a protocol for trading niche data markets, and ran design. The first app opened on trade controls, which only worked for people who already knew what they wanted. Over four iterations I moved the first screen to a list of markets, then featured markets, so people understood what they were betting on before they bet. We raised a $4M seed and grew the team from 3 to 25." ,
+    text: "Overlay raised a $4M seed and grew from 3 to 25 people. I co-founded it and ran design. It's a protocol for trading niche data markets. The first app opened on trade controls, which only worked for people who already knew what they wanted. Over four iterations I moved the first screen to a list of markets, then featured markets, so people understood what they were betting on before they bet." ,
     shots: [
+      ["covers/overlay-app.jpg", ""],
       ["overlay1.png", "The final app on mobile and desktop."],
       ["overlay8.png", "Left to right: trade controls first, then market discovery first."],
       ["overlay2.png", "A working product could still be too expensive to use."]
     ] },
   { id: "task-model", title: "A task model for human and AI work",
     org: "BNY", role: "Staff AI Designer", when: "2026",
-    text: "When work comes from people and from AI, a feed sorted by arrival time can't tell you what needs you. I created a task model based on where work comes from: things you started, things assigned to you, and things AI proposes for you to decide on. It was adopted and tested in 1:1 sessions, and it's the base for the assistant home I'm designing now." },
+    text: "My task model for human and AI work was adopted, tested in 1:1 sessions, and is the base for the assistant home I'm designing now. When work comes from people and from AI, a feed sorted by arrival time can't tell you what needs you. So the model sorts by where work comes from: things you started, things assigned to you, and things AI proposes for you to decide on." },
   { id: "light-mode", title: "Light mode, pitched and shipped in three days",
     org: "BNY", role: "Staff AI Designer", when: "2026",
-    text: "Eliza had no light mode, and dev teams had started building their own, so the platform was about to split into themes that didn't match. Management asked for one. I used AI to build several complete directions fast, put them side by side for the Head of Design, and shipped the pick in three days." },
+    text: "I shipped Eliza's light mode in three days. It had no light mode, and dev teams had started building their own, so the platform was about to split into themes that didn't match. Management asked for one. I used AI to build several complete directions fast and put them side by side for the Head of Design." },
   { id: "rubicon", title: "Staking and bridging, simple enough to do drunk",
     org: "Contango", role: "Product Designer, contract", when: "2025",
-    text: "Project Rubicon lets Bittensor holders stake their tokens and bridge them to Base for liquidity pools. That's four steps across three chains, and the founder's bar was that you could do it drunk. I laid the steps out as one numbered column, with the chains, rate, fees, and wallet for each step shown right where you need them. After launch I designed the dashboard. It launched in November 2025." ,
+    text: "Project Rubicon launched in November 2025. It lets Bittensor holders stake their tokens and bridge them to Base for liquidity pools. That's four steps across three chains, and the founder's bar was that you could do it drunk. I laid the steps out as one numbered column, with the chains, rate, fees, and wallet for each step shown right where you need them. After launch I designed the dashboard." ,
     shots: [
+      ["covers/rubicon.jpg", ""],
       ["contango/stake.png", "Four steps, one column. The chain chips on each step say where your tokens are going."],
       ["contango/confirm.png", "The last check before a cross-chain move."]
     ] },
   { id: "patterns", title: "UX patterns across Qualcomm's products",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
-    text: "Component specs couldn't answer what Qualcomm's product designers kept asking me, like whether filters go above a table or in its columns. I interviewed designers and leadership, collected examples from shipping products, and set a framework that separates reusable layouts from guidance on when to use them. I also proposed three libraries (UX patterns, components, foundations) so teams stopped using the same words for different things. The research got leadership to agree on the roadmap." ,
+    text: "My UX pattern research got Qualcomm's leadership to agree on the roadmap. Component specs couldn't answer what product designers kept asking me, like whether filters go above a table or in its columns. I interviewed designers and leadership, collected examples from shipping products, and set a framework that separates reusable layouts from guidance on when to use them. I also proposed three libraries (UX patterns, components, foundations) so teams stopped using the same words for different things." ,
     shots: [
       ["qualcomm/system-definitions.png", "One vocabulary for the whole system, from design patterns down to primitives."]
     ] },
   { id: "docs", title: "Design system docs, written 120x faster",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025", tools: "Claude",
-    text: "I owned the documentation for Qualcomm's design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output. 60 fully documented components went out for the enterprise beta with 120x less writing effort." ,
+    text: "60 fully documented components went out for Qualcomm's enterprise beta with 120x less writing effort. I owned the documentation for the design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output." ,
     shots: [
+      ["covers/docs.jpg", ""],
       ["qualcomm/qds-components-1.png", ""],
       ["qualcomm/doc-wireframes.png", "Page templates for home, foundations, a foundation page, and a component page."],
       ["qualcomm/qds-components-2.png", "The repeated grid and connectors keep the family consistent while each drawing explains a different component."],
@@ -557,6 +582,9 @@ const projects = [
     org: "CivilGrid", role: "Design consultant", when: "2024 to 2025",
     text: "About 80% of CivilGrid's new users didn't have a project yet, and the business only earns when someone creates one. Civil Draw, the drawing tool, was the bridge, but people forgot it existed after training. I made the app map-first with Civil Draw on the home screen, let people draw now and save to a project later, and moved sharing to the top right where people expect it." ,
     shots: [
+      ["covers/civil-draw.jpg", ""],
+      ["civilgrid/map-home.png", "Home is the map, with every project on it."],
+      ["civilgrid/draw-tools.png", "Drawing tools sit along the bottom of the map: polygon, line, marker, text, image, stamp."],
       ["civilgrid/civil-draw.png", "Civil Draw on the map: drawing tools along the bottom, objects and modes in the corners."]
     ] },
   { id: "civil-downloads", title: "Data downloads people can finish themselves",
@@ -573,8 +601,9 @@ const projects = [
     text: "Stalk was replacing its points program with a token. I designed the pages for checking an airdrop, claiming it, and staking it. I mapped six ways people could arrive so each one ended at a wallet that could claim, kept the points-to-token math behind a hover, and showed the yield for every staking period up front." },
   { id: "stalk", title: "A meme coin launcher styled like a trading terminal",
     org: "Stalk", role: "Product Designer, contract", when: "2024",
-    text: "Stalk Market was a meme coin launchpad that had to feel familiar to pump.fun users and still look like its own thing. I took it from soft and rounded to a trading terminal: sharp corners, a black base, an orange accent. The home screen leads with what traders watch, and a chat with clickable cashtags sits beside the market. It launched." ,
+    text: "Stalk Market launched as a meme coin launchpad styled like a trading terminal. It had to feel familiar to pump.fun users and still look like its own thing, so I took it from soft and rounded to sharp corners, a black base, and an orange accent. The home screen leads with what traders watch, and a chat with clickable cashtags sits beside the market." ,
     shots: [
+      ["covers/stalk.jpg", ""],
       ["stalk/home-desktop.png", "Desktop home. Tokens on the left, live video and the troll box on the right."],
       ["stalk/concepts.png", "Five concepts, left to right. The layout barely moves. The attitude does."],
       ["stalk/mobile.png", "Mobile home, the troll box tab, and the trade drawer on a token page."]
@@ -583,6 +612,7 @@ const projects = [
     org: "Oxbow", role: "Product Designer, contract", when: "2025",
     text: "Oxbow is a privacy pool. You deposit crypto and later withdraw it to a fresh address, with a zero-knowledge proof breaking the link between the two. To stay compliant, admins decide which deposits are allowed in. I designed the admin console where they make those calls, plus the deposit and withdrawal flows on the user side." ,
     shots: [
+      ["covers/oxbow.jpg", ""],
       ["oxbow/admin.png", "Totals up top, every deposit below, with a date filter open."],
       ["oxbow/transactions.png", "Status and flag side by side, with the reviewer's actions at the end of each row."],
       ["oxbow/withdraw-proof.png", "The wait, made visible."]
@@ -591,6 +621,7 @@ const projects = [
     org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
     text: "Overlay's protocol was technically deep, and the brand didn't have to be. I wrote the design ethos and built the early identity, then brought in an agency as it matured. With our front-end lead I built a shared component library that covered behavior as well as looks, so new features didn't re-decide every control." ,
     shots: [
+      ["covers/overlay-brand.jpg", ""],
       ["overlay5.png", "The mark went from two rings to one with a wave, and the pixel cat grew up."],
       ["overlay3.png", "The ethos. Cats knock things off the shelf, which is a decent way to design for everything."],
       ["overlay4.png", "Pending, inactive, and selected states alongside responsive headers."],
@@ -598,7 +629,7 @@ const projects = [
     ] },
   { id: "unav", title: "Universal navigation across 30 sites",
     org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
-    text: "I led T-Mobile's universal navigation, the shared header and menu across its websites. The framework grew from 16 to 30 sites, navigation usage rose 23%, and it serves 40M+ monthly users." },
+    text: "T-Mobile's universal navigation grew from 16 to 30 sites, navigation usage rose 23%, and it serves 40M+ monthly users. I led it: the shared header and menu across T-Mobile's websites." },
 ];
 
 // BNY, Qualcomm (except the UX patterns work), and CivilGrid's AI answers were built with Claude. Everything else was designed in Figma
@@ -656,6 +687,8 @@ const deckHTML = p => `<div class="cs"><div class="text">
 let cur = -1, si = 0;
 // animate only when someone moves between slides; layout fixes (opening, resizing, images loading) snap
 function setSlide(n, animate = true) {
+  // in the full-screen view, going left past the first image goes back to the text
+  if (n < 0 && full()) return exitFull();
   const max = (projects[cur]?.shots || []).length - 1;
   si = Math.max(0, Math.min(max, n));
   T.slide(projects[cur]?.id, si);
