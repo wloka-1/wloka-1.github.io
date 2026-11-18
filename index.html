@@ -321,7 +321,7 @@
       <li><a class="t out" href="https://react.qui.qualcomm.com/components/overview" target="_blank" rel="noopener">Qualcomm<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior (Staff) Designer · Contract · 2024 to 2025</span></li>
       <li><span class="t">Contango</span><span class="m">Contract Product Designer · 2025 · Rubicon</span></li>
       <li><span class="t">Field Design Co.</span><span class="m">Founder, Principal Designer · 2023 to 2025 · CivilGrid and others</span></li>
-      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Contract Product Designer · 2024 to 2025 · Corn, Stalk, Oxbow</span></li>
+      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Contract Product Designer · 2024 to 2025 · Stalk, Oxbow</span></li>
       <li><a class="t out" href="https://overlay.market/" target="_blank" rel="noopener">Overlay Protocol<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Co-founder, COO · 2021 to 2025</span></li>
       <li><a class="t out" href="https://www.t-mobile.com/" target="_blank" rel="noopener">T-Mobile<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior UX Designer, Lead · 2020 to 2021</span></li>
       <li><span class="t">Toptender</span><span class="m">UI/UX Consultant · 2019</span></li>
@@ -538,7 +538,7 @@ const projects = [
     ] },
   { id: "docs", title: "Design system docs, written 120x faster",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025", tools: "Claude",
-    text: "I owned the documentation structure for Qualcomm's design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output. 60+ docs went out for the enterprise beta with 120x less writing effort." ,
+    text: "I owned the documentation for Qualcomm's design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output. 60+ docs went out for the enterprise beta with 120x less writing effort." ,
     shots: [
       ["qualcomm/qds-components-1.png", ""],
       ["qualcomm/doc-wireframes.png", "Page templates for home, foundations, a foundation page, and a component page."],
@@ -558,11 +558,11 @@ const projects = [
     org: "CivilGrid", role: "Design consultant", when: "2025",
     text: "Civil engineers dig through long agency PDFs for permit rules and clearances. CivilGrid wanted an LLM to read them and answer per project. I designed how that shows up: a few insights pre-loaded for each project, room to ask more, and a cited source on every answer, because an engineer won't trust a number without one. This was early exploration when my engagement ended." },
   { id: "corn-bridge", title: "A Bitcoin bridge you can read at a glance",
-    org: "Corn", role: "Product Designer, contract", when: "2025",
-    text: "Corn is a Bitcoin DeFi network, and its bridge was where people got stuck. I cut it to one input and spelled out the transfer in plain terms: what you send, what you get, how long it takes, and the fees. The same screen handles three kinds of transfer, and your history stays open beside it." },
+    org: "Stalk", role: "Product Designer, contract", when: "2025",
+    text: "Stalk is a Bitcoin DeFi network, and its bridge was where people got stuck. I cut it to one input and spelled out the transfer in plain terms: what you send, what you get, how long it takes, and the fees. The same screen handles three kinds of transfer, and your history stays open beside it." },
   { id: "corn-token", title: "Checking, claiming, and staking an airdrop",
-    org: "Corn", role: "Product Designer, contract", when: "2025",
-    text: "Corn was replacing its points program with a token. I designed the pages for checking an airdrop, claiming it, and staking it. I mapped six ways people could arrive so each one ended at a wallet that could claim, kept the points-to-token math behind a hover, and showed the yield for every staking period up front." },
+    org: "Stalk", role: "Product Designer, contract", when: "2025",
+    text: "Stalk was replacing its points program with a token. I designed the pages for checking an airdrop, claiming it, and staking it. I mapped six ways people could arrive so each one ended at a wallet that could claim, kept the points-to-token math behind a hover, and showed the yield for every staking period up front." },
   { id: "stalk", title: "A meme coin launcher styled like a trading terminal",
     org: "Stalk", role: "Product Designer, contract", when: "2024",
     text: "Stalk Market was a meme coin launchpad that had to feel familiar to pump.fun users and still look like its own thing. I took it from soft and rounded to a trading terminal: sharp corners, a black base, an orange accent. The home screen leads with what traders watch, and a chat with clickable cashtags sits beside the market. It launched." ,
@@ -593,8 +593,9 @@ const projects = [
     text: "I led T-Mobile's universal navigation, the shared header and menu across its websites. The framework grew from 16 to 30 sites, navigation usage rose 23%, and it serves 40M+ monthly users." },
 ];
 
-// BNY, Qualcomm, and CivilGrid's AI answers were built with Claude. Everything else was designed in Figma
-projects.forEach(p => { p.tools = p.org === "BNY" || p.org === "Qualcomm" || p.id === "civil-ai" ? "Claude" : "Figma"; });
+// BNY, Qualcomm (except the UX patterns work), and CivilGrid's AI answers were built with Claude. Everything else was designed in Figma
+projects.forEach(p => { p.tools = (p.org === "BNY" || p.org === "Qualcomm" || p.id === "civil-ai") && p.id !== "patterns" ? "Claude" : "Figma"; });
+projects.find(p => p.id === "docs").tools = "Claude, Figma";
 
 // group by company, newest company first, then newest project first within it.
 // Dates sort by start year, then end year ("now" counts as this year). Ties keep their written order
