@@ -92,6 +92,8 @@
   .dots button { position: relative; width: 4px; height: 4px; padding: 0; border: 0; background: var(--dot); cursor: pointer; }
   .dots button::before { content: ""; position: absolute; inset: -3px -8px; }
   .dots button.on { background: var(--ink); }
+  /* keep the text off the window edge; the image strip still runs to the edge so the next image peeks in */
+  .peek .text { max-width: min(480px, calc(100% - 64px)); }
   body.open .peek { opacity: 1; pointer-events: auto; }
   body.open .peek.swap { opacity: 0; }
   @media (min-width: 1101px) {
@@ -538,7 +540,7 @@ const projects = [
     ] },
   { id: "docs", title: "Design system docs, written 120x faster",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025", tools: "Claude",
-    text: "I owned the documentation for Qualcomm's design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output. 60+ docs went out for the enterprise beta with 120x less writing effort." ,
+    text: "I owned the documentation for Qualcomm's design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output. 60 fully documented components went out for the enterprise beta with 120x less writing effort." ,
     shots: [
       ["qualcomm/qds-components-1.png", ""],
       ["qualcomm/doc-wireframes.png", "Page templates for home, foundations, a foundation page, and a component page."],
