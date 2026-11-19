@@ -100,6 +100,7 @@
   .dots button.on { background: var(--ink); }
   /* keep the text off the window edge; the image strip still runs to the edge so the next image peeks in */
   .peek .text { max-width: min(520px, calc(100% - 32px)); }
+  .peek { max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: none; }
   body.open .peek { opacity: 1; pointer-events: auto; }
   body.open .peek.swap { opacity: 0; }
   @media (min-width: 1101px) {
@@ -174,6 +175,15 @@
   a.t:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
   footer { margin-top: 112px; font-size: 13px; color: var(--gray); line-height: 1.5; }
+  footer nav { font-size: 15px; margin-bottom: 12px; }
+  footer nav a { text-decoration: none; color: var(--ink); }
+  footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .more-work { all: unset; cursor: pointer; display: block; margin-top: 28px; font-size: 15px; color: var(--gray); }
+  .more-work::after { content: " +"; }
+  .more-work[aria-expanded="true"]::after { content: " −"; }
+  .more-work:hover { color: var(--ink); }
+  body.tabbing .more-work:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+  #list-more { list-style: none; margin-top: 28px; }
 
   /* ---------- the case study panel ---------- */
   .panel {
@@ -305,6 +315,8 @@
 
   <h2 class="label">Work</h2>
   <ol id="list"></ol>
+  <button class="more-work" id="more-work" aria-expanded="false" aria-controls="list-more">More work</button>
+  <ol id="list-more" hidden></ol>
 
 
   <section class="more" id="kind-words">
@@ -338,7 +350,10 @@
   </section>
 
 
-  <footer>Wesley Kay · 2026 · Built with Claude.</footer>
+  <footer>
+    <nav><a href="Wesley-Kay-Resume.pdf">Resume</a> · <a href="https://linkedin.com/in/wesley-kay">LinkedIn</a> · <a href="mailto:wesley.kay@gmail.com">Email</a></nav>
+    <p>Wesley Kay · 2026 · Built with Claude.</p>
+  </footer>
 </div></div>
 
 <button class="close" id="close" aria-label="Close"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M6.5 2L3.5 5l3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="lbl-close">Close</span><span class="lbl-back">Back</span></button>
@@ -491,19 +506,22 @@ const orgLink = org => ORG_LINKS[org]
 const projects = [
   { id: "ai-home", title: "A home for an enterprise AI assistant",
     org: "BNY", role: "Staff AI Designer", when: "2026",
-    text: "Eliza had a chat box and a daily planner, but nothing that told you what needed you. I designed a home for the assistant and built it as a coded prototype on real data: to-dos, updates from your agents, and suggestions in one place, with a way to act on each without leaving. Research showed people didn't trust it enough to act, so I shifted it from showing everything to showing what you should do next. It's still in progress." },
+    text: "Leadership adopted the assistant home I proposed into Eliza's roadmap. To test it, I ran a beta with 24 people, mostly senior leaders, on their own real data. The prototype used agents the bank already had to read each person's email, chat, and calendar and build their home from it. That had never been done at the bank before, and the AI design hub is making it the model for reviewing prototypes and features, so decisions rest on real user data instead of hypotheticals. The home puts to-dos, updates from your agents, and suggestions in one place, with a way to act on each without leaving. Testing showed people didn't trust it enough to act, so I shifted it from showing everything to showing what to do next.\n\nNine research interviews showed why. No one finished a task during a session, and no one started their day in Eliza. Power users skipped the home and bookmarked their workspaces, and meeting suggestions missed because people were often watching a meeting, not running it. So the home now weighs what you should do next over what's happening now. Leadership judged a full redesign too risky to give everyone at once, so it goes out first as a pilot to about 1,500 people.",
+    shots: [["bny/home.jpg", "Each tester's own email, chat, and calendar ran through agents the bank already had, and came out as their home."]] },
   { id: "ai-navigation", title: "Navigation for an enterprise AI platform",
     org: "BNY", role: "Staff AI Designer", when: "2025", tools: "Claude",
-    text: "The navigation I designed for Eliza (the bank's internal AI platform, used by about 50,000 employees) shipped bank-wide in March 2026 and hasn't changed since. Before, it had a horizontal top bar plus three vertical navs, sometimes all on screen at once. I proposed the redesign and got the go-ahead. I mapped the information architecture, ran my own user research, wrote a categorization for apps that scales and was adopted, and led the design through implementation." },
+    text: "The navigation I designed for Eliza (the bank's internal AI platform, used by about 50,000 employees) launched in March 2026 and went bank-wide in July. Before, it had a top bar plus three side navs that came and went depending on what you clicked, and some items were parked in two places at once. People couldn't predict where anything lived. I proposed the redesign and got the go-ahead. I mapped the information architecture, ran my own user research, wrote a categorization for apps that scales and was adopted, and led the design through implementation.\n\nI tested it 1:1 with people who use Eliza every day, scoring whether they could finish real tasks. One daily user had stopped exploring features because the old nav confused them, and kept their prompts in a folder on their desktop. Another only found pinning once prompted. Pins and recents needed per-user storage the backend didn't have yet, so pins shipped first and recents waited.",
+    shots: [["bny/nav.jpg", "Before, the side navs changed with every click, and some items lived in two places. After, one nav, with deeper levels popping out to the side."]] },
   { id: "agent-dashboard", title: "A dashboard for watching AI agents at work",
     org: "BNY", role: "Staff AI Designer", when: "2026",
     text: "The dashboard for BNY's AI agents showed everyone the same view, whether they managed a team or were troubleshooting one failure. I redesigned it around roles: managers see the full picture, everyone else sees what they need to fix things. I added sign-off tracking so the data gets reviewed instead of just sitting there, put the escalation path on the page, and made it easy to isolate one struggling agent among many. It's in progress." },
   { id: "workspaces", title: "Workspaces and one bar for everything",
     org: "BNY", role: "Staff AI Designer", when: "2026",
-    text: "Workspaces in Eliza now hold any number of sessions, and that's live in production. A workspace holds the context for a body of work: files, people, tools. I pushed leadership to allow any number of sessions inside one, and when they pushed back, I teamed up with our researcher to test it. Leadership came around before the study wrapped, my designs moved forward, and the research later backed them up. One input handles search, navigation, and chat, and opens from anywhere with a shortcut." },
+    text: "Workspaces in Eliza now hold any number of sessions, and that's live in production. A workspace holds the context for a body of work: files, people, tools. I pushed leadership to allow any number of sessions inside one, and when they pushed back, I teamed up with our researcher to test it. Leadership came around before the study wrapped, my designs moved forward, and the research later backed them up. One input handles search, navigation, and chat, and opens from anywhere with a shortcut.\n\nThe model we landed on is private sessions inside a shared workspace. A workspace opens on its sessions and what they produced. We chose \"Sessions\" over \"Recents\" and cut an activity feed that only repeated what was already there. The one input picks up where you are, so asking from inside a workspace already knows which work you mean.",
+    shots: [["bny/ws.jpg", "A workspace holds the files, people, and tools once. Every session inside it starts with them."]] },
   { id: "icons", title: "One icon system for three brands",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025",
-    text: "Qualcomm's 1,500+ icon library shipped with the enterprise beta and is now public. Before it, Qualcomm, Snapdragon, and Dragonwing had three icon sets in use, and they disagreed. I audited them and set one size and stroke ramp, with separate rules for product icons and marketing icons. We built the library on Lucide, an open-source set, and I added a review path so custom icons had to earn their place. I also used AI to build a Figma importer that made every icon searchable." ,
+    text: "Qualcomm's 1,500+ icon library shipped with the enterprise beta and is now public. Before it, Qualcomm, Snapdragon, and Dragonwing had three icon sets in use, and they disagreed. I audited them and set one size and stroke ramp, with separate rules for product icons and marketing icons. We built the library on Lucide, an open-source set, and I added a review path so custom icons had to earn their place. I also used AI to build a Figma importer that made every icon searchable.\n\nThe ramp runs from 12 to 40px on a 16px base, with stroke growing from 1px at the smallest size to 2.25px at the largest, signed off by marketing. Six sizes turned 1,500 icons into more than 10,000 assets, kept current with Lucide's quarterly updates. The review path caught duplicates and still let about 40 genuinely new icons in." ,
     shots: [
       ["covers/icons.jpg", ""],
       ["qualcomm/icon-decision-tree.png", "Four of the five paths end in reusing an icon. Only one ends at a request to the system team."],
@@ -515,19 +533,18 @@ const projects = [
     ] },
   { id: "search", title: "One search for shopping and support",
     org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
-    text: "Zero-result searches fell to 0.7% because we built a page for searches with no results, and search usage rose 24% because we added a search button to the home page. Searching \"iPhone\" on T-Mobile could mean buying one, finding a case, or fixing the one you have, and about 13% of searches used to return nothing. I joined the redesign mid-project as the only designer on a three-person team and led design and research direction across web and mobile. Suggestions helped people form the query, account searches put tasks like paying a bill first, and results split into phones, accessories, and support." ,
+    text: "Zero-result searches fell to 0.7% because we built a page for searches with no results, and search usage rose 24% because we added a search button to the home page. Searching \"iPhone\" on T-Mobile could mean buying one, finding a case, or fixing the one you have, and about 13% of searches used to return nothing. I joined mid-project and led design and research direction across web and mobile. Suggestions helped people form the query, account searches put tasks like paying a bill first, and results split into phones, accessories, and support." ,
     shots: [
-      ["covers/search.jpg", ""],
-      ["tmo1.png", "Same query across product and support views."],
-      ["tmo/objectives.png", "The objectives from the project brief: reduce cost, increase revenue, improve CSAT, improve usability."],
-      ["tmo3.png", "Clicks after searching \"pay bill\" on the old results page."],
-      ["tmo5.png", "A partial \"iPh\" offers both phones and support."],
-      ["tmo/wireframe-pay-bill.png", "Wireframe for \"pay my bill.\" The task is one click away, above the articles."],
-      ["tmo7.png", "An explicit way out when the content lives elsewhere."]
+      ["tmo/results-magenta.png", "Same query across product and support views."],
+      ["tmo/objectives-white.png", "The objectives from the project brief: reduce cost, increase revenue, improve CSAT, improve usability."],
+      ["tmo/heatmap-white.png", "Clicks after searching \"pay bill\" on the old results page."],
+      ["tmo/partial-white.png", "A partial \"iPh\" offers both phones and support."],
+      ["tmo/wireframe-white.png", "Wireframe for \"pay my bill.\" The task is one click away, above the articles."],
+      ["tmo/way-out.png", "An explicit way out when the content lives elsewhere."]
     ] },
   { id: "civil-conflicts", title: "Finding what's in the way before you dig",
     org: "CivilGrid", role: "Design consultant", when: "2025",
-    text: "Before a utility project breaks ground, engineers have to find everything it could collide with: paving moratoria, other planned projects, city and county lines, existing utilities. They pulled it together by hand for every project. I designed CivilGrid's conflict reports, which compile it from the map in four inputs. Then I turned the report into a list teams work through over weeks, with a status on every conflict." ,
+    text: "CivilGrid's conflict reports shipped, and a search engineers used to do by hand for every project now comes from the map in four inputs. Before a utility project breaks ground, they have to find everything it could collide with: paving moratoria, other planned projects, city and county lines, existing utilities. I designed the reports, then turned the report into a list teams work through over weeks, with a status on every conflict." ,
     shots: [
       ["covers/civil-conflicts.jpg", ""],
       ["civilgrid/conflicts.png", "Every conflict gets a status and a color that matches the map."],
@@ -547,7 +564,8 @@ const projects = [
     ] },
   { id: "task-model", title: "A task model for human and AI work",
     org: "BNY", role: "Staff AI Designer", when: "2026",
-    text: "My task model for human and AI work was adopted, tested in 1:1 sessions, and is the base for the assistant home I'm designing now. When work comes from people and from AI, a feed sorted by arrival time can't tell you what needs you. So the model sorts by where work comes from: things you started, things assigned to you, and things AI proposes for you to decide on." },
+    text: "My task model for human and AI work was adopted, tested in 1:1 sessions, and is the base for the assistant home I'm designing now. When work comes from people and from AI, a feed sorted by arrival time can't tell you what needs you. So the model sorts by where work comes from: things you started, things assigned to you, and things AI proposes for you to decide on.\n\nIt's going out in a pilot to about 1,500 people. Early tests pulled to-dos out of rough notes that weren't tasks, so AI now proposes only explicit tasks, and you can flag anything that isn't one. Research said people wanted something calmer that shows what needs them, so I kept metric cards out of the pilot until we can measure whether they help.",
+    shots: [["bny/task.jpg", "Work sorted by where it comes from. AI proposals wait for your decision."]] },
   { id: "light-mode", title: "Light mode, pitched and shipped in three days",
     org: "BNY", role: "Staff AI Designer", when: "2026",
     text: "I shipped Eliza's light mode in three days. It had no light mode, and dev teams had started building their own, so the platform was about to split into themes that didn't match. Management asked for one. I used AI to build several complete directions fast and put them side by side for the Head of Design." },
@@ -567,7 +585,7 @@ const projects = [
     ] },
   { id: "docs", title: "Design system docs, written 120x faster",
     org: "Qualcomm", role: "Design Systems Lead", when: "2025", tools: "Claude",
-    text: "60 fully documented components went out for Qualcomm's enterprise beta with 120x less writing effort. I owned the documentation for the design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output." ,
+    text: "60 fully documented components went out for Qualcomm's enterprise beta with 120x less writing effort. I owned the documentation for the design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output.\n\nThe workflow cut that two hours to minutes across 55 pages. Not everything worked: generating illustrations with AI failed, so we switched to templates and I drew them. Every doc went through draft, peer review, final review, and publish. When budget cuts took the team down to two, I left a prompt guide so the docs could keep going without me." ,
     shots: [
       ["covers/docs.jpg", ""],
       ["qualcomm/qds-components-1.png", ""],
@@ -577,7 +595,7 @@ const projects = [
     ] },
   { id: "civil-draw", title: "Drawing on the map before there's a project",
     org: "CivilGrid", role: "Design consultant", when: "2024 to 2025",
-    text: "About 80% of CivilGrid's new users didn't have a project yet, and the business only earns when someone creates one. Civil Draw, the drawing tool, was the bridge, but people forgot it existed after training. I made the app map-first with Civil Draw on the home screen, let people draw now and save to a project later, and moved sharing to the top right where people expect it." ,
+    text: "CivilGrid shipped map-first, with Civil Draw on the home screen. About 80% of its new users didn't have a project yet, and the business only earns when someone creates one. Civil Draw, the drawing tool, was the bridge, but people forgot it existed after training. I made the app map-first with Civil Draw on the home screen, let people draw now and save to a project later, and moved sharing to the top right where people expect it." ,
     shots: [
       ["covers/civil-draw.jpg", ""],
       ["civilgrid/map-home.png", "Home is the map, with every project on it."],
@@ -586,16 +604,16 @@ const projects = [
     ] },
   { id: "civil-downloads", title: "Data downloads people can finish themselves",
     org: "CivilGrid", role: "Design consultant", when: "2025",
-    text: "About half of CivilGrid's data download requests didn't actually need approval. They came from confusing defaults, like layers pre-selected with no data in the area. I turned downloads into a two-step wizard that separates included, available, and restricted layers, blocks empty ones, and shows restrictions up front. Anything that does need approval goes through its own tracked request." },
+    text: "Data downloads shipped as a two-step wizard people can finish on their own. About half of CivilGrid's download requests didn't actually need approval. They came from confusing defaults, like layers pre-selected with no data in the area. The wizard separates included, available, and restricted layers, blocks empty ones, and shows restrictions up front. Anything that does need approval goes through its own tracked request." },
   { id: "civil-ai", title: "AI answers from agency rulebooks",
     org: "CivilGrid", role: "Design consultant", when: "2025",
     text: "Civil engineers dig through long agency PDFs for permit rules and clearances. CivilGrid wanted an LLM to read them and answer per project. I designed how that shows up: a few insights pre-loaded for each project, room to ask more, and a cited source on every answer, because an engineer won't trust a number without one. This was early exploration when my engagement ended." },
   { id: "corn-bridge", title: "A Bitcoin bridge you can read at a glance",
     org: "Stalk", role: "Product Designer, contract", when: "2025",
-    text: "Stalk is a Bitcoin DeFi network, and its bridge was where people got stuck. I cut it to one input and spelled out the transfer in plain terms: what you send, what you get, how long it takes, and the fees. The same screen handles three kinds of transfer, and your history stays open beside it." },
+    text: "Stalk's bridge shipped with one input and the whole transfer spelled out. It was where people got stuck. I cut it down and put everything in plain terms: what you send, what you get, how long it takes, and the fees. The same screen handles three kinds of transfer, and your history stays open beside it." },
   { id: "corn-token", title: "Checking, claiming, and staking an airdrop",
     org: "Stalk", role: "Product Designer, contract", when: "2025",
-    text: "Stalk was replacing its points program with a token. I designed the pages for checking an airdrop, claiming it, and staking it. I mapped six ways people could arrive so each one ended at a wallet that could claim, kept the points-to-token math behind a hover, and showed the yield for every staking period up front." },
+    text: "Stalk's token launch shipped with the pages I designed for checking, claiming, and staking the airdrop. The token replaced its points program. I mapped six ways people could arrive so each one ended at a wallet that could claim, kept the points-to-token math behind a hover, and showed the yield for every staking period up front." },
   { id: "stalk", title: "A meme coin launcher styled like a trading terminal",
     org: "Stalk", role: "Product Designer, contract", when: "2024",
     text: "Stalk Market launched as a meme coin launchpad styled like a trading terminal. It had to feel familiar to pump.fun users and still look like its own thing, so I took it from soft and rounded to sharp corners, a black base, and an orange accent. The home screen leads with what traders watch, and a chat with clickable cashtags sits beside the market." ,
@@ -607,7 +625,7 @@ const projects = [
     ] },
   { id: "oxbow", title: "An admin console for a compliant privacy pool",
     org: "Oxbow", role: "Product Designer, contract", when: "2025",
-    text: "Oxbow is a privacy pool. You deposit crypto and later withdraw it to a fresh address, with a zero-knowledge proof breaking the link between the two. To stay compliant, admins decide which deposits are allowed in. I designed the admin console where they make those calls, plus the deposit and withdrawal flows on the user side." ,
+    text: "Oxbow's admin console shipped, along with the deposit and withdrawal flows. Oxbow is a privacy pool. You deposit crypto and later withdraw it to a fresh address, with a zero-knowledge proof breaking the link between the two. To stay compliant, admins decide which deposits are allowed in. I designed the console where they make those calls." ,
     shots: [
       ["covers/oxbow.jpg", ""],
       ["oxbow/admin.png", "Totals up top, every deposit below, with a date filter open."],
@@ -616,7 +634,7 @@ const projects = [
     ] },
   { id: "overlay-brand", title: "Scientists and cats: a brand and component library",
     org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
-    text: "Overlay's protocol was technically deep, and the brand didn't have to be. I wrote the design ethos and built the early identity, then brought in an agency as it matured. With our front-end lead I built a shared component library that covered behavior as well as looks, so new features didn't re-decide every control." ,
+    text: "Overlay's brand and shared component library were adopted across the product. The protocol was technically deep, and the brand didn't have to be. I wrote the design ethos and built the early identity, then brought in an agency as it matured. With our front-end lead I built a shared component library that covered behavior as well as looks, so new features didn't re-decide every control." ,
     shots: [
       ["covers/overlay-brand.jpg", ""],
       ["overlay5.png", "The mark went from two rings to one with a wave, and the pixel cat grew up."],
@@ -632,6 +650,21 @@ const projects = [
 // BNY, Qualcomm (except the UX patterns work), and CivilGrid's AI answers were built with Claude. Everything else was designed in Figma
 projects.forEach(p => { p.tools = (p.org === "BNY" || p.org === "Qualcomm" || p.id === "civil-ai") && p.id !== "patterns" ? "Claude" : "Figma"; });
 projects.find(p => p.id === "docs").tools = "Claude, Figma";
+
+// what was mine, stated plainly. Reviewers reject work when ownership is unclear
+const PART = {
+  BNY: "Lead designer on Eliza's core experience",
+  Qualcomm: "Design systems lead, with designers, engineers, and PMs from several firms",
+  CivilGrid: "Sole designer, through my studio",
+  Overlay: "Co-founder, led all product design and brand",
+  Contango: "Sole designer: strategy, flows, and UI",
+  Stalk: "Product designer, working with two developers",
+  Oxbow: "Product designer, merging an outside designer's wireframes with the in-house team's",
+};
+projects.forEach(p => { p.part = PART[p.org]; });
+Object.assign(projects.find(p => p.id === "search"), { part: "Only designer on a three-person team" });
+Object.assign(projects.find(p => p.id === "unav"), { part: "Lead designer" });
+Object.assign(projects.find(p => p.id === "overlay-brand"), { part: "Co-founder. Set the early identity, then directed an agency, and built the library with our front-end lead" });
 
 // group by company, newest company first, then newest project first within it.
 // Dates sort by start year, then end year ("now" counts as this year). Ties keep their written order
@@ -649,6 +682,13 @@ projects.sort((x, y) => {
   return newer(gy.y, gx.y) || gx.i - gy.i || newer(years(y.when), years(x.when)) || x._i - y._i;
 });
 
+// the best 6 to 8 lead. Everything else sits under "More work", in the same order
+const FEATURED = ["ai-home", "ai-navigation", "workspaces", "task-model", "icons", "docs", "overlay-app", "search"];
+projects.forEach(p => { p.featured = FEATURED.includes(p.id); });
+// featured projects keep the order written above, strongest first
+const rank = p => p.featured ? FEATURED.indexOf(p.id) : FEATURED.length;
+projects.sort((x, y) => rank(x) - rank(y));
+
 const list = document.getElementById("list");
 const panel = document.getElementById("panel");
 const inner = document.getElementById("panel-inner");
@@ -658,7 +698,12 @@ const itemHTML = p => `
     <span class="t">${p.title}</span>
     <span class="m">${p.org} · ${p.role} · ${p.when}</span>
   </button></li>`;
-list.innerHTML = projects.map(itemHTML).join("");
+list.innerHTML = projects.filter(p => p.featured).map(itemHTML).join("");
+const moreList = document.getElementById("list-more");
+moreList.innerHTML = projects.filter(p => !p.featured).map(itemHTML).join("");
+const moreBtn = document.getElementById("more-work");
+const showMore = (on = true) => { moreList.hidden = !on; moreBtn.setAttribute("aria-expanded", on); moreBtn.textContent = on ? "Less work" : "More work"; };
+moreBtn.addEventListener("click", () => showMore(moreList.hidden));
 
 const peek = document.createElement("div");
 peek.className = "peek";
@@ -673,9 +718,10 @@ document.body.appendChild(dots);
 const deckHTML = p => `<div class="cs"><div class="text">
     <h2>${p.title}</h2>
     <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
-    <p>${p.text}</p>
+    ${p.text.split("\n\n").map(t => `<p>${t}</p>`).join("")}
+    ${p.part ? `<p class="meta">My part · ${p.part}</p>` : ""}
     ${p.tools ? `<p class="meta">Tools · ${p.tools}</p>` : ""}
-    ${p.org === "BNY" ? `<p class="meta">Under NDA, so no images.</p>` : ""}
+    ${p.org === "BNY" ? `<p class="meta">${p.shots ? "Under NDA, so these are simplified diagrams, not real screens." : "Under NDA, so no images."}</p>` : ""}
   </div>
   ${p.shots ? `<div class="deck"><div class="track">${p.shots.map(([src, cap]) => `<figure class="slide"><img src="${IMG}${src}" alt="${cap.replace(/"/g, "&quot;")}">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`).join("")}</div></div>` : ""}
   ${p.shots?.length > 1 ? `<div class="strip-nav"><button data-d="-1" aria-label="Previous image">←</button><span class="count">1 / ${p.shots.length}</span><button data-d="1" aria-label="Next image">→</button></div>` : ""}
@@ -724,18 +770,28 @@ function fitImages() {
   const room = panel.clientHeight - 120 - inner.querySelector(".text").offsetHeight - 28 - 110;
   deck.style.setProperty("--imgh", Math.round(Math.max(240, Math.min(room, innerHeight * 0.42))) + "px");
 }
+// desktop: longer text leaves less room, so images give way first (down to 200px) to keep it all on screen
+function fitPeek() {
+  const deck = peek.querySelector(".deck");
+  if (!deck || !desktop.matches) return;
+  const rest = peek.offsetHeight - deck.offsetHeight;
+  const room = innerHeight - 64 - rest - 40;
+  deck.style.setProperty("--imgh", Math.round(Math.max(200, Math.min(room, innerHeight * 0.32))) + "px");
+}
 function render(p) {
   inner.innerHTML = deckHTML(p);
   peek.innerHTML = deckHTML(p);
   fitImages();
+  fitPeek();
   peek.querySelectorAll("img").forEach(img => img.addEventListener("load", placePeek));
   inner.querySelectorAll("img").forEach(img => img.addEventListener("load", () => full() && setSlide(si, false)));
   setSlide(0, false);
   placePeek();
   keepOnScreen();
   panel.scrollTop = 0;
+  peek.scrollTop = 0;
 }
-addEventListener("resize", () => { fitImages(); setSlide(si, false); placePeek(); });
+addEventListener("resize", () => { fitImages(); fitPeek(); setSlide(si, false); placePeek(); });
 
 function open(id, push = true, dir = 1) {
   const i = projects.findIndex(x => x.id === id);
@@ -743,6 +799,9 @@ function open(id, push = true, dir = 1) {
   const p = projects[i];
   const wasOpen = document.body.classList.contains("open");
   cur = i;
+  // a new project always opens on its text, even from the full-screen image view
+  document.body.classList.remove("full");
+  if (!p.featured) showMore();
   T.project(id);
   document.querySelectorAll(".item").forEach(b => b.setAttribute("aria-current", b.dataset.id === id));
   dots.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.id === id));
@@ -815,7 +874,14 @@ document.addEventListener("wheel", e => {
   if (!document.body.classList.contains("open") || !desktop.matches) return;
   const sideways = Math.abs(e.deltaX) > Math.abs(e.deltaY);
   // the project sits over the right side, so pass vertical scrolling there through to the list
-  if (!sideways && !full()) { if (e.target.closest(".peek")) col.scrollTop += e.deltaY; return; }
+  // unless the project is too tall to fit and can still scroll that way, then it scrolls itself
+  if (!sideways && !full()) {
+    if (e.target.closest(".peek")) {
+      const canScroll = e.deltaY > 0 ? peek.scrollTop + peek.clientHeight < peek.scrollHeight - 1 : peek.scrollTop > 0;
+      if (!canScroll) col.scrollTop += e.deltaY;
+    }
+    return;
+  }
   e.preventDefault();
   const mag = Math.max(Math.abs(e.deltaX), Math.abs(e.deltaY));
   if (wLock && mag < wLast) wFading = true;
