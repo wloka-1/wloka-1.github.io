@@ -73,7 +73,7 @@
   }
   .peek {
     --peekw: calc(75vw - var(--col) - 32px);
-    position: fixed; top: 50%; transform: translateY(-50%); z-index: 3;
+    position: fixed; top: 0; height: 100vh; box-sizing: border-box; padding: var(--peektop, 18vh) 0 14vh; z-index: 3;
     left: calc(25vw + var(--col) + 32px);
     width: var(--peekw);
     opacity: 0; pointer-events: none; transition: opacity 260ms ease;
@@ -100,7 +100,7 @@
   .dots button.on { background: var(--ink); }
   /* keep the text off the window edge; the image strip still runs to the edge so the next image peeks in */
   .peek .text { max-width: min(520px, calc(100% - 32px)); }
-  .peek { max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: none; }
+  .peek { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
   body.open .peek { opacity: 1; pointer-events: auto; }
   body.open .peek.swap { opacity: 0; }
   @media (min-width: 1101px) {
@@ -753,7 +753,10 @@ function setSlide(n, animate = true) {
   }
 }
 // the project is fixed in place on desktop, so there's nothing to position
-function placePeek() {}
+// the project's headline starts level with the "Work" label (where it sits before the list scrolls)
+const workLabel = document.querySelector(".col-inner .label");
+function peekTop() { return workLabel.getBoundingClientRect().top + col.scrollTop; }
+function placePeek() { if (desktop.matches) document.documentElement.style.setProperty("--peektop", Math.round(peekTop()) + "px"); }
 // arrow keys can select an item that's scrolled out of view, so bring it back
 function keepOnScreen() {
   if (!desktop.matches) return;
@@ -774,8 +777,8 @@ function fitImages() {
 function fitPeek() {
   const deck = peek.querySelector(".deck");
   if (!deck || !desktop.matches) return;
-  const rest = peek.offsetHeight - deck.offsetHeight;
-  const room = innerHeight - 64 - rest - 40;
+  const rest = peek.firstElementChild.offsetHeight - deck.offsetHeight;
+  const room = innerHeight - peekTop() - rest - 40;
   deck.style.setProperty("--imgh", Math.round(Math.max(200, Math.min(room, innerHeight * 0.32))) + "px");
 }
 function render(p) {
@@ -873,15 +876,9 @@ document.addEventListener("wheel", e => {
   T.via = "trackpad";
   if (!document.body.classList.contains("open") || !desktop.matches) return;
   const sideways = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-  // the project sits over the right side, so pass vertical scrolling there through to the list
-  // unless the project is too tall to fit and can still scroll that way, then it scrolls itself
-  if (!sideways && !full()) {
-    if (e.target.closest(".peek")) {
-      const canScroll = e.deltaY > 0 ? peek.scrollTop + peek.clientHeight < peek.scrollHeight - 1 : peek.scrollTop > 0;
-      if (!canScroll) col.scrollTop += e.deltaY;
-    }
-    return;
-  }
+  // vertical scrolling moves only what the pointer is over: the project scrolls itself (if it is
+  // taller than the window), and everywhere else scrolls the list
+  if (!sideways && !full()) return;
   e.preventDefault();
   const mag = Math.max(Math.abs(e.deltaX), Math.abs(e.deltaY));
   if (wLock && mag < wLast) wFading = true;
