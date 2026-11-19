@@ -80,7 +80,10 @@
   }
   /* the text, then a strip of images below it that scrolls sideways */
   .cs { min-width: 0; max-width: 100%; }
-  .deck { overflow: hidden; margin-top: 28px; max-width: 100%; }
+  .deck { overflow: hidden; max-width: 100%; }
+  .cs > .text { margin-top: 28px; }
+  .cs > .text.head { margin-top: 0; }
+  .cs > .head + .text { margin-top: 0; }
   .track { position: relative; display: flex; align-items: center; gap: 24px; transition: transform 450ms var(--ease); }
   .track.drag { transition: none; }
   .track { align-items: flex-start; gap: 16px; }
@@ -94,12 +97,17 @@
   .strip-nav button:disabled { opacity: .3; cursor: default; }
   .cs h2 { font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; }
   .cs h2 + .meta { margin-top: 4px; margin-bottom: 16px; }
+  .cs .meta.ndaline { margin-top: -8px; margin-bottom: 16px; }
   .dots { display: none; flex-direction: column; gap: 10px; position: fixed; left: 10px; top: 50%; transform: translateY(-50%); z-index: 6; }
   .dots button { position: relative; width: 4px; height: 4px; padding: 0; border: 0; background: var(--dot); cursor: pointer; }
   .dots button::before { content: ""; position: absolute; inset: -3px -8px; }
   .dots button.on { background: var(--ink); }
   /* keep the text off the window edge; the image strip still runs to the edge so the next image peeks in */
   .peek .text { max-width: min(520px, calc(100% - 32px)); }
+  /* images match the text column's width */
+  .peek .deck figure.slide { width: min(520px, calc(var(--peekw) - 32px)); }
+  .peek .deck figure.slide figcaption { min-width: 0; }
+  .peek .deck .slide img { width: 100%; height: auto; max-width: none; max-height: 70vh; object-fit: contain; object-position: left top; }
   .peek { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
   body.open .peek { opacity: 1; pointer-events: auto; }
   body.open .peek.swap { opacity: 0; }
@@ -284,7 +292,10 @@
     .panel::-webkit-scrollbar { display: none; }
     .panel .panel-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 20px 48px 40px; }
     .panel .deck { margin-right: -20px; }
-    .panel .deck .slide img { max-height: var(--imgh, 30vh); max-width: calc(100vw - 100px); }
+    /* images match the text width; the deck runs 20px past it so the next image peeks in */
+    .panel .deck figure.slide { width: calc(100% - 20px); }
+    .panel .deck figure.slide figcaption { min-width: 0; }
+    .panel .deck .slide img { width: 100%; height: auto; max-width: none; max-height: 60vh; object-fit: contain; object-position: left top; }
     .panel .cs h2 { font-size: 22px; }
     body.open .dots { display: flex; }
     .close .lbl-close { display: none; }
@@ -715,16 +726,19 @@ dots.className = "dots";
 dots.innerHTML = projects.map(p => `<button data-id="${p.id}" aria-label="${p.title}"></button>`).join("");
 document.body.appendChild(dots);
 
-const deckHTML = p => `<div class="cs"><div class="text">
+const deckHTML = p => `<div class="cs">
+  <div class="text head">
     <h2>${p.title}</h2>
     <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
-    ${p.text.split("\n\n").map(t => `<p>${t}</p>`).join("")}
-    ${p.part ? `<p class="meta">My part · ${p.part}</p>` : ""}
-    ${p.tools ? `<p class="meta">Tools · ${p.tools}</p>` : ""}
-    ${p.org === "BNY" ? `<p class="meta">${p.shots ? "Under NDA, so these are simplified diagrams, not real screens." : "Under NDA, so no images."}</p>` : ""}
+    ${p.org === "BNY" ? `<p class="meta ndaline">${p.shots ? "Under NDA, so these are simplified diagrams, not real screens." : "Under NDA, so no images."}</p>` : ""}
   </div>
   ${p.shots ? `<div class="deck"><div class="track">${p.shots.map(([src, cap]) => `<figure class="slide"><img src="${IMG}${src}" alt="${cap.replace(/"/g, "&quot;")}">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`).join("")}</div></div>` : ""}
   ${p.shots?.length > 1 ? `<div class="strip-nav"><button data-d="-1" aria-label="Previous image">←</button><span class="count">1 / ${p.shots.length}</span><button data-d="1" aria-label="Next image">→</button></div>` : ""}
+  <div class="text">
+    ${p.text.split("\n\n").map(t => `<p>${t}</p>`).join("")}
+    ${p.part ? `<p class="meta">My part · ${p.part}</p>` : ""}
+    ${p.tools ? `<p class="meta">Tools · ${p.tools}</p>` : ""}
+  </div>
 </div>`;
 
 let cur = -1, si = 0;
@@ -770,7 +784,7 @@ function keepOnScreen() {
 function fitImages() {
   const deck = inner.querySelector(".deck");
   if (!deck || desktop.matches) return;
-  const room = panel.clientHeight - 120 - inner.querySelector(".text").offsetHeight - 28 - 110;
+  const room = panel.clientHeight - 120 - inner.querySelector(".head").offsetHeight - 28 - 110;
   deck.style.setProperty("--imgh", Math.round(Math.max(240, Math.min(room, innerHeight * 0.42))) + "px");
 }
 // desktop: longer text leaves less room, so images give way first (down to 200px) to keep it all on screen
