@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wesley Kay · Product designer</title>
+<meta name="description" content="Wesley Kay, product designer. Selected projects from BNY, Qualcomm, T-Mobile, Overlay, CivilGrid, and more.">
+<meta property="og:title" content="Wesley Kay · Product designer">
+<meta property="og:description" content="Senior product designer. Currently design lead for the core experience of Eliza, BNY's enterprise AI platform.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --ink: #000;          /* titles */
+    --ink-2: #2b2b2b;     /* body copy */
+    --ink-3: #555;        /* secondary copy, captions */
+    --gray: #959595;      /* meta lines */
+    --rule: #ececec;
+    --bg: #fff;
+    --pill: rgba(255,255,255,.78);
+    --ring: rgba(0,0,0,.08);
+    --ring-hover: rgba(0,0,0,.2);
+    --dot: #9a9a9a;
+    --veil: rgba(255,255,255,.97);
+    --col: 380px;
+    --gutter: 56px;
+    --ease: cubic-bezier(.22, .7, .12, 1);
+    --dur: 650ms;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f2f2f2; --ink-2: #d4d4d4; --ink-3: #a6a6a6; --gray: #8c8c8c; --rule: #2b2b2b;
+      --bg: #141414; --pill: rgba(28,28,28,.8); --ring: rgba(255,255,255,.12); --ring-hover: rgba(255,255,255,.28);
+      --dot: #5e5e5e; --veil: rgba(20,20,20,.97);
+    }
+  }
+  html, body { height: 100%; background: var(--bg); }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink-2);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+  a { color: inherit; }
+
+  /* ---------- the list column ---------- */
+  /* the list column: a full-width scroller so the wheel works anywhere on the page */
+  .col {
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    width: 100vw;
+    overflow-y: auto;
+    scrollbar-width: none;
+    z-index: 2;
+    transition: width 0s;
+  }
+  .col::-webkit-scrollbar { display: none; }
+  .col-inner {
+    width: var(--col);
+    margin-left: calc(50vw - var(--col) / 2);
+    padding: 18vh 0 14vh;
+    position: relative;
+  }
+  /* desktop: the list starts a quarter of the way across, and the project opens beside it with a
+     32px gap. The project stays put, centered in the window, while the list scrolls */
+  @media (min-width: 1101px) {
+    .col-inner { margin-left: 25vw; }
+  }
+  .peek {
+    --peekw: calc(75vw - var(--col) - 32px);
+    position: fixed; top: 0; height: 100vh; box-sizing: border-box; padding: var(--peektop, 18vh) 0 14vh; z-index: 3;
+    left: calc(25vw + var(--col) + 32px);
+    width: var(--peekw);
+    opacity: 0; pointer-events: none; transition: opacity 260ms ease;
+  }
+  /* the text, then a strip of images below it that scrolls sideways */
+  .cs { min-width: 0; max-width: 100%; }
+  .deck { overflow: hidden; max-width: 100%; }
+  .cs > .text { margin-top: 28px; }
+  .cs > .text.head { margin-top: 0; }
+  .cs > .head + .text { margin-top: 0; }
+  .track { position: relative; display: flex; align-items: center; gap: 24px; transition: transform 450ms var(--ease); }
+  .track.drag { transition: none; }
+  .track { align-items: flex-start; gap: 16px; }
+  .deck figure.slide { flex: 0 0 auto; width: min-content; margin: 0; transition: opacity 300ms; }
+  .deck figure.slide figcaption { min-width: 240px; }
+  .deck .slide img { display: block; width: auto; height: auto; max-height: var(--imgh, 32vh); max-width: calc(var(--peekw, 100vw) - 64px); cursor: zoom-in; }
+  .deck figcaption { font-size: 13px; line-height: 1.5; color: var(--gray); margin-top: 10px; max-width: 320px; }
+  .strip-nav { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 13px; color: var(--gray); font-variant-numeric: tabular-nums; }
+  .strip-nav button { width: 32px; height: 32px; border: 1px solid var(--rule); border-radius: 50%; background: none; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; }
+  .strip-nav button:hover:not(:disabled) { border-color: var(--ink); }
+  .strip-nav button:disabled { opacity: .3; cursor: default; }
+  .cs h2 { font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; }
+  .cs h2 + .meta { margin-top: 4px; margin-bottom: 16px; }
+  .cs .meta.ndaline { margin-top: -8px; margin-bottom: 16px; }
+  .dots { display: none; flex-direction: column; gap: 10px; position: fixed; left: 10px; top: 50%; transform: translateY(-50%); z-index: 6; }
+  .dots button { position: relative; width: 4px; height: 4px; padding: 0; border: 0; background: var(--dot); cursor: pointer; }
+  .dots button::before { content: ""; position: absolute; inset: -3px -8px; }
+  .dots button.on { background: var(--ink); }
+  /* keep the text off the window edge; the image strip still runs to the edge so the next image peeks in */
+  .peek .text { max-width: min(520px, calc(100% - 32px)); }
+  /* images match the text column's width */
+  .peek .deck figure.slide { width: min(520px, calc(var(--peekw) - 32px)); }
+  .peek .deck figure.slide figcaption { min-width: 0; }
+  .peek .deck .slide img { width: 100%; height: auto; max-width: none; max-height: 70vh; object-fit: contain; object-position: left top; }
+  .peek { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+  body.open .peek { opacity: 1; pointer-events: auto; }
+  body.open .peek.swap { opacity: 0; }
+  @media (min-width: 1101px) {
+    body:not(.full) .panel, body:not(.full) .close { display: none !important; }
+    /* clicking an image opens the phone-style view: full screen, dots on the left */
+    body.full .panel { left: 0; background: var(--bg); opacity: 1; transform: none; pointer-events: auto; z-index: 4; overflow: hidden; transition: none; }
+    body.full .panel-inner { max-width: none; min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 0 48px; }
+    /* the current slide sits centered; slides are only as wide as their image, so the next one always peeks in */
+    body.full .panel .text { display: none; }
+    body.full .panel .deck { margin-top: 0; }
+    body.full .panel .track { align-items: center; gap: 24px; }
+    body.full .panel .deck figure.slide { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    body.full .panel .deck figure.slide:not(.on) { opacity: .4; cursor: pointer; }
+    body.full .panel .deck .slide img { height: auto; max-height: 78vh; max-width: calc(100vw - 300px); cursor: auto; }
+    body.full .panel .deck figcaption { max-width: 560px; }
+    body.full .panel .deck figure.slide.past { opacity: 0; }
+    body.full .panel .strip-nav { display: none; }
+    body.full .dots { display: flex; left: 28px; }
+    body.full .close { left: 16px; opacity: 1; pointer-events: auto; transition-delay: 0ms; }
+  }
+
+  header { margin-bottom: 72px; }
+  header h1 { font-size: 15px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+  header p { font-size: 15px; color: var(--gray); margin-top: 4px; }
+  header nav { margin-top: 4px; font-size: 15px; color: var(--gray); }
+  header nav a { text-decoration: none; color: var(--gray); transition: color 150ms; }
+  header nav a:hover { color: var(--ink); }
+
+  .group-label { font-size: 12px; color: var(--gray); letter-spacing: 0.02em; margin: 0 0 20px; }
+
+  ol { list-style: none; }
+  li + li { margin-top: 30px; }
+  .item {
+    display: block; width: 100%; text-align: left;
+    background: none; border: 0; cursor: pointer;
+    font: inherit; color: inherit;
+  }
+  .item .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.35; transition: color 200ms; }
+  .item .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
+  .item .p { color: var(--gray); }
+  .item:hover .t { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  body.open .item .t { color: var(--gray); }
+  body.open .item[aria-current="true"] .t { color: var(--ink); }
+  body.open .item:hover .t { color: var(--ink); }
+  /* the focus box shows only while someone is tabbing, and goes away on any other key or click */
+  .item:focus-visible { outline: none; }
+  body.tabbing .item:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+
+  .label-other { margin-top: 88px; }
+  .cs .eyebrow { font-size: 13px; color: var(--gray); margin-bottom: 10px; }
+  .glance { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px 28px; padding: 20px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .glance dt { font-size: 13px; color: var(--gray); }
+  .glance dd { font-size: 15px; color: var(--ink); margin-top: 3px; line-height: 1.4; }
+  .note { margin-top: 40px; font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+  .more { margin-top: 112px; }
+  .label { font-size: 13px; font-weight: 400; color: var(--gray); margin-bottom: 24px; }
+  blockquote + blockquote { margin-top: 28px; }
+  blockquote p { font-size: 15px; line-height: 1.5; color: var(--ink); }
+  blockquote cite { display: block; font-style: normal; font-size: 15px; color: var(--gray); margin-top: 6px; }
+  .prose { font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+  .prose + .prose { margin-top: 12px; }
+  .plain { list-style: none; }
+  .plain li + li { margin-top: 18px; }
+  .plain .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; line-height: 1.35; }
+  .plain .m { display: block; font-size: 15px; color: var(--gray); line-height: 1.35; margin-top: 2px; }
+  a.out { text-decoration: none; }
+  .arr { width: 0.62em; height: 0.62em; color: var(--gray); margin-left: 4px; vertical-align: 0.05em; transition: color 150ms; }
+  a.out:hover .arr { color: var(--ink); }
+  .cs .meta a.out { color: inherit; }
+  .cs .meta a.out:hover { color: var(--ink); }
+  a.t:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+  footer { margin-top: 112px; font-size: 13px; color: var(--gray); line-height: 1.5; }
+  footer nav { font-size: 15px; margin-bottom: 12px; }
+  footer nav a { text-decoration: none; color: var(--ink); }
+  footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .more-work { all: unset; cursor: pointer; display: block; margin-top: 28px; font-size: 15px; color: var(--gray); }
+  .more-work::after { content: " +"; }
+  .more-work[aria-expanded="true"]::after { content: " −"; }
+  .more-work:hover { color: var(--ink); }
+  body.tabbing .more-work:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+  #list-more { list-style: none; margin-top: 28px; }
+
+  /* ---------- the case study panel ---------- */
+  .panel {
+    position: fixed;
+    top: 0; bottom: 0; right: 0;
+    left: calc(var(--gutter) + var(--col) + var(--gutter));
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateX(32px);
+    pointer-events: none;
+    transition: opacity 400ms var(--ease), transform var(--dur) var(--ease);
+  }
+  body.open .panel {
+    opacity: 1; transform: none; pointer-events: auto;
+    transition-delay: 180ms;
+  }
+  .panel-inner { max-width: 680px; padding: 18vh var(--gutter) 18vh 0; }
+  .panel.swap .panel-inner { opacity: 0; transform: translateY(var(--dy, 8px)); }
+  .panel-inner { transition: opacity 260ms ease, transform 360ms var(--ease); }
+
+  /* Same pill on every screen size: "< Close" on desktop, "< Back" on mobile */
+  .close {
+    /* Desktop: flush with the case study's left edge. Mobile resets this to the corner. */
+    position: fixed; top: 16px; left: calc(var(--gutter) + var(--col) + var(--gutter)); z-index: 5;
+    display: inline-flex; align-items: center; gap: 4px;
+    border: 0; cursor: pointer; font: inherit; font-size: 14px; color: var(--ink);
+    padding: 8px 14px; border-radius: 999px; background: var(--pill);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 0 1px var(--ring);
+    opacity: 0; pointer-events: none; transition: opacity 300ms, box-shadow 150ms;
+  }
+  body.open .close { opacity: 1; pointer-events: auto; transition-delay: 300ms; }
+  .close:hover { box-shadow: 0 0 0 1px var(--ring-hover); }
+  .close svg { width: 12px; height: 12px; margin-left: -3px; }
+  .close .lbl-back { display: none; }
+
+  .cs h2 { font-size: 28px; font-weight: 500; color: var(--ink); letter-spacing: -0.015em; line-height: 1.15; }
+  .cs .meta { font-size: 15px; color: var(--gray); margin-top: 8px; }
+  .cs .lede { font-size: 19px; line-height: 1.45; color: var(--ink); margin-top: 40px; letter-spacing: -0.005em; }
+  .cs h3 { font-size: 15px; font-weight: 500; color: var(--ink); margin: 56px 0 12px; }
+  .cs p { font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+  .cs p + p { margin-top: 14px; }
+  .cs .nda {
+    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--rule);
+    font-size: 13px; line-height: 1.5; color: var(--gray);
+  }
+  .cs figure { margin: 40px 0; }
+  .cs figure img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+
+  /* click an image to see it full size */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10;
+    background: var(--veil);
+    display: flex; overflow: auto;
+    opacity: 0; pointer-events: none; transition: opacity 250ms ease;
+    cursor: zoom-out;
+  }
+  .lightbox.on { opacity: 1; pointer-events: auto; }
+  .lightbox img {
+    margin: auto; padding: 48px;
+    max-width: 100%; max-height: 100vh; object-fit: contain;
+    transform: scale(.98); transition: transform 300ms var(--ease);
+  }
+  .lightbox.on img { transform: none; }
+  /* wide images (tables, flows) get their real size and scroll sideways instead of shrinking */
+  .lightbox.wide img { max-width: none; max-height: none; width: auto; height: calc(100vh - 96px); }
+  /* tall images get their real width and scroll down */
+  .lightbox.tall img { max-height: none; width: min(100%, 1100px); height: auto; margin: 0 auto; }
+  .lightbox .cap { position: fixed; left: 0; right: 0; bottom: 20px; text-align: center; font-size: 13px; color: var(--gray); pointer-events: none; }
+  .cs figcaption { font-size: 13px; line-height: 1.5; color: var(--gray); margin-top: 12px; max-width: 520px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; margin-top: 48px; }
+  .stats b { display: block; font-size: 28px; font-weight: 400; color: var(--ink); letter-spacing: -0.02em; }
+  .stats span { display: block; font-size: 13px; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+
+  .rows { margin-top: 24px; border-top: 1px solid var(--rule); }
+  .rows div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; }
+  .rows dt { color: var(--ink); font-weight: 500; }
+  .rows dd { color: var(--ink-3); }
+
+  .next { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .next button { background: none; border: 0; cursor: pointer; font: inherit; text-align: left; }
+  .next .l { display: block; font-size: 13px; color: var(--gray); }
+  .next .t { display: block; font-size: 15px; font-weight: 500; color: var(--ink); margin-top: 4px; }
+
+  /* ---------- small screens: panel slides over the list ---------- */
+  @media (max-width: 1100px) {
+    .peek { display: none; }
+    :root { --col: min(380px, calc(100vw - 48px)); --gutter: 24px; }
+    .col-inner { padding-top: 12vh; }
+    .col { transition: opacity 300ms; }
+    body.open .col { width: 100vw; opacity: 0; pointer-events: none; }
+    .panel { left: 0; background: var(--bg); transform: translateX(100%); opacity: 1; z-index: 4; }
+    body.open .panel { transform: none; transition-delay: 0ms; }
+    .panel-inner { padding: 88px 24px 80px; }
+    /* phones: the panel scrolls when a project is taller than the screen. Past either end, up and down
+       switch projects. Sideways moves through the images */
+    .panel { overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; }
+    .panel::-webkit-scrollbar { display: none; }
+    .panel .panel-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 20px 48px 40px; }
+    .panel .deck { margin-right: -20px; }
+    /* images match the text width; the deck runs 20px past it so the next image peeks in */
+    .panel .deck figure.slide { width: calc(100% - 20px); }
+    .panel .deck figure.slide figcaption { min-width: 0; }
+    .panel .deck .slide img { width: 100%; height: auto; max-width: none; max-height: 60vh; object-fit: contain; object-position: left top; }
+    .panel .cs h2 { font-size: 22px; }
+    body.open .dots { display: flex; }
+    .close .lbl-close { display: none; }
+    .close .lbl-back { display: inline; }
+    .close { left: 16px; }
+    .rows div { grid-template-columns: 1fr; gap: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 1ms !important; transition-delay: 0ms !important; }
+  }
+</style>
+<style>
+  /* Pulled 24px left (the script's bleed) so the scene's x = 0 still sits on the text edge */
+  .case-animation { width: min(calc(100% + 24px), 364px); height: 138px; margin: -34px 0 18px -24px; overflow: hidden; pointer-events: none; }
+  .case-animation canvas { display: block; width: 100%; height: 138px; image-rendering: pixelated; }
+  .about-content { display: flow-root; }
+  @media (max-width: 600px) { .case-animation { margin-top: -20px; } }
+</style>
+</head>
+<body>
+
+<div class="col" id="col"><div class="col-inner">
+  <header>
+    <h1>Wesley Kay</h1>
+    <p>Product designer</p>
+    <nav><a href="Wesley-Kay-Resume.pdf">Resume</a> · <a href="https://linkedin.com/in/wesley-kay">LinkedIn</a> · <a href="mailto:wesley.kay@gmail.com">Email</a></nav>
+  </header>
+
+  <h2 class="label">Work</h2>
+  <ol id="list"></ol>
+  <button class="more-work" id="more-work" aria-expanded="false" aria-controls="list-more">More work</button>
+  <ol id="list-more" hidden></ol>
+
+
+  <section class="more" id="kind-words">
+    <h2 class="label">Kind words</h2>
+    <blockquote><p>“Overlay wouldn’t be where it is today without the work we’ve done with Wesley. What sets him apart is his ability to see the bigger picture.”</p><cite>Lan Wolfer · CEO, Overlay Foundation</cite></blockquote>
+    <blockquote><p>“Wesley is a holistic and critical thinker. It was a joy to collaborate with him on intricate design challenges.”</p><cite>Irene Barber · Design Director, Blink UX</cite></blockquote>
+    <blockquote><p>“Wesley handled everything with what felt like ease, from design strategy and UX to marketing and branding.”</p><cite>Josh Mackanic · CEO &amp; Co-Founder, CivilGrid</cite></blockquote>
+  </section>
+
+  <section class="more" id="about">
+    <h2 class="label">About</h2>
+    <div class="about-content">
+    <p class="prose">I design products. Before UX I got a Masters in Architecture, and I still think in systems. ~Eight years in, I've done enterprise AI, design systems, consumer navigation and search, and a DeFi startup I co-founded.</p>
+    <p class="prose">Home is the PNW. When I'm not designing I'm with my kids skiing, cycling or picking blueberries.</p>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2 class="label">Experience</h2>
+    <ol class="plain">
+      <li><a class="t out" href="https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html" target="_blank" rel="noopener">BNY<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior (Staff) Designer · Contract · 2025 to now</span></li>
+      <li><a class="t out" href="https://react.qui.qualcomm.com/components/overview" target="_blank" rel="noopener">Qualcomm<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior (Staff) Designer · Contract · 2024 to 2025</span></li>
+      <li><span class="t">Contango</span><span class="m">Contract Product Designer · 2025 · Rubicon</span></li>
+      <li><span class="t">Field Design Co.</span><span class="m">Founder, Principal Designer · 2023 to 2025 · CivilGrid and others</span></li>
+      <li><a class="t out" href="https://numbergroup.xyz/" target="_blank" rel="noopener">Number Group<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Contract Product Designer · 2024 to 2025 · Stalk, Oxbow</span></li>
+      <li><a class="t out" href="https://overlay.market/" target="_blank" rel="noopener">Overlay Protocol<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Co-founder, COO · 2021 to 2025</span></li>
+      <li><a class="t out" href="https://www.t-mobile.com/" target="_blank" rel="noopener">T-Mobile<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">Senior UX Designer, Lead · 2020 to 2021</span></li>
+      <li><span class="t">Toptender</span><span class="m">UI/UX Consultant · 2019</span></li>
+      <li><a class="t out" href="https://opolis.co/" target="_blank" rel="noopener">Opolis<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="m">UI/UX Designer · 2018 to 2019</span></li>
+    </ol>
+  </section>
+
+
+  <footer>
+    <nav><a href="Wesley-Kay-Resume.pdf">Resume</a> · <a href="https://linkedin.com/in/wesley-kay">LinkedIn</a> · <a href="mailto:wesley.kay@gmail.com">Email</a></nav>
+    <p>Wesley Kay · 2026 · Built with Claude.</p>
+  </footer>
+</div></div>
+
+<button class="close" id="close" aria-label="Close"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M6.5 2L3.5 5l3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="lbl-close">Close</span><span class="lbl-back">Back</span></button>
+
+<section class="panel" id="panel" aria-live="polite">
+  <div class="panel-inner" id="panel-inner"></div>
+</section>
+
+<script>
+const IMG = "images/";
+
+// ---------- analytics: sends visit events to Wesley's own collector ----------
+// Add ?notrack to any URL to stop tracking this browser (?track turns it back on).
+const T = (() => {
+  const ENDPOINT = location.hostname === "127.0.0.1" ? "http://127.0.0.1:8787/e"
+    : location.hostname === "wloka-1.github.io" ? "https://snousty-1.tailc765e1.ts.net/portfolio-stats/e" : "";
+  const store = (s, k, v) => { try { if (v === undefined) return s.getItem(k); s.setItem(k, v); } catch (e) {} };
+  const qs = new URLSearchParams(location.search);
+  if (qs.has("notrack")) store(localStorage, "pa_off", "1");
+  if (qs.has("track")) { try { localStorage.removeItem("pa_off"); } catch (e) {} }
+  const noop = { via: null, project() {}, slide() {}, event() {} };
+  if (!ENDPOINT || store(localStorage, "pa_off") || navigator.webdriver) return noop;
+
+  const id = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let visitor = store(localStorage, "pa_v");
+  if (!visitor) { visitor = id(); store(localStorage, "pa_v", visitor); }
+  // a new session after 30 minutes away
+  let session = store(sessionStorage, "pa_s");
+  const lastSeen = +store(sessionStorage, "pa_t") || 0;
+  if (!session || Date.now() - lastSeen > 30 * 60 * 1000) { session = id(); store(sessionStorage, "pa_s", session); store(sessionStorage, "pa_m", ""); }
+  let needMeta = !store(sessionStorage, "pa_m");
+  let active = +store(sessionStorage, "pa_a") || 0;
+
+  let queue = [];
+  const send = beacon => {
+    store(sessionStorage, "pa_t", String(Date.now()));
+    store(sessionStorage, "pa_a", String(Math.round(activeNow())));
+    if (!queue.length && !beacon) return;
+    const body = { s: session, v: visitor, active: Math.round(activeNow()), ev: queue };
+    if (needMeta) body.meta = { ref: document.referrer, url: location.href, hash: location.hash,
+      screen: `${screen.width}x${screen.height}`, lang: navigator.language,
+      tz: Intl.DateTimeFormat().resolvedOptions().timeZone };
+    queue = [];
+    const data = JSON.stringify(body);
+    // text/plain keeps this a simple request, so the browser sends it without a preflight
+    const ok = beacon && navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, new Blob([data], { type: "text/plain" }));
+    if (!ok) fetch(ENDPOINT, { method: "POST", body: data, keepalive: true, headers: { "Content-Type": "text/plain" } }).catch(() => {});
+    needMeta = false; store(sessionStorage, "pa_m", "1");
+  };
+  // send a few seconds after something happens, so little is lost if the tab is killed
+  let soon;
+  const push = e => { queue.push({ t: Date.now(), ...e }); clearTimeout(soon); soon = setTimeout(send, 3000); if (queue.length > 40) send(); };
+
+  // time only counts while the tab is visible and someone has touched the page in the last minute
+  let visibleSince = document.visibilityState === "visible" ? performance.now() : null;
+  const activeNow = () => active + (visibleSince != null ? performance.now() - visibleSince : 0);
+  const timer = () => ({ ms: 0, since: visibleSince != null ? performance.now() : null });
+  const pause = (t, at = performance.now()) => { if (t && t.since != null) { t.ms += Math.max(0, at - t.since); t.since = null; } };
+  const resume = t => { if (t && t.since == null) t.since = performance.now(); };
+  const total = t => t.ms + (t.since != null ? performance.now() - t.since : 0);
+
+  let proj = null, slide = null;
+  const endSlide = () => { if (slide) { push({ type: "slide", p: slide.p, i: slide.i, d: Math.round(total(slide.t)), how: slide.how }); slide = null; } };
+  const endProject = () => { endSlide(); if (proj) { push({ type: "project", p: proj.p, d: Math.round(total(proj.t)), how: proj.how }); proj = null; } };
+
+  const api = {
+    via: null,
+    project(p) {
+      if (proj && proj.p === p) return;
+      endProject();
+      if (p) proj = { p, t: timer(), how: api.via || "url" };
+    },
+    slide(p, i) {
+      if (!p || (slide && slide.p === p && slide.i === i)) return;
+      endSlide();
+      slide = { p, i, t: timer(), how: api.via || "open" };
+    },
+    event(type, extra = {}) { push({ type, p: proj?.p, ...extra }); },
+  };
+
+  // idle: no mouse, wheel, key, or touch for a minute (not scroll events, which the page fires itself). The minute itself counts as reading time,
+  // then the clock stops until the next input. Catches windows left open behind other apps
+  const IDLE = 60 * 1000;
+  let lastInput = performance.now(), idle = false;
+  const start = () => { visibleSince = performance.now(); resume(proj?.t); resume(slide?.t); };
+  ["pointermove", "pointerdown", "keydown", "wheel", "touchstart"].forEach(type =>
+    addEventListener(type, () => {
+      lastInput = performance.now();
+      if (idle && document.visibilityState === "visible") { idle = false; start(); }
+    }, { capture: true, passive: true }));
+  setInterval(() => {
+    if (idle || visibleSince == null || performance.now() - lastInput < IDLE) return;
+    idle = true;
+    const at = lastInput + IDLE;
+    active += Math.max(0, at - visibleSince); visibleSince = null;
+    pause(proj?.t, at); pause(slide?.t, at);
+  }, 5000);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      if (visibleSince != null) { active += performance.now() - visibleSince; visibleSince = null; }
+      pause(proj?.t); pause(slide?.t);
+      // close out what's open so a tab that never comes back still reports it
+      const p = proj?.p, s = slide;
+      endProject(); send(true);
+      proj = p ? { p, t: { ms: 0, since: null }, how: "resume" } : null;
+      slide = s ? { p: s.p, i: s.i, t: { ms: 0, since: null }, how: "resume" } : null;
+    } else {
+      lastInput = performance.now(); idle = false;
+      start();
+    }
+  });
+  addEventListener("pagehide", () => { endProject(); send(true); });
+  setInterval(() => send(), 15000);
+
+  // how far down the page people get
+  const seen = new Set();
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    const name = en.target.querySelector("h2")?.textContent.trim();
+    if (en.isIntersecting && name && !seen.has(name)) { seen.add(name); push({ type: "section", name }); }
+  }), { threshold: 0.4 });
+  document.querySelectorAll("section.more").forEach(s => io.observe(s));
+
+  // outbound links: resume, LinkedIn, email, company links
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const label = a.textContent.trim().slice(0, 60) || a.hostname;
+    push({ type: "link", label, href: a.href.slice(0, 200) });
+    send(true);
+  }, true);
+
+  push({ type: "view", hash: location.hash });
+  send();
+  return api;
+})();
+
+
+const ORG_LINKS = {
+  "BNY": "https://www.bny.com/corporate/global/en/about-us/technology-innovation/artificial-intelligence.html",
+  "Qualcomm": "https://react.qui.qualcomm.com/components/overview",
+  "Overlay": "https://overlay.market/",
+  "T-Mobile": "https://www.t-mobile.com/",
+  "Opolis": "https://opolis.co/"
+};
+const orgLink = org => ORG_LINKS[org]
+  ? `<a class="out" href="${ORG_LINKS[org]}" target="_blank" rel="noopener">${org}<svg class="arr" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 7.5L7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`
+  : org;
+
+const projects = [
+  { id: "eliza", title: "Lead designer for an enterprise AI platform",
+    org: "BNY", role: "Staff AI Designer", when: "2025 to now",
+    text: "I lead design for the end-to-end experience of Eliza, BNY's internal AI platform, across web, mobile, tablet, and desktop. The work is under NDA, so I'm glad to walk through it in conversation." },
+  { id: "icons", title: "One icon system for three brands",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
+    text: "Qualcomm's 1,500+ icon library shipped with the enterprise beta and is now public. Before it, Qualcomm, Snapdragon, and Dragonwing had three icon sets in use, and they disagreed. I audited them and set one size and stroke ramp, with separate rules for product icons and marketing icons. We built the library on Lucide, an open-source set, and I added a review path so custom icons had to earn their place. I also used AI to build a Figma importer that made every icon searchable.\n\nThe ramp runs from 12 to 40px on a 16px base, with stroke growing from 1px at the smallest size to 2.25px at the largest, signed off by marketing. Six sizes turned 1,500 icons into more than 10,000 assets, kept current with Lucide's quarterly updates. The review path caught duplicates and still let about 40 genuinely new icons in." ,
+    shots: [
+      ["covers/icons.jpg", ""],
+      ["qualcomm/icon-decision-tree.png", "Four of the five paths end in reusing an icon. Only one ends at a request to the system team."],
+      ["qualcomm/icon-ramp-comparison.png", "Sizes, strokes, and names across three sets, with the recommendation on the right of each table."],
+      ["qualcomm/Ramp.png", "The utility ramp. Size and stroke move together."],
+      ["qualcomm/Sizing.png", "Pick from the ramp instead of scaling by eye."],
+      ["qualcomm/icon-scaling.png", "Each rule shipped with a do and a don't."],
+      ["qualcomm/icon-contextual-use.png", "Utility icons do a job. Decoration goes to the marketing set."]
+    ] },
+  { id: "search", title: "One search for shopping and support",
+    org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
+    text: "Zero-result searches fell to 0.7% because we built a page for searches with no results, and search usage rose 24% because we added a search button to the home page. Searching \"iPhone\" on T-Mobile could mean buying one, finding a case, or fixing the one you have, and about 13% of searches used to return nothing. I joined mid-project and led design and research direction across web and mobile. Suggestions helped people form the query, account searches put tasks like paying a bill first, and results split into phones, accessories, and support." ,
+    shots: [
+      ["tmo/results-magenta.png", "Same query across product and support views."],
+      ["tmo/objectives-white.png", "The objectives from the project brief: reduce cost, increase revenue, improve CSAT, improve usability."],
+      ["tmo/heatmap-white.png", "Clicks after searching \"pay bill\" on the old results page."],
+      ["tmo/partial-white.png", "A partial \"iPh\" offers both phones and support."],
+      ["tmo/wireframe-white.png", "Wireframe for \"pay my bill.\" The task is one click away, above the articles."],
+      ["tmo/way-out.png", "An explicit way out when the content lives elsewhere."]
+    ] },
+  { id: "civil-conflicts", title: "Finding what's in the way before you dig",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    text: "CivilGrid's conflict reports shipped, and a search engineers used to do by hand for every project now comes from the map in four inputs. Before a utility project breaks ground, they have to find everything it could collide with: paving moratoria, other planned projects, city and county lines, existing utilities. I designed the reports, then turned the report into a list teams work through over weeks, with a status on every conflict." ,
+    shots: [
+      ["covers/civil-conflicts.jpg", ""],
+      ["civilgrid/conflict-types.jpg", "Four kinds of conflict, each with how many overlaps there are and how many need attention."],
+      ["civilgrid/conflicts.png", "Every conflict gets a status and a color that matches the map."],
+      ["civilgrid/conflicts-by-city.jpg", "Conflicts grouped by city, with every overlapping project drawn on the map."],
+      ["civilgrid/utility-data.png", "Click any utility on the map to see who owns it, what it's made of, and when the data was loaded."],
+      ["civilgrid/project-nav.png", "Inside a project, the left nav groups general info, analysis, and the project's maps."],
+      ["civilgrid/new-report.png", "The map stays live while you set up the report."],
+      ["civilgrid/report.png", "Moratoria within half a mile of the project, with overlap, dates, and a contact for each."]
+    ] },
+  { id: "overlay-app", title: "A trading app that starts with the markets",
+    org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
+    text: "Overlay raised a $4M seed and grew from 3 to 25 people. I co-founded it and ran design. It's a protocol for trading niche data markets. The first app opened on trade controls, which only worked for people who already knew what they wanted. Over four iterations I moved the first screen to a list of markets, then featured markets, so people understood what they were betting on before they bet." ,
+    shots: [
+      ["covers/overlay-app.jpg", ""],
+      ["overlay1.png", "The final app on mobile and desktop."],
+      ["overlay8.png", "Left to right: trade controls first, then market discovery first."],
+      ["overlay2.png", "A working product could still be too expensive to use."]
+    ] },
+  { id: "rubicon", title: "Staking and bridging, simple enough to do drunk",
+    org: "Contango", role: "Product Designer, contract", when: "2025",
+    text: "Project Rubicon launched in November 2025. It lets Bittensor holders stake their tokens and bridge them to Base for liquidity pools. That's four steps across three chains, and the founder's bar was that you could do it drunk. I laid the steps out as one numbered column, with the chains, rate, fees, and wallet for each step shown right where you need them. After launch I designed the dashboard." ,
+    shots: [
+      ["covers/rubicon.jpg", ""],
+      ["contango/stake.png", "Four steps, one column. The chain chips on each step say where your tokens are going."],
+      ["contango/confirm.png", "The last check before a cross-chain move."]
+    ] },
+  { id: "patterns", title: "UX patterns across Qualcomm's products",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025",
+    text: "My UX pattern research got Qualcomm's leadership to agree on the roadmap. Component specs couldn't answer what product designers kept asking me, like whether filters go above a table or in its columns. I interviewed designers and leadership, collected examples from shipping products, and set a framework that separates reusable layouts from guidance on when to use them. I also proposed three libraries (UX patterns, components, foundations) so teams stopped using the same words for different things." ,
+    shots: [
+      ["qualcomm/system-definitions.png", "One vocabulary for the whole system, from design patterns down to primitives."]
+    ] },
+  { id: "docs", title: "Design system docs, written 120x faster",
+    org: "Qualcomm", role: "Design Systems Lead", when: "2025", tools: "Claude",
+    text: "60 fully documented components went out for Qualcomm's enterprise beta with 120x less writing effort. I owned the documentation for the design system and drew every component illustration. Moving a doc into the CMS by hand took about two hours, so I built a workflow that drafts docs and converts them, with designers reviewing the output.\n\nThe workflow cut that two hours to minutes across 55 pages. Not everything worked: generating illustrations with AI failed, so we switched to templates and I drew them. Every doc went through draft, peer review, final review, and publish. When budget cuts took the team down to two, I left a prompt guide so the docs could keep going without me." ,
+    shots: [
+      ["covers/docs.jpg", ""],
+      ["qualcomm/qds-components-1.png", ""],
+      ["qualcomm/doc-wireframes.png", "Page templates for home, foundations, a foundation page, and a component page."],
+      ["qualcomm/qds-components-2.png", "The repeated grid and connectors keep the family consistent while each drawing explains a different component."],
+      ["qualcomm/doc-illustration-howto.png", "The same language for guideline pages: a library feeding components into a product."]
+    ] },
+  { id: "civil-draw", title: "Drawing on the map before there's a project",
+    org: "CivilGrid", role: "Design consultant", when: "2024 to 2025",
+    text: "CivilGrid shipped map-first, with Civil Draw on the home screen. About 80% of its new users didn't have a project yet, and the business only earns when someone creates one. Civil Draw, the drawing tool, was the bridge, but people forgot it existed after training. I made the app map-first with Civil Draw on the home screen, let people draw now and save to a project later, and moved sharing to the top right where people expect it." ,
+    shots: [
+      ["covers/civil-draw.jpg", ""],
+      ["civilgrid/map-home.png", "Home is the map, with every project on it."],
+      ["civilgrid/draw-tools.png", "Drawing tools sit along the bottom of the map: polygon, line, marker, text, image, stamp."],
+      ["civilgrid/civil-draw.png", "Civil Draw on the map: drawing tools along the bottom, objects and modes in the corners."],
+      ["civilgrid/name-project.jpg", "Draw first, then turn the drawing into a project: name it, add scope, and the area and size carry over."]
+    ] },
+  { id: "civil-downloads", title: "Data downloads people can finish themselves",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    text: "Data downloads shipped as a two-step wizard people can finish on their own. About half of CivilGrid's download requests didn't actually need approval. They came from confusing defaults, like layers pre-selected with no data in the area. The wizard separates included, available, and restricted layers, blocks empty ones, and shows restrictions up front. Anything that does need approval goes through its own tracked request." },
+  { id: "civil-ai", title: "AI answers from agency rulebooks",
+    org: "CivilGrid", role: "Design consultant", when: "2025",
+    text: "Civil engineers dig through long agency PDFs for permit rules and clearances. CivilGrid wanted an LLM to read them and answer per project. I designed how that shows up: a few insights pre-loaded for each project, room to ask more, and a cited source on every answer, because an engineer won't trust a number without one. This was early exploration when my engagement ended." },
+  { id: "corn-bridge", title: "A Bitcoin bridge you can read at a glance",
+    org: "Stalk", role: "Product Designer, contract", when: "2025",
+    text: "Stalk's bridge shipped with one input and the whole transfer spelled out. It was where people got stuck. I cut it down and put everything in plain terms: what you send, what you get, how long it takes, and the fees. The same screen handles three kinds of transfer, and your history stays open beside it." },
+  { id: "corn-token", title: "Checking, claiming, and staking an airdrop",
+    org: "Stalk", role: "Product Designer, contract", when: "2025",
+    text: "Stalk's token launch shipped with the pages I designed for checking, claiming, and staking the airdrop. The token replaced its points program. I mapped six ways people could arrive so each one ended at a wallet that could claim, kept the points-to-token math behind a hover, and showed the yield for every staking period up front." },
+  { id: "stalk", title: "A meme coin launcher styled like a trading terminal",
+    org: "Stalk", role: "Product Designer, contract", when: "2024",
+    text: "Stalk Market launched as a meme coin launchpad styled like a trading terminal. It had to feel familiar to pump.fun users and still look like its own thing, so I took it from soft and rounded to sharp corners, a black base, and an orange accent. The home screen leads with what traders watch, and a chat with clickable cashtags sits beside the market." ,
+    shots: [
+      ["covers/stalk.jpg", ""],
+      ["stalk/home-desktop.png", "Desktop home. Tokens on the left, live video and the troll box on the right."],
+      ["stalk/concepts.png", "Five concepts, left to right. The layout barely moves. The attitude does."],
+      ["stalk/mobile.png", "Mobile home, the troll box tab, and the trade drawer on a token page."]
+    ] },
+  { id: "oxbow", title: "An admin console for a compliant privacy pool",
+    org: "Oxbow", role: "Product Designer, contract", when: "2025",
+    text: "Oxbow's admin console shipped, along with the deposit and withdrawal flows. Oxbow is a privacy pool. You deposit crypto and later withdraw it to a fresh address, with a zero-knowledge proof breaking the link between the two. To stay compliant, admins decide which deposits are allowed in. I designed the console where they make those calls." ,
+    shots: [
+      ["covers/oxbow.jpg", ""],
+      ["oxbow/admin.png", "Totals up top, every deposit below, with a date filter open."],
+      ["oxbow/transactions.png", "Status and flag side by side, with the reviewer's actions at the end of each row."],
+      ["oxbow/withdraw-proof.png", "The wait, made visible."]
+    ] },
+  { id: "overlay-brand", title: "Scientists and cats: a brand and component library",
+    org: "Overlay", role: "Co-founder, COO", when: "2021 to 2025",
+    text: "Overlay's brand and shared component library were adopted across the product. The protocol was technically deep, and the brand didn't have to be. I wrote the design ethos and built the early identity, then brought in an agency as it matured. With our front-end lead I built a shared component library that covered behavior as well as looks, so new features didn't re-decide every control." ,
+    shots: [
+      ["covers/overlay-brand.jpg", ""],
+      ["overlay5.png", "The mark went from two rings to one with a wave, and the pixel cat grew up."],
+      ["overlay3.png", "The ethos. Cats knock things off the shelf, which is a decent way to design for everything."],
+      ["overlay4.png", "Pending, inactive, and selected states alongside responsive headers."],
+      ["overlay6.png", "Referrals on mobile: before connecting, entering a code, and earning."]
+    ] },
+  { id: "unav", title: "Universal navigation across 30 sites",
+    org: "T-Mobile", role: "Lead UX Designer", when: "2020 to 2021",
+    text: "T-Mobile's universal navigation grew from 16 to 30 sites, navigation usage rose 23%, and it serves 40M+ monthly users. I led it: the shared header and menu across T-Mobile's websites." },
+];
+
+// BNY, Qualcomm (except the UX patterns work), and CivilGrid's AI answers were built with Claude. Everything else was designed in Figma
+projects.forEach(p => { p.tools = p.org === "BNY" ? "" : (p.org === "Qualcomm" || p.id === "civil-ai") && p.id !== "patterns" ? "Claude" : "Figma"; });
+projects.find(p => p.id === "docs").tools = "Claude, Figma";
+
+// what was mine, stated plainly. Reviewers reject work when ownership is unclear
+const PART = {
+  BNY: "Lead designer on Eliza's core experience",
+  Qualcomm: "Design systems lead, with designers, engineers, and PMs from several firms",
+  CivilGrid: "Sole designer, through my studio",
+  Overlay: "Co-founder, led all product design and brand",
+  Contango: "Sole designer: strategy, flows, and UI",
+  Stalk: "Product designer, working with two developers",
+  Oxbow: "Product designer, merging an outside designer's wireframes with the in-house team's",
+};
+projects.forEach(p => { p.part = PART[p.org]; });
+Object.assign(projects.find(p => p.id === "search"), { part: "Only designer on a three-person team" });
+Object.assign(projects.find(p => p.id === "unav"), { part: "Lead designer" });
+Object.assign(projects.find(p => p.id === "overlay-brand"), { part: "Co-founder. Set the early identity, then directed an agency, and built the library with our front-end lead" });
+
+// group by company, newest company first, then newest project first within it.
+// Dates sort by start year, then end year ("now" counts as this year). Ties keep their written order
+const years = w => { const [a, b] = w.split(" to "); return [+a, b === "now" ? new Date().getFullYear() : +(b || a)]; };
+const newer = (p, q) => p[0] - q[0] || p[1] - q[1];
+const orgs = new Map();
+projects.forEach((p, i) => {
+  const y = years(p.when), g = orgs.get(p.org);
+  if (!g) orgs.set(p.org, { y, i });
+  else if (newer(y, g.y) > 0) g.y = y;
+});
+projects.forEach((p, i) => { p._i = i; });
+projects.sort((x, y) => {
+  const gx = orgs.get(x.org), gy = orgs.get(y.org);
+  return newer(gy.y, gx.y) || gx.i - gy.i || newer(years(y.when), years(x.when)) || x._i - y._i;
+});
+
+// the best 6 to 8 lead. Everything else sits under "More work", in the same order
+const FEATURED = ["eliza", "icons", "docs", "overlay-app", "search"];
+projects.forEach(p => { p.featured = FEATURED.includes(p.id); });
+// featured projects keep the order written above, strongest first
+const rank = p => p.featured ? FEATURED.indexOf(p.id) : FEATURED.length;
+projects.sort((x, y) => rank(x) - rank(y));
+
+const list = document.getElementById("list");
+const panel = document.getElementById("panel");
+const inner = document.getElementById("panel-inner");
+
+const itemHTML = p => `
+  <li><button class="item" data-id="${p.id}">
+    <span class="t">${p.title}</span>
+    <span class="m">${p.org} · ${p.role} · ${p.when}</span>
+  </button></li>`;
+list.innerHTML = projects.filter(p => p.featured).map(itemHTML).join("");
+const moreList = document.getElementById("list-more");
+moreList.innerHTML = projects.filter(p => !p.featured).map(itemHTML).join("");
+const moreBtn = document.getElementById("more-work");
+const showMore = (on = true) => { moreList.hidden = !on; moreBtn.setAttribute("aria-expanded", on); moreBtn.textContent = on ? "Less work" : "More work"; };
+moreBtn.addEventListener("click", () => showMore(moreList.hidden));
+
+const peek = document.createElement("div");
+peek.className = "peek";
+document.body.appendChild(peek);
+const col = document.getElementById("col");
+const desktop = matchMedia("(min-width: 1101px)");
+const dots = document.createElement("nav");
+dots.className = "dots";
+dots.innerHTML = projects.map(p => `<button data-id="${p.id}" aria-label="${p.title}"></button>`).join("");
+document.body.appendChild(dots);
+
+const deckHTML = p => `<div class="cs">
+  <div class="text head">
+    <h2>${p.title}</h2>
+    <p class="meta">${orgLink(p.org)} · ${p.role} · ${p.when}</p>
+      </div>
+  ${p.shots ? `<div class="deck"><div class="track">${p.shots.map(([src, cap]) => `<figure class="slide"><img src="${IMG}${src}" alt="${cap.replace(/"/g, "&quot;")}">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`).join("")}</div></div>` : ""}
+  ${p.shots?.length > 1 ? `<div class="strip-nav"><button data-d="-1" aria-label="Previous image">←</button><span class="count">1 / ${p.shots.length}</span><button data-d="1" aria-label="Next image">→</button></div>` : ""}
+  <div class="text">
+    ${p.text.split("\n\n").map(t => `<p>${t}</p>`).join("")}
+    ${p.part ? `<p class="meta">My part · ${p.part}</p>` : ""}
+    ${p.tools ? `<p class="meta">Tools · ${p.tools}</p>` : ""}
+  </div>
+</div>`;
+
+let cur = -1, si = 0;
+// animate only when someone moves between slides; layout fixes (opening, resizing, images loading) snap
+function setSlide(n, animate = true) {
+  // in the full-screen view, going left past the first image goes back to the text
+  if (n < 0 && full()) return exitFull();
+  const max = (projects[cur]?.shots || []).length - 1;
+  si = Math.max(0, Math.min(max, n));
+  T.slide(projects[cur]?.id, si);
+  for (const track of document.querySelectorAll(".track")) {
+    const el = track.children[si];
+    // in the desktop full-screen view the current slide is centered
+    const centered = full() && track.closest(".panel");
+    const x = centered ? el.offsetLeft - (track.parentNode.clientWidth - el.offsetWidth) / 2
+      : Math.min(el.offsetLeft, Math.max(0, track.scrollWidth - track.parentNode.clientWidth));
+    if (!animate) track.classList.add("drag");
+    track.style.transform = `translateX(${-x}px)`;
+    if (!animate) { track.offsetWidth; track.classList.remove("drag"); }
+    [...track.children].forEach((el, i) => { el.classList.toggle("on", i === si); el.classList.toggle("past", i < si); });
+  }
+  for (const nav of document.querySelectorAll(".strip-nav")) {
+    nav.querySelector(".count").textContent = `${si + 1} / ${max + 1}`;
+    nav.querySelector('[data-d="-1"]').disabled = si === 0;
+    nav.querySelector('[data-d="1"]').disabled = si === max;
+  }
+}
+// the project is fixed in place on desktop, so there's nothing to position
+// the project's headline starts level with the "Work" label (where it sits before the list scrolls)
+const workLabel = document.querySelector(".col-inner .label");
+function peekTop() { return workLabel.getBoundingClientRect().top + col.scrollTop; }
+function placePeek() { if (desktop.matches) document.documentElement.style.setProperty("--peektop", Math.round(peekTop()) + "px"); }
+// arrow keys can select an item that's scrolled out of view, so bring it back
+function keepOnScreen() {
+  if (!desktop.matches) return;
+  const b = document.querySelector('.item[aria-current="true"]');
+  if (!b) return;
+  const r = b.getBoundingClientRect();
+  const by = r.bottom > innerHeight - 32 ? r.bottom - innerHeight + 64 : r.top < 32 ? r.top - 64 : 0;
+  if (by) col.scrollBy({ top: by, behavior: "smooth" });
+}
+// phones: images shrink a little to fit under the text, but never so small they can't be read
+function fitImages() {
+  const deck = inner.querySelector(".deck");
+  if (!deck || desktop.matches) return;
+  const room = panel.clientHeight - 120 - inner.querySelector(".head").offsetHeight - 28 - 110;
+  deck.style.setProperty("--imgh", Math.round(Math.max(240, Math.min(room, innerHeight * 0.42))) + "px");
+}
+// desktop: longer text leaves less room, so images give way first (down to 200px) to keep it all on screen
+function fitPeek() {
+  const deck = peek.querySelector(".deck");
+  if (!deck || !desktop.matches) return;
+  const rest = peek.firstElementChild.offsetHeight - deck.offsetHeight;
+  const room = innerHeight - peekTop() - rest - 40;
+  deck.style.setProperty("--imgh", Math.round(Math.max(200, Math.min(room, innerHeight * 0.32))) + "px");
+}
+function render(p) {
+  inner.innerHTML = deckHTML(p);
+  peek.innerHTML = deckHTML(p);
+  fitImages();
+  fitPeek();
+  peek.querySelectorAll("img").forEach(img => img.addEventListener("load", placePeek));
+  inner.querySelectorAll("img").forEach(img => img.addEventListener("load", () => full() && setSlide(si, false)));
+  setSlide(0, false);
+  placePeek();
+  keepOnScreen();
+  panel.scrollTop = 0;
+  peek.scrollTop = 0;
+}
+addEventListener("resize", () => { fitImages(); fitPeek(); setSlide(si, false); placePeek(); });
+
+function open(id, push = true, dir = 1) {
+  const i = projects.findIndex(x => x.id === id);
+  if (i < 0) return close(false);
+  const p = projects[i];
+  const wasOpen = document.body.classList.contains("open");
+  cur = i;
+  // a new project always opens on its text, even from the full-screen image view
+  document.body.classList.remove("full");
+  if (!p.featured) showMore();
+  T.project(id);
+  document.querySelectorAll(".item").forEach(b => b.setAttribute("aria-current", b.dataset.id === id));
+  dots.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.id === id));
+  if (wasOpen) {
+    panel.style.setProperty("--dy", dir > 0 ? "-24px" : "24px");
+    panel.classList.add("swap"); peek.classList.add("swap");
+    setTimeout(() => { render(p); panel.classList.remove("swap"); peek.classList.remove("swap"); }, 220);
+  } else {
+    render(p);
+    document.body.classList.add("open");
+  }
+  if (push) history.pushState(null, "", "#" + id);
+  else history.replaceState(null, "", "#" + id);
+}
+
+const full = () => document.body.classList.contains("full");
+function enterFull() { document.body.classList.add("full"); setSlide(si, false); T.event("full", { i: si }); }
+function exitFull() { document.body.classList.remove("full"); setSlide(si, false); placePeek(); }
+function close(push = true) {
+  cur = -1;
+  T.project(null);
+  document.body.classList.remove("open", "full");
+  document.querySelectorAll(".item").forEach(b => b.removeAttribute("aria-current"));
+  if (push) history.pushState(null, "", location.pathname);
+  else history.replaceState(null, "", location.pathname);
+}
+
+// move to the next or previous project. Past the last one, go back to the page at Kind words
+function step(d) {
+  if (cur < 0) return open(projects[0].id);
+  const n = cur + d;
+  if (n >= projects.length) {
+    close(false);
+    const k = document.getElementById("kind-words");
+    col.scrollTo({ top: k.offsetTop - 120, behavior: desktop.matches ? "smooth" : "auto" });
+  } else if (n < 0) close(false);
+  else open(projects[n].id, false, d);
+}
+
+document.addEventListener("click", e => {
+  T.via = e.target.closest(".dots") ? "dot" : "click";
+  const sn = e.target.closest(".strip-nav button");
+  if (sn) return setSlide(si + +sn.dataset.d);
+  const slide = e.target.closest(".slide");
+  if (slide) {
+    const n = [...slide.parentNode.children].indexOf(slide);
+    const img = e.target.closest("img");
+    // desktop: any image opens the full-screen view on that image. Phones: the zoomable lightbox
+    if (desktop.matches) { if (!full()) { si = n; enterFull(); } else if (n !== si) setSlide(n); }
+    else if (img) openLightbox(img);
+    return;
+  }
+  const b = e.target.closest("[data-id]");
+  if (!b && full()) { if (!e.target.closest(".close, a")) exitFull(); return; }
+  if (!b) {
+    // desktop: clicking anywhere else closes it
+    if (desktop.matches && document.body.classList.contains("open") && !e.target.closest(".peek, a, .lightbox")) close();
+    return;
+  }
+  if (b.classList.contains("item") && b.getAttribute("aria-current") === "true") return close();
+  open(b.dataset.id);
+});
+
+// trackpad: a swipe moves one slide (or, in the full-screen view, up and down change project).
+// After a swipe the trackpad keeps sending fading "momentum" events. Those are ignored, but a
+// new swipe shows up as the deltas growing again, and that unlocks right away
+let wx = 0, wy = 0, wLock = false, wFading = false, wLast = 0, wTimer;
+document.addEventListener("wheel", e => {
+  T.via = "trackpad";
+  if (!document.body.classList.contains("open") || !desktop.matches) return;
+  const sideways = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+  // vertical scrolling moves only what the pointer is over: the project scrolls itself (if it is
+  // taller than the window), and everywhere else scrolls the list
+  if (!sideways && !full()) return;
+  e.preventDefault();
+  const mag = Math.max(Math.abs(e.deltaX), Math.abs(e.deltaY));
+  if (wLock && mag < wLast) wFading = true;
+  if (wLock && wFading && mag > 4 && mag > wLast * 1.4) { wLock = false; wx = wy = 0; }
+  wLast = mag;
+  clearTimeout(wTimer);
+  wTimer = setTimeout(() => { wLock = false; wx = wy = 0; wLast = 0; }, 100);
+  if (wLock) return;
+  if (sideways) wx += e.deltaX; else wy += e.deltaY;
+  const fire = d => { wLock = true; wFading = false; wx = wy = 0; d(); };
+  if (Math.abs(wx) > 30) { const d = Math.sign(wx); fire(() => setSlide(si + d)); }
+  else if (Math.abs(wy) > 30) { const d = Math.sign(wy); fire(() => step(d)); }
+}, { passive: false });
+
+// phones: swipe up or down to change project, sideways to move through slides
+let touch = null;
+panel.addEventListener("touchstart", e => {
+  const t = e.touches[0];
+  touch = { x: t.clientX, y: t.clientY, dx: 0, dy: 0, axis: null,
+    top: panel.scrollTop <= 0, bottom: panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1 };
+}, { passive: true });
+panel.addEventListener("touchmove", e => {
+  if (!touch) return;
+  const t = e.touches[0];
+  touch.dx = t.clientX - touch.x; touch.dy = t.clientY - touch.y;
+  if (!touch.axis && Math.hypot(touch.dx, touch.dy) > 10) touch.axis = Math.abs(touch.dx) > Math.abs(touch.dy) ? "x" : "y";
+  if (!touch.axis) return;
+  // vertical moves scroll the panel natively until it's at the end in that direction
+  if (touch.axis === "y" && !(touch.dy < 0 ? touch.bottom : touch.top)) { touch.axis = "scroll"; }
+  if (touch.axis === "scroll") return;
+  e.preventDefault();
+  const track = inner.querySelector(".track");
+  if (touch.axis === "x" && !track) return;
+  if (touch.axis === "x") {
+    track.classList.add("drag");
+    track.style.transform = `translateX(${-Math.min(track.children[si].offsetLeft, Math.max(0, track.scrollWidth - track.parentNode.clientWidth)) + touch.dx}px)`;
+  } else {
+    inner.style.transition = "none";
+    inner.style.transform = `translateY(${touch.dy * 0.3}px)`;
+  }
+}, { passive: false });
+panel.addEventListener("touchend", () => {
+  T.via = "swipe";
+  if (!touch) return;
+  const { axis, dx, dy } = touch;
+  touch = null;
+  if (axis === "x") {
+    inner.querySelector(".track")?.classList.remove("drag");
+    if (dx < -50) setSlide(si + 1);
+    else if (dx > 50 && si === 0) close();
+    else if (dx > 50) setSlide(si - 1);
+    else setSlide(si);
+  } else if (axis === "y") {
+    inner.style.transition = ""; inner.style.transform = "";
+    if (dy < -50) step(1); else if (dy > 50) step(-1);
+  }
+});
+
+document.getElementById("close").addEventListener("click", () => full() ? exitFull() : close());
+const lb = document.createElement("div");
+lb.className = "lightbox";
+lb.innerHTML = '<img alt=""><div class="cap"></div>';
+document.body.appendChild(lb);
+const lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".cap");
+function openLightbox(img) {
+  lbImg.src = img.src; lbImg.alt = img.alt;
+  const cap = img.closest("figure")?.querySelector("figcaption");
+  lbCap.textContent = cap ? cap.textContent : "";
+  // very wide images would be unreadable shrunk to the window, so show them tall and let them scroll
+  const ratio = img.naturalWidth / img.naturalHeight;
+  lb.classList.toggle("wide", ratio > 2.6);
+  lb.classList.toggle("tall", ratio < 0.6);
+  lb.classList.add("on");
+  lb.scrollLeft = 0; lb.scrollTop = 0;
+}
+function closeLightbox() { lb.classList.remove("on"); }
+lb.addEventListener("click", closeLightbox);
+
+document.addEventListener("keydown", e => document.body.classList.toggle("tabbing", e.key === "Tab"), true);
+document.addEventListener("pointerdown", () => document.body.classList.remove("tabbing"), true);
+document.addEventListener("keydown", e => {
+  T.via = "key";
+  if (e.key === "Escape") return lb.classList.contains("on") ? closeLightbox() : full() ? exitFull() : close();
+  if (lb.classList.contains("on") || e.metaKey || e.ctrlKey || e.altKey) return;
+  const isOpen = document.body.classList.contains("open");
+  if (e.key === "ArrowDown") {
+    // from the closed page, down arrow selects the first project while the list is in view
+    if (!isOpen && list.getBoundingClientRect().top > innerHeight) return;
+    if (!isOpen && list.getBoundingClientRect().bottom < 0) return;
+    e.preventDefault(); step(1);
+  } else if (isOpen && e.key === "ArrowUp") { e.preventDefault(); step(-1); }
+  else if (isOpen && e.key === "ArrowRight") { e.preventDefault(); setSlide(si + 1); }
+  else if (isOpen && e.key === "ArrowLeft") { e.preventDefault(); setSlide(si - 1); }
+});
+window.addEventListener("popstate", () => (T.via = "back", location.hash) ? open(hashId(), false) : close(false));
+const RETIRED = ["ai-home", "ai-navigation", "agent-dashboard", "workspaces", "task-model", "light-mode"];
+const hashId = () => { const h = location.hash.slice(1); return RETIRED.includes(h) ? "eliza" : h; };
+if (location.hash) open(hashId(), false);
+</script>
+</body>
+</html>
